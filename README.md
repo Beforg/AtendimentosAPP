@@ -5,6 +5,8 @@ Projeto JavaFX para auxiliar nos atendimentos e fechamento do caixa
 | :sparkles: Nome        | **Atendimentos APP**
 | :label: Tecnologias | java, screenbuilder
 | :date: Data da conclusão       | 12 de outubro de 2023
+| :back: Download do projeto | [**LINK PARA O PROJETO EM .EXE**](https://drive.google.com/file/d/17XD5_YPotW67ekUKbIOzaiSW67oNe1jB/view?usp=drive_link)
+| :balloon: Versão do projeto | Versão 1.1 (12 de outubro de 2023)
 
 <!-- Inserir imagem com a #vitrinedev ao final do link -->
 ![](https://github.com/Beforg/assets/blob/main/imagem_2023-10-12_174931524.png#vitrinedev)
