@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="831.0" prefWidth="759.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.demo.HelloController">
+   <children>
+      <Button focusTraversable="false" layoutX="5.0" layoutY="47.0" mnemonicParsing="false" onAction="#adicionar" prefHeight="35.0" prefWidth="83.0" text="Adicionar">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="759.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Menu">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#ajuda" text="Ajuda" />
+                  <MenuItem mnemonicParsing="false" onAction="#sobre" text="Sobre" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TableView fx:id="tabelaCliente" cacheShape="false" centerShape="false" focusTraversable="false" layoutY="102.0" prefHeight="673.0" prefWidth="759.0" scaleShape="false">
+        <columns>
+            <TableColumn fx:id="deleta" editable="false" prefWidth="26.0" resizable="false" text="X" />
+          <TableColumn fx:id="nomeCliente" onEditCommit="#editarNome" prefWidth="225.0" resizable="false" text="Nome" />
+          <TableColumn fx:id="statusCliente" prefWidth="76.0" resizable="false" text="Status" />
+            <TableColumn fx:id="brl" onEditCommit="#editarValor" prefWidth="92.0" resizable="false" text="Valor em BRL" />
+            <TableColumn fx:id="uyu" prefWidth="92.0" resizable="false" text="Valor em UYU" />
+            <TableColumn fx:id="pagamento" prefWidth="138.0" resizable="false" text="Forma de pagamento" />
+            <TableColumn fx:id="entregue" prefWidth="61.0" resizable="false" text="Entregue" />
+            <TableColumn fx:id="pago" prefWidth="45.0" resizable="false" text="Pago" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tabelaTotal" cacheShape="false" centerShape="false" layoutY="774.0" prefHeight="57.0" prefWidth="759.0" scaleShape="false">
+         <columns>
+            <TableColumn fx:id="clienteTotal" prefWidth="162.0" resizable="false" text="Atendimentos" />
+            <TableColumn fx:id="pedidosTotais" prefWidth="78.0" resizable="false" text="Pedidos" />
+            <TableColumn fx:id="valorTotal" prefWidth="105.0" resizable="false" text="Valor total" />
+            <TableColumn fx:id="brlRecebido" prefWidth="109.0" resizable="false" text="Recebido BRL" />
+            <TableColumn fx:id="pixRecebido" prefWidth="87.0" resizable="false" text="Recebido PIX" />
+            <TableColumn fx:id="uyuRecebido" prefWidth="104.0" resizable="false" text="Recebido UYU" />
+            <TableColumn fx:id="recebidoCartao" prefWidth="112.0" text="Recebido Cartão" />
+         </columns>
+      </TableView>
+      <Button fx:id="botaoFinalizar" focusTraversable="false" layoutX="183.0" layoutY="47.0" mnemonicParsing="false" onAction="#salvarTabelaEmPDF" prefHeight="35.0" prefWidth="83.0" text="Finalizar">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Label layoutX="546.0" layoutY="32.0" prefHeight="30.0" prefWidth="126.0" text="FUNCIONÁRIO:">
+         <font>
+            <Font name="Calibri Light" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="315.0" layoutY="37.0" prefHeight="20.0" prefWidth="112.0" text="CHAVE DO PESO">
+         <font>
+            <Font name="Calibri Light" size="16.0" />
+         </font>
+      </Label>
+      <Separator layoutX="453.0" layoutY="27.0" orientation="VERTICAL" prefHeight="75.0" prefWidth="7.0" />
+      <Separator layoutX="272.0" layoutY="27.0" orientation="VERTICAL" prefHeight="75.0" prefWidth="1.0" />
+      <TextField fx:id="valorPeso" alignment="CENTER" focusTraversable="false" layoutX="341.0" layoutY="62.0" prefHeight="25.0" prefWidth="53.0" promptText="Valor da chave" text="0,00">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <Button focusTraversable="false" layoutX="94.0" layoutY="47.0" mnemonicParsing="false" onAction="#botaoRemover" prefHeight="35.0" prefWidth="83.0" text="Remover">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <TextField fx:id="nomeFuncionario" alignment="CENTER" focusTraversable="false" layoutX="519.0" layoutY="65.0" promptText="Nome">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </TextField>
+   </children>
+</AnchorPane>

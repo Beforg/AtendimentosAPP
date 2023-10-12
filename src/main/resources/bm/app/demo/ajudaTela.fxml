@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="510.0" prefWidth="436.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="19.0" layoutY="107.0">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_LEFT" layoutX="19.0" layoutY="97.0" prefHeight="53.0" prefWidth="398.0" text="1 - Adicione atendimentos pelo botão &quot;Adicionar&quot; ou aperte &quot;ENTER&quot;" wrapText="true">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_LEFT" layoutX="19.0" layoutY="150.0" prefHeight="53.0" prefWidth="398.0" text="2 - A coluna X será marcada para remover algum atendimento clicando no botão &quot;Remover&quot;" wrapText="true">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_LEFT" layoutX="19.0" layoutY="203.0" prefHeight="63.0" prefWidth="398.0" text="3 - É preciso inserir a CHAVE DO PESO e o NOME DO FUNCIONARIO para o bom funcionamento do fechamento." wrapText="true">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_LEFT" layoutX="66.0" layoutY="272.0" prefHeight="27.0" prefWidth="292.0" text="4 - Sobre a Coluna &quot;Entregue&quot; e &quot;Pago&quot;:" underline="true" wrapText="true">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_LEFT" layoutX="20.0" layoutY="299.0" prefHeight="306.0" prefWidth="398.0" text="4.1 - o Atendimento marcado como ENTREGUE será grifado em vermelho para indicar que NÃO foi recebido o pagamento. 4.2 - o Atendimento marcado como PAGO será grifado em verde para indicar que foi PAGO, independente de ser ENTREGUE ou não." wrapText="true">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_LEFT" layoutX="20.0" layoutY="428.0" prefHeight="53.0" prefWidth="398.0" text="5 - Para editar nomes, valores e forma de pagamento clique ou aperte enter na coluna desejada" wrapText="true">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Label>
+      <Separator layoutY="67.0" prefHeight="16.0" prefWidth="436.0" />
+      <Label alignment="TOP_LEFT" layoutX="139.0" layoutY="30.0" prefHeight="37.0" prefWidth="159.0" text="Ajuda &lt;?&gt;" wrapText="true">
+         <font>
+            <Font name="Arial Bold" size="32.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_LEFT" layoutX="20.0" layoutY="502.0" prefHeight="70.0" prefWidth="398.0" text="Ao finalizar os atendimento será registrado todas informações em um PDF, sendo calculado o valor total e os valores recebidos." wrapText="true">
+         <font>
+            <Font name="Arial Bold" size="16.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

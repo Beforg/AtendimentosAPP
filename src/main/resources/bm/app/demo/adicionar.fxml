@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="182.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.demo.AdicionarControler">
+   <children>
+      <Label layoutX="21.0" layoutY="28.0" prefHeight="35.0" prefWidth="279.0" text="ADICIONAR ATENDIMENTO">
+         <font>
+            <Font name="SansSerif Regular" size="21.0" />
+         </font>
+      </Label>
+      <FlowPane hgap="10.0" layoutY="104.0" prefHeight="72.0" prefWidth="610.0" vgap="10.0">
+         <children>
+            <TextField fx:id="adicionaNome" prefHeight="25.0" prefWidth="198.0" promptText="Nome" />
+            <CheckBox fx:id="adicionaPedido" mnemonicParsing="false" onAction="#pedidoMarcado" text="Pedido feito">
+               <font>
+                  <Font name="Calibri" size="15.0" />
+               </font></CheckBox>
+            <TextField fx:id="valorPedido" disable="true" prefHeight="25.0" prefWidth="129.0" promptText="Valor do pedido" />
+            <ChoiceBox fx:id="listaPagamento" prefHeight="25.0" prefWidth="135.0" />
+         </children>
+         <padding>
+            <Insets left="10.0" top="20.0" />
+         </padding>
+      </FlowPane>
+      <Button fx:id="adicionaCliente" defaultButton="true" focusTraversable="false" layoutX="439.0" layoutY="33.0" mnemonicParsing="false" onAction="#adicionar" text="Adicionar" />
+      <Button fx:id="cancelarBot" focusTraversable="false" layoutX="518.0" layoutY="33.0" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+      <Separator layoutX="-10.0" layoutY="77.0" prefHeight="25.0" prefWidth="627.0" />
+      <Label layoutX="471.0" layoutY="97.0" text="Forma de Pagamento:">
+         <font>
+            <Font name="Calibri Italic" size="15.0" />
+         </font>
+      </Label>
+      <Separator layoutX="310.0" layoutY="-6.0" orientation="VERTICAL" prefHeight="94.0" prefWidth="7.0" />
+      <TextField fx:id="chave_peso" layoutX="333.0" layoutY="33.0" prefHeight="25.0" prefWidth="86.0" promptText="Valor" />
+      <Label layoutX="337.0" layoutY="14.0" text="Chave do peso" />
+      <Label layoutX="25.0" layoutY="95.0" text="Nome do cliente:">
+         <font>
+            <Font name="Calibri Italic" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="373.0" layoutY="97.0" text="Valor:">
+         <font>
+            <Font name="Calibri Italic" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
