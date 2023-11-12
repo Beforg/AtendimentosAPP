@@ -27,7 +27,7 @@
             <Font name="Arial" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="96.0" layoutY="117.0" text="versão 1.1">
+      <Label layoutX="74.0" layoutY="117.0" text="versão 2.0 (beta)">
          <font>
             <Font name="Arial" size="15.0" />
          </font>

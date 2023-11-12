@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="831.0" prefWidth="759.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.demo.HelloController">
+<AnchorPane fx:id="painelFundo" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1276.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.demo.HelloController">
    <children>
-      <Button focusTraversable="false" layoutX="5.0" layoutY="47.0" mnemonicParsing="false" onAction="#adicionar" prefHeight="35.0" prefWidth="83.0" text="Adicionar">
+      <Button fx:id="add_botao" focusTraversable="false" layoutX="91.0" layoutY="136.0" mnemonicParsing="false" onAction="#adicionar" prefHeight="35.0" prefWidth="150.0" text="Adicionar">
          <font>
-            <Font size="15.0" />
+            <Font name="Arial" size="16.0" />
          </font>
       </Button>
-      <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="759.0">
+      <MenuBar fx:id="barraMenu" layoutY="-1.0" prefHeight="28.0" prefWidth="1283.0" AnchorPane.rightAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="Menu">
             <items>
@@ -29,60 +35,112 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TableView fx:id="tabelaCliente" cacheShape="false" centerShape="false" focusTraversable="false" layoutY="102.0" prefHeight="673.0" prefWidth="759.0" scaleShape="false">
+      <TableView fx:id="tabelaCliente" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="275.0" layoutY="32.0" prefHeight="632.0" prefWidth="1000.0" scaleShape="false" stylesheets="@../../../tabela.css" AnchorPane.rightAnchor="1.0">
         <columns>
-            <TableColumn fx:id="deleta" editable="false" prefWidth="26.0" resizable="false" text="X" />
-          <TableColumn fx:id="nomeCliente" onEditCommit="#editarNome" prefWidth="225.0" resizable="false" text="Nome" />
-          <TableColumn fx:id="statusCliente" prefWidth="76.0" resizable="false" text="Status" />
-            <TableColumn fx:id="brl" onEditCommit="#editarValor" prefWidth="92.0" resizable="false" text="Valor em BRL" />
-            <TableColumn fx:id="uyu" prefWidth="92.0" resizable="false" text="Valor em UYU" />
-            <TableColumn fx:id="pagamento" prefWidth="138.0" resizable="false" text="Forma de pagamento" />
-            <TableColumn fx:id="entregue" prefWidth="61.0" resizable="false" text="Entregue" />
-            <TableColumn fx:id="pago" prefWidth="45.0" resizable="false" text="Pago" />
+            <TableColumn fx:id="deleta" editable="false" prefWidth="33.0" resizable="false" text="X" />
+          <TableColumn fx:id="nomeCliente" onEditCommit="#editarNome" prefWidth="216.0" resizable="false" text="Nome" />
+          <TableColumn fx:id="statusCliente" prefWidth="103.0" resizable="false" text="Status" />
+            <TableColumn fx:id="brl" onEditCommit="#editarValor" prefWidth="103.0" resizable="false" text="Valor BRL" />
+            <TableColumn fx:id="uyu" prefWidth="123.0" resizable="false" text="Valor UYU" />
+            <TableColumn fx:id="pagamento" prefWidth="161.0" resizable="false" text="Forma de pagamento" />
+            <TableColumn fx:id="entregador" onEditCommit="#editarEntregador" prefWidth="98.0" resizable="false" text="Entregador" />
+            <TableColumn fx:id="entregue" prefWidth="96.0" resizable="false" text="Entregue" />
+            <TableColumn fx:id="pago" minWidth="0.0" prefWidth="64.0" resizable="false" text="Pago" />
         </columns>
       </TableView>
-      <TableView fx:id="tabelaTotal" cacheShape="false" centerShape="false" layoutY="774.0" prefHeight="57.0" prefWidth="759.0" scaleShape="false">
+      <TableView fx:id="tabelaTotal" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="275.0" layoutY="657.0" prefHeight="63.0" prefWidth="1000.0" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="657.0">
          <columns>
-            <TableColumn fx:id="clienteTotal" prefWidth="162.0" resizable="false" text="Atendimentos" />
-            <TableColumn fx:id="pedidosTotais" prefWidth="78.0" resizable="false" text="Pedidos" />
-            <TableColumn fx:id="valorTotal" prefWidth="105.0" resizable="false" text="Valor total" />
-            <TableColumn fx:id="brlRecebido" prefWidth="109.0" resizable="false" text="Recebido BRL" />
-            <TableColumn fx:id="pixRecebido" prefWidth="87.0" resizable="false" text="Recebido PIX" />
-            <TableColumn fx:id="uyuRecebido" prefWidth="104.0" resizable="false" text="Recebido UYU" />
-            <TableColumn fx:id="recebidoCartao" prefWidth="112.0" text="Recebido Cartão" />
+            <TableColumn fx:id="clienteTotal" editable="false" prefWidth="99.0" resizable="false" sortable="false" text="Atendimentos" />
+            <TableColumn fx:id="pedidosTotais" editable="false" prefWidth="73.0" resizable="false" sortable="false" text="Pedidos" />
+            <TableColumn fx:id="entreguesTot" editable="false" prefWidth="77.0" resizable="false" sortable="false" text="Entregues" />
+            <TableColumn fx:id="valorTotal" editable="false" prefWidth="103.0" resizable="false" sortable="false" text="Valor total" />
+            <TableColumn fx:id="brlRecebido" editable="false" prefWidth="113.0" resizable="false" sortable="false" text="Recebido BRL" />
+            <TableColumn fx:id="pixRecebido" editable="false" prefWidth="112.0" resizable="false" sortable="false" text="Recebido PIX" />
+            <TableColumn fx:id="recebidoCartao" editable="false" prefWidth="176.0" resizable="false" sortable="false" text="Recebido Cartão/Outros" />
+            <TableColumn fx:id="uyuRecebido" editable="false" prefWidth="113.0" resizable="false" sortable="false" text="Recebido UYU" />
+            <TableColumn fx:id="valor_npg" editable="false" prefWidth="131.0" resizable="false" sortable="false" styleClass="valor-npg-column" text="Valor não pago" />
          </columns>
+         <stylesheets>
+            <URL value="@../../../tabela.css" />
+            <URL value="@../../../tabela_total.css" />
+         </stylesheets>
       </TableView>
-      <Button fx:id="botaoFinalizar" focusTraversable="false" layoutX="183.0" layoutY="47.0" mnemonicParsing="false" onAction="#salvarTabelaEmPDF" prefHeight="35.0" prefWidth="83.0" text="Finalizar">
+      <Button fx:id="botaoFinalizar" focusTraversable="false" layoutX="91.0" layoutY="247.0" mnemonicParsing="false" onAction="#salvarTabelaEmPDF" prefHeight="35.0" prefWidth="150.0" text="Finalizar">
          <font>
-            <Font size="15.0" />
+            <Font name="Arial" size="16.0" />
          </font>
       </Button>
-      <Label layoutX="546.0" layoutY="32.0" prefHeight="30.0" prefWidth="126.0" text="FUNCIONÁRIO:">
-         <font>
-            <Font name="Calibri Light" size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="315.0" layoutY="37.0" prefHeight="20.0" prefWidth="112.0" text="CHAVE DO PESO">
-         <font>
-            <Font name="Calibri Light" size="16.0" />
-         </font>
-      </Label>
-      <Separator layoutX="453.0" layoutY="27.0" orientation="VERTICAL" prefHeight="75.0" prefWidth="7.0" />
-      <Separator layoutX="272.0" layoutY="27.0" orientation="VERTICAL" prefHeight="75.0" prefWidth="1.0" />
-      <TextField fx:id="valorPeso" alignment="CENTER" focusTraversable="false" layoutX="341.0" layoutY="62.0" prefHeight="25.0" prefWidth="53.0" promptText="Valor da chave" text="0,00">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </TextField>
-      <Button focusTraversable="false" layoutX="94.0" layoutY="47.0" mnemonicParsing="false" onAction="#botaoRemover" prefHeight="35.0" prefWidth="83.0" text="Remover">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <TextField fx:id="nomeFuncionario" alignment="CENTER" focusTraversable="false" layoutX="519.0" layoutY="65.0" promptText="Nome">
+      <Label layoutX="8.0" layoutY="45.0" prefHeight="20.0" prefWidth="126.0" text="CHAVE DO PESO:">
          <font>
             <Font name="Arial" size="13.0" />
          </font>
+      </Label>
+      <Separator layoutX="271.0" layoutY="27.0" orientation="VERTICAL" prefHeight="696.0" prefWidth="7.0" />
+      <TextField fx:id="valorPeso" alignment="CENTER" focusTraversable="false" layoutX="126.0" layoutY="41.0" prefHeight="24.0" prefWidth="53.0" text="0,00">
+         <font>
+            <Font name="Arial Black" size="13.0" />
+         </font>
       </TextField>
+      <Button fx:id="remover_botao" focusTraversable="false" layoutX="91.0" layoutY="191.0" mnemonicParsing="false" onAction="#botaoRemover" prefHeight="35.0" prefWidth="150.0" text="Remover">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Button>
+      <TextField fx:id="nomeFuncionario" alignment="CENTER" layoutX="126.0" layoutY="77.0" prefHeight="24.0" prefWidth="142.0" promptText="Nome">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+         <stylesheets>
+            <URL value="@../../../funcionario.css" />
+            <URL value="@../../../funcionario.css" />
+         </stylesheets>
+      </TextField>
+      <TextArea fx:id="anotacoes" cacheShape="false" centerShape="false" layoutX="6.0" layoutY="348.0" pickOnBounds="false" prefHeight="335.0" prefWidth="260.0" scaleShape="false" stylesheets="@../../../textArea.css" wrapText="true">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </TextArea>
+      <ImageView fx:id="add" fitHeight="51.0" fitWidth="62.0" layoutX="9.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../add_order.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="delete" fitHeight="51.0" fitWidth="62.0" layoutX="8.0" layoutY="183.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../remove_order.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pdf" fitHeight="51.0" fitWidth="62.0" layoutX="8.0" layoutY="239.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../save_pdf.png" />
+         </image>
+      </ImageView>
+      <Separator layoutX="-4.0" layoutY="114.0" prefHeight="4.0" prefWidth="278.0" />
+      <Label layoutX="8.0" layoutY="79.0" prefHeight="20.0" prefWidth="126.0" text="FUNCIONÁRIO:">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </Label>
+      <RadioButton layoutX="14.0" layoutY="317.0" mnemonicParsing="false" onAction="#registro_rb" selected="true" text="Registros">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+         <toggleGroup>
+            <ToggleGroup fx:id="regis_img" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="119.0" layoutY="317.0" mnemonicParsing="false" onAction="#promo_rb" prefHeight="17.0" prefWidth="126.0" text="Promoções" toggleGroup="$regis_img">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+      </RadioButton>
+      <ImageView fx:id="promocoes_img" fitHeight="360.0" fitWidth="278.0" layoutX="11.0" layoutY="343.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <Button fx:id="botao_carregar" layoutX="227.0" layoutY="311.0" mnemonicParsing="false" onAction="#carregar_imagem" prefHeight="25.0" prefWidth="27.0" visible="false" />
+      <Separator layoutX="-4.0" layoutY="303.0" prefHeight="4.0" prefWidth="278.0" />
+      <Label fx:id="labelViewInfo" layoutX="17.0" layoutY="703.0" prefHeight="17.0" prefWidth="270.0" text="Carregue uma imagem. Clique para expandir" visible="false">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -1,0 +1,40 @@
+.table-view .column-header-background .table-column {
+    -fx-background-color: #2E8B57; /* Cor de fundo da coluna */
+    -fx-text-fill: #808080; /* Cor do texto da coluna */
+    -fx-border-width: 0 1 0 0; /* Adiciona uma borda à direita de cada coluna */
+    -fx-border-color: #000000; /* Cor da borda da coluna */
+    -fx-alignment: CENTER; /* Alinhamento do texto */
+}
+
+.table-view .column-header-background {
+    -fx-border-width: 0 1 0 0; /* Adiciona uma borda à direita de cada cabeçalho de coluna */
+    -fx-border-color: #000000; /* Cor da borda do cabeçalho de coluna */
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #F5F5F5; /* Cor para linhas ímpares */
+
+}
+
+.table-row-cell:even {
+    -fx-background-color: #FFFAFA; /* Cor para linhas pares */
+
+}
+
+.table-row-cell {
+    -fx-border-width: 0 1 0 0; /* Adiciona uma borda à direita de cada célula */
+    -fx-border-color: #000000; /* Cor da borda das células */
+
+}
+.table-cell {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+.custom-choice-box-cell .list-cell {
+    -fx-background-color: #ffffff; /* Cor de fundo da lista suspensa */
+    -fx-text-fill: #000000; /* Cor do texto na lista suspensa */
+    -fx-font-size: 14px; /* Tamanho da fonte na lista suspensa */
+    /* Outras propriedades de estilo conforme necessário */
+}

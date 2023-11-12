@@ -8,7 +8,8 @@ import java.math.BigDecimal;
 
 public class Cliente {
     private  String nome;
-   private final StringProperty status = new SimpleStringProperty();
+    private String entregador;
+   private  StringProperty status = new SimpleStringProperty();
     private final ObjectProperty<BigDecimal> brl = new SimpleObjectProperty<>();
     private final ObjectProperty<BigDecimal> uyu = new SimpleObjectProperty<>();
 
@@ -18,7 +19,7 @@ public class Cliente {
     private final BooleanProperty entregue = new SimpleBooleanProperty();
     private CheckBox remover;
 
-    public Cliente(String nome, String status, BigDecimal brl, BigDecimal uyu, String formaPagamento, Boolean pago, Boolean entregue) {
+    public Cliente(String nome, String status, BigDecimal brl, BigDecimal uyu, String formaPagamento, Boolean pago, Boolean entregue, String entregador) {
         this.nome = nome;
         this.status.set(status);
         this.brl.set(brl);
@@ -26,21 +27,29 @@ public class Cliente {
         this.formaPagamento.set(formaPagamento);
         this.pago.set(pago);
         this.entregue.set(entregue);
+        this.entregador = entregador;
         this.remover = new CheckBox();
         brlProperty().addListener((observable, oldValue, newValue) -> {
-            HelloController.atualizarAtendimento("","", BigDecimal.ZERO, BigDecimal.ZERO, "",false,false);
+            HelloController.atualizarAtendimento("","", BigDecimal.ZERO, BigDecimal.ZERO, "",false,false,"");
         });
         uyuProperty().addListener((observable, oldValue, newValue) -> {
-            HelloController.atualizarAtendimento("","", BigDecimal.ZERO, BigDecimal.ZERO, "",false,false);
+            HelloController.atualizarAtendimento("","", BigDecimal.ZERO, BigDecimal.ZERO, "",false,false,"");
+
         });
         pagoProperty().addListener((observable, oldValue, newValue) -> {
-            HelloController.atualizarAtendimento("","", BigDecimal.ZERO, BigDecimal.ZERO, "",false,false);
+            HelloController.atualizarAtendimento("","", BigDecimal.ZERO, BigDecimal.ZERO, "",false,false,"");
+
+
         });
         statusProperty().addListener((observable, oldValue, newValue) -> {
-            HelloController.atualizarAtendimento("","", BigDecimal.ZERO, BigDecimal.ZERO, "",false,false);
+            HelloController.atualizarAtendimento("","", BigDecimal.ZERO, BigDecimal.ZERO, "",false,false,"");
         });
         formaPagamentoProperty().addListener((observable, oldValue, newValue) -> {
-            HelloController.atualizarAtendimento("","", BigDecimal.ZERO, BigDecimal.ZERO, "",false,false);
+            HelloController.atualizarAtendimento("","", BigDecimal.ZERO, BigDecimal.ZERO, "",false,false,"");
+        });
+        entregueProperty().addListener((observable, oldValue, newValue) -> {
+            HelloController.atualizarAtendimento("","", BigDecimal.ZERO, BigDecimal.ZERO, "",false,false,"");
+
         });
     }
 
@@ -146,5 +155,11 @@ public class Cliente {
         return pago.get();
     }
 
+    public String getEntregador() {
+        return entregador;
+    }
 
+    public void setEntregador(String entregador) {
+        this.entregador = entregador;
+    }
 }

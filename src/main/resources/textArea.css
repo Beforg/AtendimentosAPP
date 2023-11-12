@@ -1,0 +1,5 @@
+.text-area {
+    -fx-border-color: #000000; /* Cor da borda */
+    -fx-border-width: 1px; /* Largura da borda */
+    -fx-border-radius: 5px; /* Raio dos cantos da borda */
+}

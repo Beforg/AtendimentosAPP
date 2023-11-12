@@ -1,5 +1,6 @@
 package bm.app.demo;
 
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.collections.FXCollections;
@@ -8,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import java.math.BigDecimal;
+import java.util.concurrent.Callable;
 
 public class ValorTotal {
     public static void vincularSoma(TableView<Cliente> tabelaCliente, TableColumn<Cliente, BigDecimal> brlColumn, TableView<ClienteTotal> tabelaTotal, TableColumn<ClienteTotal, BigDecimal> valorTotalColumn) {
@@ -27,7 +29,26 @@ public class ValorTotal {
             tabelaTotal.refresh();
         });
     }
-public static void vincularBrl(
+    public static void vincularFalta(TableView<Cliente> tabelaAtendimento, TableView<ClienteTotal> tabelaTotal, TableColumn<ClienteTotal, BigDecimal> valorTotalColumn) {
+
+        DoubleBinding somaBinding = Bindings.createDoubleBinding(() ->
+                        tabelaAtendimento.getItems().stream()
+                                .filter(atendimento -> !atendimento.isPago())
+                                .map(Cliente::getBrl)
+                                .mapToDouble(BigDecimal::doubleValue)
+                                .sum(),
+                tabelaAtendimento.getItems());
+
+        valorTotalColumn.setCellValueFactory(data -> {
+            BigDecimal valorTotal = BigDecimal.valueOf(somaBinding.get());
+            return Bindings.createObjectBinding(() -> valorTotal);
+        });
+
+        tabelaAtendimento.getItems().addListener((ListChangeListener<Cliente>) change -> {
+            tabelaTotal.refresh();
+        });
+    }
+    public static void vincularBrl(
         TableView<Cliente> tabelaCliente,
         TableColumn<Cliente, String> pagamentoColumn,
         TableColumn<Cliente, Boolean> pagoColumn,
@@ -161,6 +182,8 @@ public static void vincularBrl(
                 Boolean pago = pagoColumn.getCellData(cliente);
 
                 if ("Cartão".equals(pagamento) && pago != null && pago) {
+                    clientesRelevantes.add(cliente);
+                } else if ("Outro".equals(pagamento)  && pago != null && pago) {
                     clientesRelevantes.add(cliente);
                 }
             }

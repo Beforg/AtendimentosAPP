@@ -48,7 +48,7 @@
             <Font name="Arial Bold" size="32.0" />
          </font>
       </Label>
-      <Label alignment="TOP_LEFT" layoutX="20.0" layoutY="502.0" prefHeight="70.0" prefWidth="398.0" text="Ao finalizar os atendimento será registrado todas informações em um PDF, sendo calculado o valor total e os valores recebidos." wrapText="true">
+      <Label alignment="TOP_LEFT" layoutX="20.0" layoutY="502.0" prefHeight="91.0" prefWidth="398.0" text="Ao finalizar o atendimento será registrado todas informações em um PDF, sendo calculado o valor total e os valores recebidos. (OBS: Aba ainda não atualizada)" wrapText="true">
          <font>
             <Font name="Arial Bold" size="16.0" />
          </font>

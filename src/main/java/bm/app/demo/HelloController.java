@@ -17,7 +17,10 @@ import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.converter.BigDecimalStringConverter;
@@ -25,6 +28,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.io.File;
@@ -33,10 +37,25 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.text.StringCharacterIterator;
+import java.time.LocalDate;
 import java.util.*;
 
 public class HelloController implements Initializable {
-
+    @FXML
+    private Label labelViewInfo;
+    @FXML
+    private Button add_botao;
+    @FXML
+    private MenuBar barraMenu;
+    @FXML
+    private AnchorPane painelFundo;
+    @FXML
+    private  Button remover_botao;
+    @FXML
+    private TableColumn<Cliente, String> entregador;
+    @FXML
+    private  Button botaoFinalizar;
     @FXML
     private TableView<Cliente> tabelaCliente;
 
@@ -45,6 +64,8 @@ public class HelloController implements Initializable {
 
     @FXML
     private TableColumn<ClienteTotal, BigDecimal> brlRecebido;
+    @FXML
+    private TableColumn<ClienteTotal, BigDecimal> valor_npg;
 
     @FXML
     private TableColumn<ClienteTotal, Integer> clienteTotal;
@@ -87,15 +108,29 @@ public class HelloController implements Initializable {
     @FXML
     private TextField nomeFuncionario;
     @FXML
-    private Button botaoFinalizar;
+    private ImageView pdf;
+    @FXML
+    private  ImageView add;
+    @FXML
+    private ImageView delete;
+    @FXML
+    private TableColumn<ClienteTotal, Integer> entreguesTot;
     @FXML
     static ObservableList<Cliente> list = FXCollections.observableArrayList(
 
     );
     @FXML
+    private ImageView promocoes_img;
+    @FXML
+    private TextArea anotacoes;
+    @FXML
     private ObservableList<ClienteTotal> clientesTotal = FXCollections.observableArrayList();
+    @FXML
+    private Button botao_carregar;
     IntegerProperty pedidosProperty = new SimpleIntegerProperty(0);
+    IntegerProperty entreguesProperty = new SimpleIntegerProperty(0);
     int atendTotal = 0;
+    int entreguesTabela = 0;
     String valorTotalReais = "0";
     BigDecimal valorTotalPesos = new BigDecimal("0");
     BigDecimal valorTotalPix = new BigDecimal("0");
@@ -110,6 +145,437 @@ public class HelloController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        Image iconeBotao = new Image("carregar.png");
+        ImageView iconeBotaoView = new ImageView(iconeBotao);
+        iconeBotaoView.setFitWidth(24);
+        iconeBotaoView.setFitHeight(20);
+        botao_carregar.setStyle("-fx-background-color: #13aa52; -fx-border-color: black; -fx-border-width: 0px 0px 1px 0px; -fx-border-style: solid;");
+        botao_carregar.setGraphic(iconeBotaoView);
+        /* Style colunas TabelaTotal ================================================================================*/
+
+        valor_npg.setStyle("-fx-text-fill: red;");
+        brlRecebido.setStyle("-fx-text-fill: #006400;");
+        uyuRecebido.setStyle("-fx-text-fill: #006400;");
+        recebidoCartao.setStyle("-fx-text-fill: #006400;");
+        pixRecebido.setStyle("-fx-text-fill: #006400;");
+        valorTotal.setStyle("-fx-text-fill: #2F4F4F;");
+
+
+        /*===========================================================================================================*/
+        painelFundo.setStyle("-fx-background-color: #2E8B57;");
+        barraMenu.setStyle("-fx-background-color: #008080; -fx-font-size: 13px; -fx-font-family: Arial, sans-serif;" +
+                "-fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-border-color: #008080; -fx-border-width: 0px 0px 1px 0px; -fx-border-style: solid;");
+        tabelaCliente.setPlaceholder(new Label("Não há atendimentos registrados."));
+        tabelaCliente.setStyle("-fx-font-size: 14px;"+
+                "-fx-focus-color: transparent;" +
+                "-fx-faint-focus-color: t1ransparent;" +
+                "-fx-control-inner-background: #ffffff;" + /* Defina a cor de fundo interna desejada */
+                "-fx-selection-bar: #b3d9ff;" + /* Defina a cor da barra de seleção desejada */
+                "-fx-selection-bar-non-focused: derive(#b3d9ff, -20%);" +
+                "-fx-border-color: #2E8B57;");
+        tabelaCliente.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                tabelaCliente.setStyle(
+                        "-fx-font-size: 14px;"+
+                        "-fx-focus-color: #b3d9ff;" +
+                                "-fx-faint-focus-color: #b3d9ff;"+
+                                "-fx-control-inner-background: #ffffff;" + /* Defina a cor de fundo interna desejada */
+                                "-fx-selection-bar: #b3d9ff;" + /* Defina a cor da barra de seleção desejada */
+                                "-fx-selection-bar-non-focused: derive(#b3d9ff, -20%);" /* Defina a cor da barra de seleção quando não estiver focada */);
+
+            } else {
+                tabelaCliente.setStyle(
+                        "-fx-font-size: 14px;"+
+                        "-fx-focus-color: transparent;" +
+                                "-fx-faint-focus-color: transparent;"+
+                                "-fx-control-inner-background: #ffffff;" + /* Defina a cor de fundo interna desejada */
+                                "-fx-selection-bar: #b3d9ff;" + /* Defina a cor da barra de seleção desejada */
+                                "-fx-selection-bar-non-focused: derive(#b3d9ff, -20%);" /* Defina a cor da barra de seleção quando não estiver focada */);
+
+            }
+        });
+
+
+        add_botao.setStyle(
+                "-fx-background-color: #13aa52; " +
+                        "-fx-border-color: #13aa52; " +
+                        "-fx-border-width: 1px; " +
+                        "-fx-border-radius: 4px; " +
+                        "-fx-background-radius: 4px; " +
+                        "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                        "-fx-color: #fff; " +
+                        "-fx-cursor: pointer; " +
+                        "-fx-font-family: \"Akzidenz Grotesk BQ Medium\", -apple-system, BlinkMacSystemFont, sans-serif; " +
+                        "-fx-font-size: 16px; " +
+                        "-fx-font-weight: 400; " +
+                        "-fx-outline: none; " +
+                        "-fx-padding: 10px 25px; " +
+                        "-fx-text-align: center; " +
+                        "-fx-translate-y: 0; " +
+                        "-fx-transition: translate 150ms, box-shadow 150ms; " +
+                        "-fx-user-select: none; " +
+                        "-webkit-user-select: none; " +
+                        "-fx-touch-action: manipulation;"
+        );
+
+        add_botao.setOnMouseEntered(event -> {
+            add_botao.setStyle(
+                    "-fx-background-color: #13aa52; " +
+                            "-fx-border-color: #13aa52; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 4px; " +
+                            "-fx-background-radius: 4px; " +
+                            "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                            "-fx-color: #fff; " +
+                            "-fx-cursor: pointer; " +
+                            "-fx-font-family: \"Akzidenz Grotesk BQ Medium\", -apple-system, BlinkMacSystemFont, sans-serif; " +
+                            "-fx-font-size: 16px; " +
+                            "-fx-font-weight: 400; " +
+                            "-fx-outline: none; " +
+                            "-fx-padding: 10px 25px; " +
+                            "-fx-text-align: center; " +
+                            "-fx-translate-y: 0; " +
+                            "-fx-transition: translate 150ms, box-shadow 150ms; " +
+                            "-fx-user-select: none; " +
+                            "-webkit-user-select: none; " +
+                            "-fx-touch-action: manipulation;" +
+                    "-fx-box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0; " +
+                            "-fx-translate-y: -2px;"
+            );
+        });
+
+        add_botao.setOnMouseExited(event -> {
+            add_botao.setStyle(
+                    "-fx-background-color: #13aa52; " +
+                            "-fx-border-color: #13aa52; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 4px; " +
+                            "-fx-background-radius: 4px; " +
+                            "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                            "-fx-color: #fff; " +
+                            "-fx-cursor: pointer; " +
+                            "-fx-font-family: \"Akzidenz Grotesk BQ Medium\", -apple-system, BlinkMacSystemFont, sans-serif; " +
+                            "-fx-font-size: 16px; " +
+                            "-fx-font-weight: 400; " +
+                            "-fx-outline: none; " +
+                            "-fx-padding: 10px 25px; " +
+                            "-fx-text-align: center; " +
+                            "-fx-translate-y: 0; " +
+                            "-fx-transition: translate 150ms, box-shadow 150ms; " +
+                            "-fx-user-select: none; " +
+                            "-webkit-user-select: none; " +
+                            "-fx-touch-action: manipulation;" +
+                    "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                            "-fx-translate-y: 0;"
+            );
+        });
+        add_botao.setStyle(
+                "-fx-background-color: #13aa52; " +
+                        "-fx-border-color: #13aa52; " +
+                        "-fx-border-width: 1px; " +
+                        "-fx-border-radius: 4px; " +
+                        "-fx-background-radius: 4px; " +
+                        "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                        "-fx-color: #fff; " +
+                        "-fx-cursor: pointer; " +
+                        "-fx-font-family: \"Akzidenz Grotesk BQ Medium\", -apple-system, BlinkMacSystemFont, sans-serif; " +
+                        "-fx-font-size: 16px; " +
+                        "-fx-font-weight: 400; " +
+                        "-fx-outline: none; " +
+                        "-fx-padding: 10px 25px; " +
+                        "-fx-text-align: center; " +
+                        "-fx-translate-y: 0; " +
+                        "-fx-transition: translate 150ms, box-shadow 150ms; " +
+                        "-fx-user-select: none; " +
+                        "-webkit-user-select: none; " +
+                        "-fx-touch-action: manipulation;"
+        );
+
+        add_botao.setOnMouseEntered(event -> {
+            add_botao.setStyle(
+                    "-fx-background-color: #13aa52; " +
+                            "-fx-border-color: #13aa52; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 4px; " +
+                            "-fx-background-radius: 4px; " +
+                            "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                            "-fx-color: #fff; " +
+                            "-fx-cursor: pointer; " +
+                            "-fx-font-family: \"Akzidenz Grotesk BQ Medium\", -apple-system, BlinkMacSystemFont, sans-serif; " +
+                            "-fx-font-size: 16px; " +
+                            "-fx-font-weight: 400; " +
+                            "-fx-outline: none; " +
+                            "-fx-padding: 10px 25px; " +
+                            "-fx-text-align: center; " +
+                            "-fx-translate-y: 0; " +
+                            "-fx-transition: translate 150ms, box-shadow 150ms; " +
+                            "-fx-user-select: none; " +
+                            "-webkit-user-select: none; " +
+                            "-fx-touch-action: manipulation;" +
+                            "-fx-box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0; " +
+                            "-fx-translate-y: -2px;"
+            );
+        });
+
+        add_botao.setOnMouseExited(event -> {
+            add_botao.setStyle(
+                    "-fx-background-color: #13aa52; " +
+                            "-fx-border-color: #13aa52; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 4px; " +
+                            "-fx-background-radius: 4px; " +
+                            "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                            "-fx-color: #fff; " +
+                            "-fx-cursor: pointer; " +
+                            "-fx-font-family: \"Akzidenz Grotesk BQ Medium\", -apple-system, BlinkMacSystemFont, sans-serif; " +
+                            "-fx-font-size: 16px; " +
+                            "-fx-font-weight: 400; " +
+                            "-fx-outline: none; " +
+                            "-fx-padding: 10px 25px; " +
+                            "-fx-text-align: center; " +
+                            "-fx-translate-y: 0; " +
+                            "-fx-transition: translate 150ms, box-shadow 150ms; " +
+                            "-fx-user-select: none; " +
+                            "-webkit-user-select: none; " +
+                            "-fx-touch-action: manipulation;" +
+                            "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                            "-fx-translate-y: 0;"
+            );
+        });
+        //========================================================================================
+        remover_botao.setStyle(
+                "-fx-background-color: #13aa52; " +
+                        "-fx-border-color: #13aa52; " +
+                        "-fx-border-width: 1px; " +
+                        "-fx-border-radius: 4px; " +
+                        "-fx-background-radius: 4px; " +
+                        "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                        "-fx-color: #fff; " +
+                        "-fx-cursor: pointer; " +
+                        "-fx-font-family: \"Akzidenz Grotesk BQ Medium\", -apple-system, BlinkMacSystemFont, sans-serif; " +
+                        "-fx-font-size: 16px; " +
+                        "-fx-font-weight: 400; " +
+                        "-fx-outline: none; " +
+                        "-fx-padding: 10px 25px; " +
+                        "-fx-text-align: center; " +
+                        "-fx-translate-y: 0; " +
+                        "-fx-transition: translate 150ms, box-shadow 150ms; " +
+                        "-fx-user-select: none; " +
+                        "-webkit-user-select: none; " +
+                        "-fx-touch-action: manipulation;"
+        );
+
+        remover_botao.setOnMouseEntered(event -> {
+            remover_botao.setStyle(
+                    "-fx-background-color: #13aa52; " +
+                            "-fx-border-color: #13aa52; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 4px; " +
+                            "-fx-background-radius: 4px; " +
+                            "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                            "-fx-color: #fff; " +
+                            "-fx-cursor: pointer; " +
+                            "-fx-font-family: \"Akzidenz Grotesk BQ Medium\", -apple-system, BlinkMacSystemFont, sans-serif; " +
+                            "-fx-font-size: 16px; " +
+                            "-fx-font-weight: 400; " +
+                            "-fx-outline: none; " +
+                            "-fx-padding: 10px 25px; " +
+                            "-fx-text-align: center; " +
+                            "-fx-translate-y: 0; " +
+                            "-fx-transition: translate 150ms, box-shadow 150ms; " +
+                            "-fx-user-select: none; " +
+                            "-webkit-user-select: none; " +
+                            "-fx-touch-action: manipulation;" +
+                            "-fx-box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0; " +
+                            "-fx-translate-y: -2px;"
+            );
+        });
+
+        remover_botao.setOnMouseExited(event -> {
+            remover_botao.setStyle(
+                    "-fx-background-color: #13aa52; " +
+                            "-fx-border-color: #13aa52; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 4px; " +
+                            "-fx-background-radius: 4px; " +
+                            "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                            "-fx-color: #fff; " +
+                            "-fx-cursor: pointer; " +
+                            "-fx-font-family: \"Akzidenz Grotesk BQ Medium\", -apple-system, BlinkMacSystemFont, sans-serif; " +
+                            "-fx-font-size: 16px; " +
+                            "-fx-font-weight: 400; " +
+                            "-fx-outline: none; " +
+                            "-fx-padding: 10px 25px; " +
+                            "-fx-text-align: center; " +
+                            "-fx-translate-y: 0; " +
+                            "-fx-transition: translate 150ms, box-shadow 150ms; " +
+                            "-fx-user-select: none; " +
+                            "-webkit-user-select: none; " +
+                            "-fx-touch-action: manipulation;" +
+                            "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                            "-fx-translate-y: 0;"
+            );
+        });
+        //========================================================================================
+
+        botaoFinalizar.setStyle(
+                "-fx-background-color: #13aa52; " +
+                        "-fx-border-color: #13aa52; " +
+                        "-fx-border-width: 1px; " +
+                        "-fx-border-radius: 4px; " +
+                        "-fx-background-radius: 4px; " +
+                        "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                        "-fx-color: #fff; " +
+                        "-fx-cursor: pointer; " +
+                        "-fx-font-family: \"Akzidenz Grotesk BQ Medium\", -apple-system, BlinkMacSystemFont, sans-serif; " +
+                        "-fx-font-size: 16px; " +
+                        "-fx-font-weight: 400; " +
+                        "-fx-outline: none; " +
+                        "-fx-padding: 10px 25px; " +
+                        "-fx-text-align: center; " +
+                        "-fx-translate-y: 0; " +
+                        "-fx-transition: translate 150ms, box-shadow 150ms; " +
+                        "-fx-user-select: none; " +
+                        "-webkit-user-select: none; " +
+                        "-fx-touch-action: manipulation;"
+        );
+
+        botaoFinalizar.setOnMouseEntered(event -> {
+            botaoFinalizar.setStyle(
+                    "-fx-background-color: #13aa52; " +
+                            "-fx-border-color: #13aa52; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 4px; " +
+                            "-fx-background-radius: 4px; " +
+                            "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                            "-fx-color: #fff; " +
+                            "-fx-cursor: pointer; " +
+                            "-fx-font-family: \"Akzidenz Grotesk BQ Medium\", -apple-system, BlinkMacSystemFont, sans-serif; " +
+                            "-fx-font-size: 16px; " +
+                            "-fx-font-weight: 400; " +
+                            "-fx-outline: none; " +
+                            "-fx-padding: 10px 25px; " +
+                            "-fx-text-align: center; " +
+                            "-fx-translate-y: 0; " +
+                            "-fx-transition: translate 150ms, box-shadow 150ms; " +
+                            "-fx-user-select: none; " +
+                            "-webkit-user-select: none; " +
+                            "-fx-touch-action: manipulation;" +
+                            "-fx-box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0; " +
+                            "-fx-translate-y: -2px;"
+            );
+        });
+
+        botaoFinalizar.setOnMouseExited(event -> {
+            botaoFinalizar.setStyle(
+                    "-fx-background-color: #13aa52; " +
+                            "-fx-border-color: #13aa52; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 4px; " +
+                            "-fx-background-radius: 4px; " +
+                            "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                            "-fx-color: #fff; " +
+                            "-fx-cursor: pointer; " +
+                            "-fx-font-family: \"Akzidenz Grotesk BQ Medium\", -apple-system, BlinkMacSystemFont, sans-serif; " +
+                            "-fx-font-size: 16px; " +
+                            "-fx-font-weight: 400; " +
+                            "-fx-outline: none; " +
+                            "-fx-padding: 10px 25px; " +
+                            "-fx-text-align: center; " +
+                            "-fx-translate-y: 0; " +
+                            "-fx-transition: translate 150ms, box-shadow 150ms; " +
+                            "-fx-user-select: none; " +
+                            "-webkit-user-select: none; " +
+                            "-fx-touch-action: manipulation;" +
+                            "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                            "-fx-translate-y: 0;"
+            );
+        });
+        botaoFinalizar.setStyle(
+                "-fx-background-color: #13aa52; " +
+                        "-fx-border-color: #13aa52; " +
+                        "-fx-border-width: 1px; " +
+                        "-fx-border-radius: 4px; " +
+                        "-fx-background-radius: 4px; " +
+                        "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                        "-fx-color: #fff; " +
+                        "-fx-cursor: pointer; " +
+                        "-fx-font-family: \"Akzidenz Grotesk BQ Medium\", -apple-system, BlinkMacSystemFont, sans-serif; " +
+                        "-fx-font-size: 16px; " +
+                        "-fx-font-weight: 400; " +
+                        "-fx-outline: none; " +
+                        "-fx-padding: 10px 25px; " +
+                        "-fx-text-align: center; " +
+                        "-fx-translate-y: 0; " +
+                        "-fx-transition: translate 150ms, box-shadow 150ms; " +
+                        "-fx-user-select: none; " +
+                        "-webkit-user-select: none; " +
+                        "-fx-touch-action: manipulation;"
+        );
+
+        botaoFinalizar.setOnMouseEntered(event -> {
+            botaoFinalizar.setStyle(
+                    "-fx-background-color: #13aa52; " +
+                            "-fx-border-color: #13aa52; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 4px; " +
+                            "-fx-background-radius: 4px; " +
+                            "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                            "-fx-color: #fff; " +
+                            "-fx-cursor: pointer; " +
+                            "-fx-font-family: \"Akzidenz Grotesk BQ Medium\", -apple-system, BlinkMacSystemFont, sans-serif; " +
+                            "-fx-font-size: 16px; " +
+                            "-fx-font-weight: 400; " +
+                            "-fx-outline: none; " +
+                            "-fx-padding: 10px 25px; " +
+                            "-fx-text-align: center; " +
+                            "-fx-translate-y: 0; " +
+                            "-fx-transition: translate 150ms, box-shadow 150ms; " +
+                            "-fx-user-select: none; " +
+                            "-webkit-user-select: none; " +
+                            "-fx-touch-action: manipulation;" +
+                            "-fx-box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0; " +
+                            "-fx-translate-y: -2px;"
+            );
+        });
+
+        botaoFinalizar.setOnMouseExited(event -> {
+            botaoFinalizar.setStyle(
+                    "-fx-background-color: #13aa52; " +
+                            "-fx-border-color: #13aa52; " +
+                            "-fx-border-width: 1px; " +
+                            "-fx-border-radius: 4px; " +
+                            "-fx-background-radius: 4px; " +
+                            "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                            "-fx-color: #fff; " +
+                            "-fx-cursor: pointer; " +
+                            "-fx-font-family: \"Akzidenz Grotesk BQ Medium\", -apple-system, BlinkMacSystemFont, sans-serif; " +
+                            "-fx-font-size: 16px; " +
+                            "-fx-font-weight: 400; " +
+                            "-fx-outline: none; " +
+                            "-fx-padding: 10px 25px; " +
+                            "-fx-text-align: center; " +
+                            "-fx-translate-y: 0; " +
+                            "-fx-transition: translate 150ms, box-shadow 150ms; " +
+                            "-fx-user-select: none; " +
+                            "-webkit-user-select: none; " +
+                            "-fx-touch-action: manipulation;" +
+                            "-fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0; " +
+                            "-fx-translate-y: 0;"
+            );
+        });
+
+        //=================================================Icones/Imagens=======================================
+        Image image_add = new Image(String.valueOf(new File("add_order.png")));
+        Image image_del = new Image(String.valueOf(new File("remove_order.png")));
+        Image image_pdf = new Image(String.valueOf(new File("save_pdf.png")));
+
+        pdf.setImage(image_pdf);
+        add.setImage(image_add);
+        delete.setImage(image_del);
+
+        //=====================================================================================================
+
 
         valorPeso.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -120,7 +586,11 @@ public class HelloController implements Initializable {
         nomeCliente.setCellValueFactory(new PropertyValueFactory<Cliente, String>("nome"));
         nomeCliente.setCellFactory(TextFieldTableCell.forTableColumn());
 
+        entregador.setCellValueFactory(new PropertyValueFactory<Cliente, String>("entregador"));
+        entregador.setCellFactory(TextFieldTableCell.forTableColumn());
+
         statusCliente.setCellValueFactory(new PropertyValueFactory<Cliente, String>("status"));
+
         entregue.setCellValueFactory(new PropertyValueFactory<Cliente, Boolean>("entregue"));
         entregue.setCellFactory(column -> new CheckBoxTableCell<Cliente, Boolean>() {
             @Override
@@ -142,10 +612,9 @@ public class HelloController implements Initializable {
 
                     }
                 }
+
             }
         });
-
-
         brl.setCellValueFactory(new PropertyValueFactory<Cliente, BigDecimal>("brl"));
         brl.setCellFactory(column -> new MoneyTableCell(new Locale("pt", "BR")));
 
@@ -184,9 +653,22 @@ public class HelloController implements Initializable {
 
         deleta.setCellValueFactory(new PropertyValueFactory<Cliente, CheckBox>("remover"));
 
+
+        valorPeso.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                valorPeso.requestFocus();
+                valorPeso.setText("");
+            }
+        });
+
         pagamento.setCellValueFactory(new PropertyValueFactory<Cliente, String>("formaPagamento"));
         pagamento.setCellFactory(ChoiceBoxTableCell.forTableColumn("Cartão", "Pesos", "Reais", "PIX", "Outros"));
 
+
+
+
+
+        // =
 
         tabelaCliente.setEditable(true);
         tabelaCliente.setItems(list);
@@ -196,7 +678,7 @@ public class HelloController implements Initializable {
         clienteTotal.setCellValueFactory(new PropertyValueFactory<ClienteTotal, Integer>("atendimentos"));
 
         pedidosTotais.setCellValueFactory(new PropertyValueFactory<ClienteTotal, Integer>("pedidos"));
-
+        entreguesTot.setCellValueFactory(new PropertyValueFactory<ClienteTotal, Integer>("entregues"));
 
         valorTotal.setCellValueFactory(new PropertyValueFactory<ClienteTotal, BigDecimal>("valorTotal"));
         valorTotal.setCellFactory(column -> new MoneyTableCellTotal(new Locale("pt", "BR")));
@@ -213,6 +695,9 @@ public class HelloController implements Initializable {
         recebidoCartao.setCellValueFactory(new PropertyValueFactory<ClienteTotal, BigDecimal>("valorPix"));
         recebidoCartao.setCellFactory(column -> new MoneyTableCellTotal(new Locale("pt", "BR")));
 
+        valor_npg.setCellValueFactory(new PropertyValueFactory<ClienteTotal, BigDecimal>("valorNaoRecebido"));
+        valor_npg.setCellFactory(column -> new MoneyTableCellTotal(new Locale("pt", "BR")));
+
 
         //@**Somar valores totais**@//
 
@@ -221,22 +706,36 @@ public class HelloController implements Initializable {
         ValorTotal.vincularUyu(tabelaCliente,pagamento,pago,tabelaTotal,uyuRecebido);
         ValorTotal.vincularPix(tabelaCliente,pagamento,pago,tabelaTotal,pixRecebido);
         ValorTotal.vincularCartao(tabelaCliente,pagamento,pago,tabelaTotal,recebidoCartao);
+        ValorTotal.vincularFalta(tabelaCliente, tabelaTotal, valor_npg);
+
 
         //@**Contador de Pedidos**@//
 
         tabelaCliente.getItems().addListener((ListChangeListener<? super Cliente>) c -> {
             int pedidosCount = 0;
+            int entregasCount = 0;
             for (Cliente cliente : tabelaCliente.getItems()) {
-                if ("Pedido".equals(cliente.getStatus())) {
+                if ("Pedido".equals(cliente.getStatus()) || "Entregue".equals(cliente.getStatus()) || "Não Pago".equals(cliente.getStatus()) || "Pago".equals(cliente.getStatus())) {
                     pedidosCount++;
                 }
+
+
             }
+            for (Cliente cliente : tabelaCliente.getItems()) {
+                if (cliente.isEntregue()) {
+                    entregasCount++;
+                }
+            }
+            entreguesProperty.set(entregasCount);
             pedidosProperty.set(pedidosCount);
         });
+
+
         //@Adicinando objeto tabela total\\
-        ClienteTotal total = new ClienteTotal(atendTotal, pedidosProperty.get(), valorTotalPedidos, new BigDecimal(valorTotalReais), valorTotalPix, valorTotalPesos, valorNrecebido, valorCartao);
+        ClienteTotal total = new ClienteTotal(atendTotal, pedidosProperty.get(), valorTotalPedidos, new BigDecimal(valorTotalReais), valorTotalPix, valorTotalPesos, valorNrecebido, valorCartao, entreguesProperty.get());
         total.atendimentosProperty().bind(Bindings.size(tabelaCliente.getItems()));
         total.pedidosProperty().bind(pedidosProperty);
+        total.entreguesProperty().bind(entreguesProperty);
         clientesTotal.add(total);
 
         tabelaTotal.getItems().addAll(clientesTotal);
@@ -257,6 +756,31 @@ public class HelloController implements Initializable {
             };
 
             return row;
+        });
+
+        promocoes_img.setOnMouseClicked(event -> {
+            if (promocoes_img.getImage() == null) {
+                System.out.println("Nenhuma imagem selecionada");
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Nenhuma imagem selecionada");
+                alert.setHeaderText("Nenhuma imagem selecionada");
+                alert.setContentText("Por favor, selecione uma imagem para visualizar");
+                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+                stage.getIcons().add(new Image("aviso.png"));
+                alert.showAndWait();
+            } else {
+                Stage stage = new Stage();
+                ImageView imageView = new ImageView(promocoes_img.getImage());
+                imageView.setFitWidth(600);
+                imageView.setFitHeight(600);
+
+                StackPane layout = new StackPane();
+                layout.getChildren().add(imageView);
+
+                Scene scene = new Scene(layout);
+                stage.setScene(scene);
+                stage.show();
+            }
         });
 
     }
@@ -290,20 +814,20 @@ public class HelloController implements Initializable {
         TableColumn<ClienteTotal, Integer> colunaPedidos = (TableColumn<ClienteTotal, Integer>) tabelaTotal.getColumns().get(1);
         String pedidos = String.valueOf(colunaPedidos.getCellData(tabelaTotal.getItems().get(0)));
 
-        TableColumn<ClienteTotal, BigDecimal> colunaVtotal = (TableColumn<ClienteTotal, BigDecimal>) tabelaTotal.getColumns().get(2);
+        TableColumn<ClienteTotal, BigDecimal> colunaVtotal = (TableColumn<ClienteTotal, BigDecimal>) tabelaTotal.getColumns().get(3);
         BigDecimal valorNumTot = colunaVtotal.getCellData(tabelaTotal.getItems().get(0));
         String valorTotal = String.format("%.2f", valorNumTot);
 
-        TableColumn<ClienteTotal, BigDecimal> colunaRecebidoBrl = (TableColumn<ClienteTotal, BigDecimal>) tabelaTotal.getColumns().get(3);
+        TableColumn<ClienteTotal, BigDecimal> colunaRecebidoBrl = (TableColumn<ClienteTotal, BigDecimal>) tabelaTotal.getColumns().get(4);
         BigDecimal valorBrlNum = colunaRecebidoBrl.getCellData(tabelaTotal.getItems().get(0));
         String valorBrl =  String.format("%.2f", valorBrlNum);
 
 
-        TableColumn<ClienteTotal, BigDecimal> colunaRecebidoPIX = (TableColumn<ClienteTotal, BigDecimal>) tabelaTotal.getColumns().get(4);
+        TableColumn<ClienteTotal, BigDecimal> colunaRecebidoPIX = (TableColumn<ClienteTotal, BigDecimal>) tabelaTotal.getColumns().get(5);
         BigDecimal valorPixNum = colunaRecebidoPIX.getCellData(tabelaTotal.getItems().get(0));
         String valorPix = String.format("%.2f", valorPixNum);
 
-        TableColumn<ClienteTotal, BigDecimal> colunaRecebidoUYU = (TableColumn<ClienteTotal, BigDecimal>) tabelaTotal.getColumns().get(5);
+        TableColumn<ClienteTotal, BigDecimal> colunaRecebidoUYU = (TableColumn<ClienteTotal, BigDecimal>) tabelaTotal.getColumns().get(7);
         BigDecimal valorUyuNum = colunaRecebidoUYU.getCellData(tabelaTotal.getItems().get(0));
         String valorUyu = String.format("%.2f", valorUyuNum);
 
@@ -353,9 +877,7 @@ public class HelloController implements Initializable {
                 }
 
                 try (PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true)) {
-                    if (nomeFuncionario.getText().isEmpty()) {
-                        nomeFuncionario.setText("Não informado");
-                    } else {
+
                         contentStream.beginText();
                         contentStream.setFont(PDType1Font.HELVETICA, 10);
                         contentStream.newLineAtOffset(margin, yPosition);
@@ -380,7 +902,7 @@ public class HelloController implements Initializable {
                         if (yPosition < marginP) {
                             yPosition = 0;
                             pageNumber++;
-                        }
+
                     }
 
                 }
@@ -442,7 +964,7 @@ public class HelloController implements Initializable {
                     }
 
                 } else {
-                    System.out.println("ETSTE");
+
                     contentStream.beginText();
                     contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
                     contentStream.newLineAtOffset(margin, yPosition+81);
@@ -489,6 +1011,45 @@ public class HelloController implements Initializable {
                 }
             }
 
+            PDPage anotationPage = new PDPage(PDRectangle.A4);
+            document.addPage(anotationPage);
+            try {
+                PDPageContentStream contentStream = new PDPageContentStream(document, anotationPage);
+                float fontSize = 12;
+                PDFont font = PDType1Font.COURIER_BOLD;
+                contentStream.setFont(font, fontSize);
+                String texto = anotacoes.getText();
+                contentStream.beginText();
+                float posX = 0, posY = 800;
+                int contador = 0 ;
+                contentStream.newLineAtOffset(20,posY);
+                for (int i = 0; i < texto.length(); i++) {
+
+                    contentStream.showText(String.valueOf(texto.charAt(i)).replace("\n",""));
+                    contador++;
+                    posX += 7.5;
+
+                    if (posX > 577.5) {
+                        contentStream.endText();
+                        System.out.println("Entrou no if");
+                        posY -= 15;
+                        contentStream.beginText();
+                        contentStream.newLineAtOffset(20, posY);
+                        posX = 0;
+                    }
+
+                    System.out.println(contador);
+                    System.out.println(posX);
+
+
+                }
+                contentStream.endText();
+                contentStream.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
 
             float fontSize = 10;
             float pageWidth = page.getMediaBox().getWidth();
@@ -518,8 +1079,8 @@ public class HelloController implements Initializable {
 
             if (fileToSave != null) {
                 try {
-
                     document.save(fileToSave.getAbsolutePath());
+                    document.close();
                     System.out.println("Tabela de clientes salva em " + fileToSave.getAbsolutePath());
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -556,7 +1117,6 @@ public class HelloController implements Initializable {
             stage.close();
         }
     }
-
 
 
     public void adicionar(ActionEvent e) throws IOException {
@@ -639,16 +1199,13 @@ public class HelloController implements Initializable {
 
     }
 
-    public static void adicionarAtendimento(String nome, String status, BigDecimal brl, BigDecimal uyu, String formaPagamento, Boolean pago, Boolean entregue) {
-        Cliente novoCliente = new Cliente(nome, status, brl, uyu, formaPagamento, pago, entregue);
+    public static void adicionarAtendimento(String nome, String status, BigDecimal brl, BigDecimal uyu, String formaPagamento, Boolean pago, Boolean entregue,String entregador) {
+        Cliente novoCliente = new Cliente(nome, status, brl, uyu, formaPagamento, pago, entregue, entregador);
         list.add(novoCliente);
         verificaJanela = false;
-
-
-
     }
-    public static void atualizarAtendimento(String nome, String status, BigDecimal brl, BigDecimal uyu, String formaPagamento, Boolean pago, Boolean entregue) {
-        Cliente novoCliente = new Cliente(nome, status, brl, uyu, formaPagamento, pago, entregue);
+    public static void atualizarAtendimento(String nome, String status, BigDecimal brl, BigDecimal uyu, String formaPagamento, Boolean pago, Boolean entregue, String entregador) {
+        Cliente novoCliente = new Cliente(nome, status, brl, uyu, formaPagamento, pago, entregue,entregador);
         list.add(novoCliente);
         list.remove(novoCliente);
 
@@ -679,6 +1236,16 @@ public class HelloController implements Initializable {
             alert.showAndWait();
         }
 
+    }
+    public void editarEntregador(TableColumn.CellEditEvent<Cliente, String> nomeClienteTroca) {
+        Cliente cliente = tabelaCliente.getSelectionModel().getSelectedItem();
+        String oldName = cliente.getEntregador();
+        System.out.println(oldName);
+        cliente.setEntregador(nomeClienteTroca.getNewValue());
+        if (cliente.getEntregador().equals("")) {
+            cliente.setEntregador(oldName);
+            tabelaCliente.refresh();
+        }
     }
 
     public void editarValor() {
@@ -722,17 +1289,18 @@ public class MoneyTableCell extends TableCell<Cliente, BigDecimal> {
         super.startEdit();
         if (isEmpty()) return;
         setGraphic(textField);
+        textField.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 14px; -fx-font-family: Arial, sans-serif; -fx-border-color: #000000; -fx-border-width: 1px; -fx-border-radius: 5px; -fx-padding: 5px;");
         textField.setText(getItem().toString());
         textField.selectAll();
         textField.requestFocus();
-        System.out.println("StartEdit");
+
     }
 
     @Override
     public void cancelEdit() {
         super.cancelEdit();
         updateItem(getItem(), isEmpty());
-        System.out.println("CancelEdit");
+
     }
 
     @Override
@@ -774,5 +1342,16 @@ public class MoneyTableCell extends TableCell<Cliente, BigDecimal> {
             }
         }
     }
+
+    public void carregar_imagem(){
+        RadioButtons.loadImage(promocoes_img);
+    }
+    public void registro_rb(){
+        RadioButtons.anotacoesView(anotacoes, promocoes_img, botao_carregar, labelViewInfo);
+    }
+    public void promo_rb(){
+        RadioButtons.promoView(anotacoes, promocoes_img, botao_carregar, labelViewInfo);
+    }
+
 
 }

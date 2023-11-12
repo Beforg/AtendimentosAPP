@@ -23,6 +23,10 @@ public class AdicionarControler implements Initializable {
     private ChoiceBox<String> listaPagamento;
     @FXML
     private TextField chave_peso;
+    @FXML
+    private CheckBox continuaAdd;
+    @FXML
+    private Label nomeAdd;
     String pagamentoSelecionado;
     String[] pagamentos = {"Cartão","Pesos","Reais","PIX","Outro"};
 
@@ -31,6 +35,7 @@ public class AdicionarControler implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         listaPagamento.getItems().addAll(pagamentos);
         chave_peso.setText(peso);
+        listaPagamento.setValue("Reais");
     }
 
 
@@ -112,15 +117,35 @@ public class AdicionarControler implements Initializable {
                         System.out.println("Erro");
                     }
 
-                    HelloController.adicionarAtendimento(adicionaNome.getText(), "Pedido", new BigDecimal(valorPedido.getText().replace(",",".")), new BigDecimal(valorPedido.getText().replace(",",".")).multiply(new BigDecimal(chave_peso.getText().replace(",","."))), pagamentoSelecionado, false, false);
-                    Stage stage = (Stage) cancelarBot.getScene().getWindow();
-                    stage.close();
+                    HelloController.adicionarAtendimento(adicionaNome.getText(), "Pedido", new BigDecimal(valorPedido.getText().replace(",",".")), new BigDecimal(valorPedido.getText().replace(",",".")).multiply(new BigDecimal(chave_peso.getText().replace(",","."))), pagamentoSelecionado, false, false,"");
+                    if (continuaAdd.isSelected()) {
+                        nomeAdd.setText(adicionaNome.getText() + " adicionado com sucesso");
+                        adicionaNome.setText("");
+                        adicionaPedido.setSelected(true);
+                        valorPedido.setText("");
+                        listaPagamento.setValue("Reais");
+                        continuaAdd.setSelected(true);
+                        nomeAdd.setVisible(true);
+                    } else {
+                        Stage stage = (Stage) cancelarBot.getScene().getWindow();
+                        stage.close();
+                    }
+
 
 
                 } else {
-                    HelloController.adicionarAtendimento(adicionaNome.getText(), "Atendendo", new BigDecimal("0"), new BigDecimal("0"), pagamentoSelecionado, false, false);
-                    Stage stage = (Stage) cancelarBot.getScene().getWindow();
-                    stage.close();
+                    HelloController.adicionarAtendimento(adicionaNome.getText(), "Atendendo", new BigDecimal("0"), new BigDecimal("0"), pagamentoSelecionado, false, false,"");
+                    if (continuaAdd.isSelected()) {
+                        nomeAdd.setText(adicionaNome.getText() + " adicionado com sucesso");
+                        adicionaNome.setText("");
+                        valorPedido.setText("");
+                        listaPagamento.setValue("Reais");
+                        continuaAdd.setSelected(true);
+                        nomeAdd.setVisible(true);
+                    } else {
+                        Stage stage = (Stage) cancelarBot.getScene().getWindow();
+                        stage.close();
+                    }
                 }
             }
 
