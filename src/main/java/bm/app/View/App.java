@@ -1,4 +1,5 @@
-package bm.app.demo;
+package bm.app.View;
+
 
 public class App {
     public static void main(String[] args) {

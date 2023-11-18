@@ -1,4 +1,4 @@
-package bm.app.demo;
+package bm.app.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -119,7 +119,7 @@ public class AdicionarControler implements Initializable {
 
                     HelloController.adicionarAtendimento(adicionaNome.getText(), "Pedido", new BigDecimal(valorPedido.getText().replace(",",".")), new BigDecimal(valorPedido.getText().replace(",",".")).multiply(new BigDecimal(chave_peso.getText().replace(",","."))), pagamentoSelecionado, false, false,"");
                     if (continuaAdd.isSelected()) {
-                        nomeAdd.setText(adicionaNome.getText() + " adicionado com sucesso");
+                        nomeAdd.setText(adicionaNome.getText() + " adicionado");
                         adicionaNome.setText("");
                         adicionaPedido.setSelected(true);
                         valorPedido.setText("");

@@ -1,4 +1,4 @@
-package bm.app.demo;
+package bm.app.Metodos;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;

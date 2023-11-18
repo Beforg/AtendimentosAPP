@@ -1,4 +1,4 @@
-package bm.app.demo;
+package bm.app.Model;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;

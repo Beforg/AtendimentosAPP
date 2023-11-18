@@ -4,7 +4,13 @@ module bm.app.demo {
     requires org.apache.pdfbox;
 
 
-    opens bm.app.demo to javafx.fxml;
-    exports bm.app.demo;
+    exports bm.app.View;
+    opens bm.app.View to javafx.fxml;
+    exports bm.app.Metodos;
+    opens bm.app.Metodos to javafx.fxml;
+    exports bm.app.Model;
+    opens bm.app.Model to javafx.fxml;
+    exports bm.app.Controller;
+    opens bm.app.Controller to javafx.fxml;
 
 }

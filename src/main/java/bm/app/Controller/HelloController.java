@@ -1,5 +1,11 @@
-package bm.app.demo;
+package bm.app.Controller;
 
+import bm.app.Controller.AdicionarControler;
+import bm.app.Metodos.RadioButtons;
+import bm.app.Metodos.ValorTotal;
+import bm.app.Model.Cliente;
+import bm.app.Model.ClienteTotal;
+import bm.app.View.AdicionarView;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -10,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -37,8 +44,6 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.text.StringCharacterIterator;
-import java.time.LocalDate;
 import java.util.*;
 
 public class HelloController implements Initializable {
@@ -590,6 +595,14 @@ public class HelloController implements Initializable {
         entregador.setCellFactory(TextFieldTableCell.forTableColumn());
 
         statusCliente.setCellValueFactory(new PropertyValueFactory<Cliente, String>("status"));
+        statusCliente.setCellFactory(ChoiceBoxTableCell.forTableColumn("Atendendo", "Pedido", "Entregue", "Não pago", "Pago"));
+        statusCliente.setOnEditCommit(event -> {
+            Cliente cliente = event.getRowValue();
+            cliente.setStatus(event.getNewValue());
+            System.out.println(cliente.getStatus());
+        });
+
+
 
         entregue.setCellValueFactory(new PropertyValueFactory<Cliente, Boolean>("entregue"));
         entregue.setCellFactory(column -> new CheckBoxTableCell<Cliente, Boolean>() {
@@ -598,19 +611,26 @@ public class HelloController implements Initializable {
                 super.updateItem(item, empty);
 
                 TableRow<Cliente> linha = getTableRow();
-                if (!isEmpty()) {
-                    Cliente cliente = (Cliente) getTableRow().getItem();
-                    if (item != null && item && cliente != null && !cliente.isPago()) {
-                        linha.setStyle("-fx-background-color: salmon;");
-                    } else {
-                        if (item != null && cliente != null && cliente.isPago()) {
-                            linha.setStyle("-fx-background-color: greenyellow;");
+                Cliente cliente = (Cliente) getTableRow().getItem();
 
+                if (!isEmpty() && cliente != null) {
+                    System.out.println(cliente.getNome());
+                    if (item != null && item && !cliente.isPago()) {
+                        linha.setStyle("-fx-background-color: salmon;");
+
+                    } else if (item != null && item && cliente.isPago()) {
+                        linha.setStyle("-fx-background-color: greenyellow;");
+
+                    } else {
+                        if (item != null && cliente.isPago()) {
+                            System.out.println(cliente.getStatus());
+                            linha.setStyle("-fx-background-color: greenyellow;");
                         } else {
                             linha.setStyle("");
                         }
 
                     }
+
                 }
 
             }
@@ -630,23 +650,31 @@ public class HelloController implements Initializable {
             public void updateItem(Boolean item, boolean empty) {
                 super.updateItem(item, empty);
 
-                TableRow<Cliente> linha = getTableRow();
-                if (!isEmpty()) {
-                    Cliente cliente = (Cliente) getTableRow().getItem();
 
-                    if (cliente != null && cliente.isEntregue() && item != null && item) {
+                TableRow<Cliente> linha = getTableRow();
+                Cliente cliente = (Cliente) getTableRow().getItem();
+                if (!isEmpty() && cliente != null) {
+
+                    if (cliente.isEntregue() && item != null && item) {
                         linha.setStyle("-fx-background-color: greenyellow;");
-                    } else if (cliente != null && item != null && item) {
+
+                        System.out.println(cliente.getStatus());
+                    } else if (item != null && item) {
                         linha.setStyle("-fx-background-color: greenyellow;");
+
                     } else {
-                        if (item != null && cliente != null && cliente.isEntregue()) {
-                            linha.setStyle("-fx-background-color: salmon;");
+                        if (item != null && cliente.isEntregue()) {
+                            linha.setStyle("-fx-background-color: salmon;");;
+
 
                         } else {
                             linha.setStyle("");
+                            System.out.println("atendendo/pedido");
                         }
                     }
                 }
+
+
             }
         });
 
@@ -1120,21 +1148,12 @@ public class HelloController implements Initializable {
 
 
     public void adicionar(ActionEvent e) throws IOException {
-        AdicionarControler.peso = valorPeso.getText();
+        AdicionarView adicionarView = new AdicionarView();
+        Stage adicionar = adicionarView.telaAdicionar(verificaJanela,valorPeso);
         if (!verificaJanela) {
-            FXMLLoader segundaTela = new FXMLLoader(getClass().getResource("adicionar.fxml"));
-            Scene tela2 = new Scene(segundaTela.load());
-            Stage stageAdicionar = new Stage();
-            segundaTela.getController();
-            stageAdicionar.setTitle("Adicionar pedido");
-            stageAdicionar.setScene(tela2);
-            stageAdicionar.show();
-            Image icon = new Image("adicionar-usuario.png");
-            stageAdicionar.getIcons().add(icon);
-            stageAdicionar.setResizable(false);
-            stageAdicionar.setOnCloseRequest(event -> {
+            adicionar.setOnCloseRequest(event -> {
                 event.consume();
-                logout(stageAdicionar);
+                logout(adicionar);
                 verificaJanela =  false;
             });
             verificaJanela = true;
@@ -1352,6 +1371,12 @@ public class MoneyTableCell extends TableCell<Cliente, BigDecimal> {
     public void promo_rb(){
         RadioButtons.promoView(anotacoes, promocoes_img, botao_carregar, labelViewInfo);
     }
+    public void teste(){
+        System.out.println("Teste");
+    }
 
+    public void test(TableView tabelaa){
+        tabelaa.refresh();
+    }
 
 }

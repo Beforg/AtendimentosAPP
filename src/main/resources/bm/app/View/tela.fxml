@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="painelFundo" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1276.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.demo.HelloController">
+<AnchorPane fx:id="painelFundo" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1276.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.HelloController">
    <children>
       <Button fx:id="add_botao" focusTraversable="false" layoutX="91.0" layoutY="136.0" mnemonicParsing="false" onAction="#adicionar" prefHeight="35.0" prefWidth="150.0" text="Adicionar">
          <font>
@@ -35,7 +35,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TableView fx:id="tabelaCliente" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="275.0" layoutY="32.0" prefHeight="632.0" prefWidth="1000.0" scaleShape="false" stylesheets="@../../../tabela.css" AnchorPane.rightAnchor="1.0">
+      <TableView fx:id="tabelaCliente" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="275.0" layoutY="32.0" prefHeight="632.0" prefWidth="1000.0" scaleShape="false" stylesheets="@../../../bm.app.Styles/tabela.css" AnchorPane.rightAnchor="1.0">
         <columns>
             <TableColumn fx:id="deleta" editable="false" prefWidth="33.0" resizable="false" text="X" />
           <TableColumn fx:id="nomeCliente" onEditCommit="#editarNome" prefWidth="216.0" resizable="false" text="Nome" />
@@ -44,11 +44,11 @@
             <TableColumn fx:id="uyu" prefWidth="123.0" resizable="false" text="Valor UYU" />
             <TableColumn fx:id="pagamento" prefWidth="161.0" resizable="false" text="Forma de pagamento" />
             <TableColumn fx:id="entregador" onEditCommit="#editarEntregador" prefWidth="98.0" resizable="false" text="Entregador" />
-            <TableColumn fx:id="entregue" prefWidth="96.0" resizable="false" text="Entregue" />
-            <TableColumn fx:id="pago" minWidth="0.0" prefWidth="64.0" resizable="false" text="Pago" />
+            <TableColumn fx:id="entregue" onEditCommit="#teste" prefWidth="96.0" resizable="false" text="Entregue" />
+            <TableColumn fx:id="pago" minWidth="0.0" prefWidth="66.0" resizable="false" text="Pago" />
         </columns>
       </TableView>
-      <TableView fx:id="tabelaTotal" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="275.0" layoutY="657.0" prefHeight="63.0" prefWidth="1000.0" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="657.0">
+      <TableView fx:id="tabelaTotal" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="275.0" layoutY="652.0" prefHeight="68.0" prefWidth="1000.0" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="652.0">
          <columns>
             <TableColumn fx:id="clienteTotal" editable="false" prefWidth="99.0" resizable="false" sortable="false" text="Atendimentos" />
             <TableColumn fx:id="pedidosTotais" editable="false" prefWidth="73.0" resizable="false" sortable="false" text="Pedidos" />
@@ -58,11 +58,11 @@
             <TableColumn fx:id="pixRecebido" editable="false" prefWidth="112.0" resizable="false" sortable="false" text="Recebido PIX" />
             <TableColumn fx:id="recebidoCartao" editable="false" prefWidth="176.0" resizable="false" sortable="false" text="Recebido Cartão/Outros" />
             <TableColumn fx:id="uyuRecebido" editable="false" prefWidth="113.0" resizable="false" sortable="false" text="Recebido UYU" />
-            <TableColumn fx:id="valor_npg" editable="false" prefWidth="131.0" resizable="false" sortable="false" styleClass="valor-npg-column" text="Valor não pago" />
+            <TableColumn fx:id="valor_npg" editable="false" minWidth="9.0" prefWidth="133.0" resizable="false" sortable="false" styleClass="valor-npg-column" text="Valor não pago" />
          </columns>
          <stylesheets>
-            <URL value="@../../../tabela.css" />
-            <URL value="@../../../tabela_total.css" />
+            <URL value="@../../../bm.app.Styles/tabela.css" />
+            <URL value="@../../../bm.app.Styles/tabela_total.css" />
          </stylesheets>
       </TableView>
       <Button fx:id="botaoFinalizar" focusTraversable="false" layoutX="91.0" layoutY="247.0" mnemonicParsing="false" onAction="#salvarTabelaEmPDF" prefHeight="35.0" prefWidth="150.0" text="Finalizar">
@@ -91,11 +91,11 @@
             <Font name="Arial" size="13.0" />
          </font>
          <stylesheets>
-            <URL value="@../../../funcionario.css" />
-            <URL value="@../../../funcionario.css" />
+            <URL value="@../../../bm.app.Styles/funcionario.css" />
+            <URL value="@../../../bm.app.Styles/funcionario.css" />
          </stylesheets>
       </TextField>
-      <TextArea fx:id="anotacoes" cacheShape="false" centerShape="false" layoutX="6.0" layoutY="348.0" pickOnBounds="false" prefHeight="335.0" prefWidth="260.0" scaleShape="false" stylesheets="@../../../textArea.css" wrapText="true">
+      <TextArea fx:id="anotacoes" cacheShape="false" centerShape="false" layoutX="6.0" layoutY="348.0" pickOnBounds="false" prefHeight="335.0" prefWidth="260.0" scaleShape="false" stylesheets="@../../../bm.app.Styles/textArea.css" wrapText="true">
          <font>
             <Font name="Arial" size="15.0" />
          </font>

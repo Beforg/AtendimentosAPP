@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="364.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.demo.AdicionarControler">
+<AnchorPane prefHeight="364.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.AdicionarControler">
    <children>
       <Separator layoutX="-14.0" layoutY="59.0" prefHeight="25.0" prefWidth="310.0" />
       <Label layoutX="64.0" layoutY="3.0" prefHeight="35.0" prefWidth="173.0" text="Novo atendimento">

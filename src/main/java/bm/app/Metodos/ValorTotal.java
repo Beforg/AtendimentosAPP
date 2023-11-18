@@ -1,6 +1,7 @@
-package bm.app.demo;
+package bm.app.Metodos;
 
-import javafx.beans.Observable;
+import bm.app.Model.Cliente;
+import bm.app.Model.ClienteTotal;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.collections.FXCollections;
@@ -9,7 +10,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import java.math.BigDecimal;
-import java.util.concurrent.Callable;
 
 public class ValorTotal {
     public static void vincularSoma(TableView<Cliente> tabelaCliente, TableColumn<Cliente, BigDecimal> brlColumn, TableView<ClienteTotal> tabelaTotal, TableColumn<ClienteTotal, BigDecimal> valorTotalColumn) {

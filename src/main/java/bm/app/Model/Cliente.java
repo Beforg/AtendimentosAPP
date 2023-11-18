@@ -1,6 +1,6 @@
-package bm.app.demo;
+package bm.app.Model;
 
-import bm.app.demo.HelloController;
+import bm.app.Controller.HelloController;
 import javafx.beans.property.*;
 import javafx.scene.control.CheckBox;
 
@@ -51,6 +51,23 @@ public class Cliente {
             HelloController.atualizarAtendimento("","", BigDecimal.ZERO, BigDecimal.ZERO, "",false,false,"");
 
         });
+        this.entregue.addListener((obs, oldValue, newValue) -> atualizarStatus());
+        this.pago.addListener((obs, oldValue, newValue) -> atualizarStatus());
+    }
+    private void atualizarStatus() {
+        if (isEntregue() && isPago()) {
+            setStatus("Entregue");
+        } else if (isEntregue()) {
+            setStatus("Não pago");
+        } else if (isPago()) {
+            setStatus("Pago");
+        } else {
+            if (getBrl().equals(BigDecimal.ZERO)) {
+                setStatus("Atendendo");
+            } else {
+                setStatus("Pedido");
+            }
+        }
     }
 
     public boolean isEntregue() {
