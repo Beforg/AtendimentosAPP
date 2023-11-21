@@ -20,7 +20,7 @@
 
 <AnchorPane fx:id="painelFundo" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1276.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.HelloController">
    <children>
-      <Button fx:id="add_botao" focusTraversable="false" layoutX="91.0" layoutY="136.0" mnemonicParsing="false" onAction="#adicionar" prefHeight="35.0" prefWidth="150.0" text="Adicionar">
+      <Button fx:id="add_botao" focusTraversable="false" layoutX="91.0" layoutY="136.0" mnemonicParsing="false" onAction="#adicionar" prefHeight="35.0" prefWidth="150.0" stylesheets="@../../../bm.app.Styles/button.css" text="Adicionar">
          <font>
             <Font name="Arial" size="16.0" />
          </font>
@@ -35,20 +35,20 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TableView fx:id="tabelaCliente" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="275.0" layoutY="32.0" prefHeight="632.0" prefWidth="1000.0" scaleShape="false" stylesheets="@../../../bm.app.Styles/tabela.css" AnchorPane.rightAnchor="1.0">
+      <TableView fx:id="tabelaCliente" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="275.0" layoutY="32.0" prefHeight="632.0" prefWidth="1000.0" scaleShape="false" stylesheets="@../../../bm.app.Styles/tabela.css" AnchorPane.rightAnchor="0.0">
         <columns>
             <TableColumn fx:id="deleta" editable="false" prefWidth="33.0" resizable="false" text="X" />
           <TableColumn fx:id="nomeCliente" onEditCommit="#editarNome" prefWidth="216.0" resizable="false" text="Nome" />
           <TableColumn fx:id="statusCliente" prefWidth="103.0" resizable="false" text="Status" />
-            <TableColumn fx:id="brl" onEditCommit="#editarValor" prefWidth="103.0" resizable="false" text="Valor BRL" />
+            <TableColumn fx:id="brl" prefWidth="103.0" resizable="false" text="Valor BRL" />
             <TableColumn fx:id="uyu" prefWidth="123.0" resizable="false" text="Valor UYU" />
             <TableColumn fx:id="pagamento" prefWidth="161.0" resizable="false" text="Forma de pagamento" />
             <TableColumn fx:id="entregador" onEditCommit="#editarEntregador" prefWidth="98.0" resizable="false" text="Entregador" />
             <TableColumn fx:id="entregue" onEditCommit="#teste" prefWidth="96.0" resizable="false" text="Entregue" />
-            <TableColumn fx:id="pago" minWidth="0.0" prefWidth="66.0" resizable="false" text="Pago" />
+            <TableColumn fx:id="pago" minWidth="0.0" prefWidth="60.0" resizable="false" text="Pago" />
         </columns>
       </TableView>
-      <TableView fx:id="tabelaTotal" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="275.0" layoutY="652.0" prefHeight="68.0" prefWidth="1000.0" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="652.0">
+      <TableView fx:id="tabelaTotal" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="275.0" layoutY="652.0" prefHeight="68.0" prefWidth="1000.0" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="652.0">
          <columns>
             <TableColumn fx:id="clienteTotal" editable="false" prefWidth="99.0" resizable="false" sortable="false" text="Atendimentos" />
             <TableColumn fx:id="pedidosTotais" editable="false" prefWidth="73.0" resizable="false" sortable="false" text="Pedidos" />
@@ -65,7 +65,7 @@
             <URL value="@../../../bm.app.Styles/tabela_total.css" />
          </stylesheets>
       </TableView>
-      <Button fx:id="botaoFinalizar" focusTraversable="false" layoutX="91.0" layoutY="247.0" mnemonicParsing="false" onAction="#salvarTabelaEmPDF" prefHeight="35.0" prefWidth="150.0" text="Finalizar">
+      <Button fx:id="botaoFinalizar" focusTraversable="false" layoutX="91.0" layoutY="247.0" mnemonicParsing="false" onAction="#salvarTabelaEmPDF" prefHeight="35.0" prefWidth="150.0" stylesheets="@../../../bm.app.Styles/button.css" text="Finalizar">
          <font>
             <Font name="Arial" size="16.0" />
          </font>
@@ -81,7 +81,7 @@
             <Font name="Arial Black" size="13.0" />
          </font>
       </TextField>
-      <Button fx:id="remover_botao" focusTraversable="false" layoutX="91.0" layoutY="191.0" mnemonicParsing="false" onAction="#botaoRemover" prefHeight="35.0" prefWidth="150.0" text="Remover">
+      <Button fx:id="remover_botao" focusTraversable="false" layoutX="91.0" layoutY="191.0" mnemonicParsing="false" onAction="#botaoRemover" prefHeight="35.0" prefWidth="150.0" stylesheets="@../../../bm.app.Styles/button.css" text="Remover">
          <font>
             <Font name="Arial" size="16.0" />
          </font>

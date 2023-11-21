@@ -32,12 +32,12 @@
             <Font name="Arial" size="16.0" />
          </font>
       </Label>
-      <Label alignment="TOP_LEFT" layoutX="20.0" layoutY="299.0" prefHeight="306.0" prefWidth="398.0" text="4.1 - o Atendimento marcado como ENTREGUE será grifado em vermelho para indicar que NÃO foi recebido o pagamento. 4.2 - o Atendimento marcado como PAGO será grifado em verde para indicar que foi PAGO, independente de ser ENTREGUE ou não." wrapText="true">
+      <Label alignment="TOP_LEFT" layoutX="20.0" layoutY="299.0" prefHeight="306.0" prefWidth="398.0" text="4.1 - o Atendimento marcado como ENTREGUE será grifado em vermelho para indicar que NÃO foi recebido o pagamento. 4.2 - o Atendimento marcado como PAGO será grifado em verde para indicar que foi PAGO, independente de ser ENTREGUE ou não, o Status atualizará automaticamente." wrapText="true">
          <font>
             <Font name="Arial" size="16.0" />
          </font>
       </Label>
-      <Label alignment="TOP_LEFT" layoutX="20.0" layoutY="428.0" prefHeight="53.0" prefWidth="398.0" text="5 - Para editar nomes, valores e forma de pagamento clique ou aperte enter na coluna desejada" wrapText="true">
+      <Label alignment="TOP_LEFT" layoutX="20.0" layoutY="440.0" prefHeight="53.0" prefWidth="398.0" text="5 - Para editar nomes, valores e forma de pagamento clique ou aperte enter na coluna desejada" wrapText="true">
          <font>
             <Font name="Arial" size="16.0" />
          </font>
@@ -48,9 +48,9 @@
             <Font name="Arial Bold" size="32.0" />
          </font>
       </Label>
-      <Label alignment="TOP_LEFT" layoutX="20.0" layoutY="502.0" prefHeight="91.0" prefWidth="398.0" text="Ao finalizar o atendimento será registrado todas informações em um PDF, sendo calculado o valor total e os valores recebidos. (OBS: Aba ainda não atualizada)" wrapText="true">
+      <Label alignment="TOP_LEFT" layoutX="19.0" layoutY="499.0" prefHeight="53.0" prefWidth="398.0" text="6 - É possível salvar os registros e carregar imagens das promoções do dia" wrapText="true">
          <font>
-            <Font name="Arial Bold" size="16.0" />
+            <Font name="Arial" size="16.0" />
          </font>
       </Label>
    </children>

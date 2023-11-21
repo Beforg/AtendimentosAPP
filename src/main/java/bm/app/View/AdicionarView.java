@@ -1,7 +1,6 @@
 package bm.app.View;
 
 import bm.app.Controller.AdicionarControler;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
