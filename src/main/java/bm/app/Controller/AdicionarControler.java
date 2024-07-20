@@ -163,6 +163,8 @@ public class AdicionarControler implements Initializable {
         }
 
     }
-
+    public void teste() {
+        System.out.println("Teste");
+    }
 
 }

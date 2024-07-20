@@ -1,0 +1,9 @@
+* {
+    -fx-fonte-principal: "Yu Gothic UI Semibold";
+
+}
+
+.anchor-pane {
+    -fx-background-color: #E0FBE2;
+    -fx-font-family: -fx-fonte-principal;
+}

@@ -27,7 +27,7 @@ public class MenuView {
     public Stage sobreView() throws IOException {
         Stage stageSobre = new Stage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("telaSobre.fxml"));
+        loader.setLocation(getClass().getResource("sobre.fxml"));
         Parent content = loader.load();
         Scene sobreView = new Scene(content);
         loader.getController();

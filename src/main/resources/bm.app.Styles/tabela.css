@@ -1,40 +1,58 @@
 .table-view .column-header-background .table-column {
-    -fx-background-color: #2E8B57; /* Cor de fundo da coluna */
-    -fx-text-fill: #808080; /* Cor do texto da coluna */
-    -fx-border-width: 0 1 0 0; /* Adiciona uma borda à direita de cada coluna */
-    -fx-border-color: #000000; /* Cor da borda da coluna */
-    -fx-alignment: CENTER; /* Alinhamento do texto */
+    -fx-background-color: #E0FBE2;
+    -fx-text-fill: #BFF6C3;
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: #ffffff;
+    -fx-alignment: CENTER;
 }
 
+.table-view .column-header-background .table-column:focused {
+    -fx-background-color: #none;
+
+}
+.table-view .table-row-cell:filled:selected {
+    -fx-background-color: #bfbfbf;
+}
 .table-view .column-header-background {
-    -fx-border-width: 0 1 0 0; /* Adiciona uma borda à direita de cada cabeçalho de coluna */
-    -fx-border-color: #000000; /* Cor da borda do cabeçalho de coluna */
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: #BFF6C3;
 }
 
+.table-row-cell:selected {
+    -fx-selection-bar: transparent;
+    -fx-selection-bar-non-focused: transparent;
+
+}
 .table-row-cell:odd {
-    -fx-background-color: #F5F5F5; /* Cor para linhas ímpares */
+    -fx-background-color: #F5F5F5;
 
 }
 
 .table-row-cell:even {
-    -fx-background-color: #FFFAFA; /* Cor para linhas pares */
+    -fx-background-color: #FFFAFA;
 
 }
 
 .table-row-cell {
-    -fx-border-width: 0 1 0 0; /* Adiciona uma borda à direita de cada célula */
-    -fx-border-color: #000000; /* Cor da borda das células */
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: #B0EBB4;
 
 }
 .table-cell {
-    -fx-font-family: "Arial";
+    -fx-font-family: "Yu Gothic Medium";
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-alignment: CENTER;
 }
 .custom-choice-box-cell .list-cell {
-    -fx-background-color: #ffffff; /* Cor de fundo da lista suspensa */
-    -fx-text-fill: #000000; /* Cor do texto na lista suspensa */
-    -fx-font-size: 14px; /* Tamanho da fonte na lista suspensa */
-    /* Outras propriedades de estilo conforme necessário */
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
+
 }
+
+.table-view:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+

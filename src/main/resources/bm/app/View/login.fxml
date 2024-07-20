@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="164.0" prefWidth="315.0" styleClass="loginBackground" stylesheets="@../../../bm.app.Styles/app2.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.View.Login">
+   <children>
+      <Label layoutX="29.0" layoutY="45.0" styleClass="labelInfo" text="Login" />
+      <Label layoutX="27.0" layoutY="86.0" styleClass="labelInfo" text="Senha" />
+      <Label layoutX="100.0" layoutY="11.0" text="AtendimentosAPP">
+         <font>
+            <Font name="Yu Gothic UI Semibold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="286.0" layoutY="145.0" text="v3.0.1">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Label>
+      <TextField layoutX="76.0" layoutY="41.0" prefHeight="27.0" prefWidth="192.0" />
+      <PasswordField layoutX="77.0" layoutY="82.0" prefHeight="27.0" prefWidth="192.0" />
+      <Button layoutX="77.0" layoutY="123.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="88.0" styleClass="button2" text="Entrar" />
+      <Button layoutX="180.0" layoutY="123.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="88.0" styleClass="button2" text="Sair" />
+   </children>
+</AnchorPane>

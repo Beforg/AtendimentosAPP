@@ -136,52 +136,52 @@ public class HelloController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         /*@Css básico@*/
-        valor_npg.setStyle("-fx-text-fill: red;");
-        brlRecebido.setStyle("-fx-text-fill: #006400;");
-        uyuRecebido.setStyle("-fx-text-fill: #006400;");
-        recebidoCartao.setStyle("-fx-text-fill: #006400;");
-        pixRecebido.setStyle("-fx-text-fill: #006400;");
-        valorTotal.setStyle("-fx-text-fill: #2F4F4F;");
-
-        painelFundo.setStyle("-fx-background-color: #2E8B57;");
-        barraMenu.setStyle("-fx-background-color: #008080; -fx-font-size: 13px; -fx-font-family: Arial, sans-serif;" +
-                "-fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-border-color: #008080; -fx-border-width: 0px 0px 1px 0px; -fx-border-style: solid;");
+//        valor_npg.setStyle("-fx-text-fill: red;");
+//        brlRecebido.setStyle("-fx-text-fill: #006400;");
+//        uyuRecebido.setStyle("-fx-text-fill: #006400;");
+//        recebidoCartao.setStyle("-fx-text-fill: #006400;");
+//        pixRecebido.setStyle("-fx-text-fill: #006400;");
+//        valorTotal.setStyle("-fx-text-fill: #2F4F4F;");
+//
+//        painelFundo.setStyle("-fx-background-color: #2E8B57;");
+//        barraMenu.setStyle("-fx-background-color: #008080; -fx-font-size: 13px; -fx-font-family: Arial, sans-serif;" +
+//                "-fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-border-color: #008080; -fx-border-width: 0px 0px 1px 0px; -fx-border-style: solid;");
         tabelaCliente.setPlaceholder(new Label("Não há atendimentos registrados."));
-        tabelaCliente.setStyle("-fx-font-size: 14px;"+
-                "-fx-focus-color: transparent;" +
-                "-fx-faint-focus-color: t1ransparent;" +
-                "-fx-control-inner-background: #ffffff;" +
-                "-fx-selection-bar: #b3d9ff;" +
-                "-fx-selection-bar-non-focused: derive(#b3d9ff, -20%);" +
-                "-fx-border-color: #2E8B57;");
-        tabelaCliente.focusedProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal) {
-                tabelaCliente.setStyle(
-                        "-fx-font-size: 14px;"+
-                        "-fx-focus-color: #b3d9ff;" +
-                                "-fx-faint-focus-color: #b3d9ff;"+
-                                "-fx-control-inner-background: #ffffff;" +
-                                "-fx-selection-bar: #b3d9ff;" +
-                                "-fx-selection-bar-non-focused: derive(#b3d9ff, -20%);");
-
-            } else {
-                tabelaCliente.setStyle(
-                        "-fx-font-size: 14px;"+
-                        "-fx-focus-color: transparent;" +
-                                "-fx-faint-focus-color: transparent;"+
-                                "-fx-control-inner-background: #ffffff;" +
-                                "-fx-selection-bar: #b3d9ff;" +
-                                "-fx-selection-bar-non-focused: derive(#b3d9ff, -20%);");
-
-            }
-        });
+//        tabelaCliente.setStyle("-fx-font-size: 14px;"+
+//                "-fx-focus-color: transparent;" +
+//                "-fx-faint-focus-color: t1ransparent;" +
+//                "-fx-control-inner-background: #ffffff;" +
+//                "-fx-selection-bar: #b3d9ff;" +
+//                "-fx-selection-bar-non-focused: derive(#b3d9ff, -20%);" +
+//                "-fx-border-color: #2E8B57;");
+//        tabelaCliente.focusedProperty().addListener((obs, oldVal, newVal) -> {
+//            if (newVal) {
+//                tabelaCliente.setStyle(
+//                        "-fx-font-size: 14px;"+
+//                        "-fx-focus-color: #b3d9ff;" +
+//                                "-fx-faint-focus-color: #b3d9ff;"+
+//                                "-fx-control-inner-background: #ffffff;" +
+//                                "-fx-selection-bar: #b3d9ff;" +
+//                                "-fx-selection-bar-non-focused: derive(#b3d9ff, -20%);");
+//
+//            } else {
+//                tabelaCliente.setStyle(
+//                        "-fx-font-size: 14px;"+
+//                        "-fx-focus-color: transparent;" +
+//                                "-fx-faint-focus-color: transparent;"+
+//                                "-fx-control-inner-background: #ffffff;" +
+//                                "-fx-selection-bar: #b3d9ff;" +
+//                                "-fx-selection-bar-non-focused: derive(#b3d9ff, -20%);");
+//
+//            }
+//        });
 
         /*@ Icones @*/
 
         Image image_add = new Image(String.valueOf(new File("add_order.png")));
         Image image_del = new Image(String.valueOf(new File("remove_order.png")));
         Image image_pdf = new Image(String.valueOf(new File("save_pdf.png")));
-        Image iconeBotao = new Image("carregar.png");
+        Image iconeBotao = new Image("ajuda.png");
 
         ImageView iconeBotaoView = new ImageView(iconeBotao);
         iconeBotaoView.setFitWidth(24);

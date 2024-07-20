@@ -1,0 +1,67 @@
+.text-field {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 5, 0.1, 0.0, 0.0);
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
+    -fx-font-family: "Yu Gothic Light";
+}
+
+.loginBackground {
+    -fx-background-color: #c1c6b5;
+}
+
+.choice-box {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 5, 0.1, 0.0, 0.0);
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
+    -fx-font-family: "Yu Gothic Light";
+}
+
+.button {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 5, 0.1, 0.0, 0.0);
+    -fx-background-color: #a3a3a3;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+    -fx-color: #fff;
+    -fx-cursor: pointer;
+    -fx-font-size: 18px;
+    -fx-font-weight: 400;
+    -fx-text-align: center;
+}
+
+.button2 {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 5, 0.1, 0.0, 0.0);
+    -fx-background-color:#ffffff;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+    -fx-color: #fff;
+    -fx-cursor: pointer;
+    -fx-font-size: 13px;
+    -fx-font-weight: 400;
+    -fx-text-align: center;
+}
+.button:hover {
+    -fx-background-color: #aeaeae;
+}
+
+.labelInfo {
+    -fx-font-family: "Yu Gothic Medium";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.check-box {
+    -fx-font-family: "Yu Gothic Medium";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.check-box .box {
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 5, 0.1, 0.0, 0.0);
+}
