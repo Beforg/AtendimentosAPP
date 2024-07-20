@@ -12,7 +12,7 @@ Projeto JavaFX para auxiliar nos atendimentos e fechamento do caixa
 ![](https://github.com/Beforg/assets/blob/main/imagem_2023-11-20_170029286.png#vitrinedev)
 
 ## Descrição
-Projeto criado com base nas necessidades do dia a dia do meu antigo trabalho, uma aplicação JavaFX desenvolvida para auxiliar nos atendimentos, registrar os atendimentos e pedidos, exibindo a forma de pagamento, seu valor e marcando se o pedido final foi pago ou entregue, salvando os dados em formato de PDF ao finalizar o horário comercial.
+Projeto criado com base nas necessidades do dia a dia do meu antigo trabalho, uma aplicação JavaFX desenvolvida para auxiliar nos atendimentos, registrar os atendimentos e pedidos, exibindo a forma de pagamento, seu valor e marcando se o pedidoTableView final foi pago ou entregue, salvando os dados em formato de PDF ao finalizar o horário comercial.
 
 ## Detalhes do projeto
 
@@ -22,7 +22,7 @@ A aplicação apresenta duas tabelas (TableView), uma para todos os atendimentos
 
 ![](https://github.com/Beforg/assets/blob/main/imagem_2023-11-20_170132543.png)
 
-Adicionando um atendimento, podemos manipular os valores e a forma de pagameto de acordo com o pedidio que foi feito, sendo mostrado também a situação do pedido (na coluna **STATUS**) com as opções *ATENDIMENTO* ou *PEDIDO*, a situação muda automaticamento quando agregamos um valor a esse atendimento, reconhecendo que o cliente fez um pedido, podemos também excluir um atendimento se necessário preenchendo a coluna " X " e acionando o botão remover.
+Adicionando um atendimento, podemos manipular os valores e a forma de pagameto de acordo com o pedidio que foi feito, sendo mostrado também a situação do pedidoTableView (na coluna **STATUS**) com as opções *ATENDIMENTO* ou *PEDIDO*, a situação muda automaticamento quando agregamos um valor a esse atendimento, reconhecendo que o pedidoTableView fez um pedidoTableView, podemos também excluir um atendimento se necessário preenchendo a coluna " X " e acionando o botão remover.
 
 ![](https://github.com/Beforg/assets/blob/main/imagem_2023-11-20_170513989.png)
 
@@ -52,10 +52,10 @@ Ao acionar o botão "Adicionar" ou apertando a tecla ENTER, entramos na tela par
 
 ![](https://github.com/Beforg/assets/blob/main/imagem_2023-11-20_170823463.png)
 
-Nessa tela, é pego a informação da **CHAVE DO PESO** inserida na tela principal, podendo ser alterada para aquele pedido específico quando necessário, sem alterar o valor da chave na tela principal.
+Nessa tela, é pego a informação da **CHAVE DO PESO** inserida na tela principal, podendo ser alterada para aquele pedidoTableView específico quando necessário, sem alterar o valor da chave na tela principal.
 Os valores de pesos uruguaios são convertidos automaticamente de acordo com a chave inserida, não sendo possível alterar o campo diretamente na tabela.
 
-<p>Podemos também marcar a situação do atendimento como <strong>PEDIDO</strong> e ele vai entrar na tabela já com o status de <strong>PEDIDO</strong> para indicar que o cliente fez o pedido.</p>
+<p>Podemos também marcar a situação do atendimento como <strong>PEDIDO</strong> e ele vai entrar na tabela já com o status de <strong>PEDIDO</strong> para indicar que o pedidoTableView fez o pedidoTableView.</p>
 <p>Podemos alterar os campos <strong>NOME</strong>, <strong>VALOR EM BRL</strong> e <strong>FORMA DE PAGAMENTO</strong> de acordo com o necessário, lembrando que quando o <strong>PAGO</strong> é marcado, a segunda tabela soma a coluna de acordo com a forma de pagamento selecionada.</p>
 
 ![](https://github.com/Beforg/assets/blob/main/imagem_2023-11-20_170846017.png)
@@ -81,7 +81,7 @@ Esse projeto foi construído de acordo com a necessidade diária, para melhorar 
 
 *Créditos dos icones usados no programa:*
 
-<a href="https://www.flaticon.com/br/icones-gratis/atendimento-ao-cliente" title="atendimento ao cliente ícones">Atendimento ao cliente ícones criados por IYAHICON - Flaticon</a> <br/>
+<a href="https://www.flaticon.com/br/icones-gratis/atendimento-ao-pedidoTableView" title="atendimento ao pedidoTableView ícones">Atendimento ao pedidoTableView ícones criados por IYAHICON - Flaticon</a> <br/>
 <a href="https://www.flaticon.com/br/icones-gratis/do-utilizador" title="do utilizador ícones">Do utilizador ícones criados por uicon - Flaticon</a> <br/>
 <a href="https://www.flaticon.com/br/icones-gratis/perguntas-frequentes" title="perguntas frequentes ícones">Perguntas frequentes ícones criados por Bharat Icons - Flaticon</a> <br/>
 <a href="https://www.flaticon.com/br/icones-gratis/erro" title="erro ícones">Erro ícones criados por surang - Flaticon</a> <br/>

@@ -1,4 +1,4 @@
-package bm.app.Model;
+package bm.app.Model.pedidos;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleObjectProperty;
 
 import java.math.BigDecimal;
 
-public class ClienteTotal {
+public class PedidoTotalTableView {
     private final IntegerProperty atendimentos = new SimpleIntegerProperty();
     private final IntegerProperty pedidos = new SimpleIntegerProperty();
     private final IntegerProperty entregues = new SimpleIntegerProperty();
@@ -18,7 +18,7 @@ public class ClienteTotal {
     private final ObjectProperty<BigDecimal> valorBrl = new SimpleObjectProperty<>();
     private final ObjectProperty<BigDecimal> valorNaoRecebido = new SimpleObjectProperty<>();
 
-    public ClienteTotal(int atendimentos, int pedidos, BigDecimal valorTotal, BigDecimal valorBrl, BigDecimal valorPix, BigDecimal valorUyu, BigDecimal valorNaoRecebido, BigDecimal valorCartao, int entregues) {
+    public PedidoTotalTableView(int atendimentos, int pedidos, BigDecimal valorTotal, BigDecimal valorBrl, BigDecimal valorPix, BigDecimal valorUyu, BigDecimal valorNaoRecebido, BigDecimal valorCartao, int entregues) {
         this.atendimentos.set(atendimentos);
         this.pedidos.set(pedidos);
         this.valorTotal.set(valorTotal);

@@ -1,6 +1,6 @@
 package bm.app.View;
 
-import bm.app.Controller.HelloController;
+import bm.app.Controller.AppController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +28,7 @@ public class HelloApplication extends Application {
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.ENTER) {
-                    if (!HelloController.verificaJanela) {
+                    if (!AppController.verificaJanela) {
                         FXMLLoader segundaTela = new FXMLLoader(getClass().getResource("adicionar.fxml"));
                         Scene tela2 = null;
                         try {
@@ -47,9 +47,9 @@ public class HelloApplication extends Application {
                         stageAdicionar.setOnCloseRequest(eventJanela -> {
                             event.consume();
                             logout(stageAdicionar);
-                            HelloController.verificaJanela = false;
+                            AppController.verificaJanela = false;
                         });
-                        HelloController.verificaJanela = true;
+                        AppController.verificaJanela = true;
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Atenção");

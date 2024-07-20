@@ -27,6 +27,10 @@ public class AdicionarView {
             Image icon = new Image("adicionar-usuario.png");
             stageAdicionar.getIcons().add(icon);
             stageAdicionar.setResizable(false);
+            stageAdicionar.setOnCloseRequest(event -> {
+                event.consume();
+                ViewService.logout(stageAdicionar);
+            });
         }
         return stageAdicionar;
     }

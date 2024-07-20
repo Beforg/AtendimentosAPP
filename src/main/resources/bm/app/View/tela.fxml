@@ -21,9 +21,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="painelFundo" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1308.0" styleClass="anchor-pane" stylesheets="@../../../bm.app.Styles/app.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.HelloController">
+<AnchorPane fx:id="painelFundo" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1308.0" styleClass="anchor-pane" stylesheets="@../../../bm.app.Styles/app.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.AppController">
    <children>
-      <Button fx:id="add_botao" focusTraversable="false" layoutX="1.0" layoutY="78.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#adicionar" prefHeight="51.0" prefWidth="289.0" stylesheets="@../../../bm.app.Styles/button.css" text="Adicionar">
+      <Button fx:id="add_botao" focusTraversable="false" layoutX="1.0" layoutY="78.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#adicionar" prefHeight="40.0" prefWidth="289.0" stylesheets="@../../../bm.app.Styles/button.css" text="Adicionar">
          <font>
             <Font name="Arial" size="16.0" />
          </font>
@@ -65,17 +65,15 @@
             </Menu>
         </menus>
       </MenuBar>
-      <TableView fx:id="tabelaCliente" cacheShape="false" centerShape="false" fixedCellSize="0.0" focusTraversable="false" layoutX="289.0" layoutY="27.0" prefHeight="623.0" prefWidth="1018.0" scaleShape="false" stylesheets="@../../../bm.app.Styles/tabela.css" AnchorPane.rightAnchor="1.0">
+      <TableView fx:id="tabelaPedidos" cacheShape="false" centerShape="false" editable="true" fixedCellSize="0.0" focusTraversable="false" layoutX="289.0" layoutY="27.0" prefHeight="623.0" prefWidth="1018.0" scaleShape="false" stylesheets="@../../../bm.app.Styles/tabela.css" AnchorPane.rightAnchor="1.0">
         <columns>
             <TableColumn fx:id="deleta" editable="false" prefWidth="33.0" resizable="false" text="X" />
-          <TableColumn fx:id="nomeCliente" onEditCommit="#editarNome" prefWidth="216.0" resizable="false" text="Nome" />
-          <TableColumn fx:id="statusCliente" prefWidth="103.0" resizable="false" text="Status" />
-            <TableColumn fx:id="brl" prefWidth="103.0" resizable="false" text="Valor BRL" />
-            <TableColumn fx:id="uyu" prefWidth="123.0" resizable="false" text="Valor UYU" />
-            <TableColumn fx:id="pagamento" prefWidth="153.0" resizable="false" text="Forma de pagamento" />
-            <TableColumn fx:id="entregador" onEditCommit="#editarEntregador" prefWidth="148.0" resizable="false" text="Entregador" />
-            <TableColumn fx:id="entregue" onEditCommit="#teste" prefWidth="67.0" resizable="false" text="Entregue" />
-            <TableColumn fx:id="pago" minWidth="0.0" prefWidth="71.0" resizable="false" text="Pago" />
+          <TableColumn fx:id="nomeCliente" onEditCommit="#editarNome" prefWidth="233.0" resizable="false" text="Nome" />
+          <TableColumn fx:id="statusCliente" prefWidth="147.0" resizable="false" text="Status" />
+            <TableColumn fx:id="brl" prefWidth="124.0" resizable="false" text="Valor BRL" />
+            <TableColumn fx:id="uyu" editable="false" prefWidth="130.0" resizable="false" text="Valor UYU" />
+            <TableColumn fx:id="pagamento" prefWidth="180.0" resizable="false" text="Forma de pagamento" />
+            <TableColumn fx:id="entregador" onEditCommit="#editarEntregador" prefWidth="168.0" resizable="false" text="Entregador" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -97,7 +95,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="botaoFinalizar" focusTraversable="false" layoutX="3.0" layoutY="129.0" mnemonicParsing="false" onAction="#salvarTabelaEmPDF" prefHeight="51.0" prefWidth="286.0" stylesheets="@../../../bm.app.Styles/button.css" text="Editar">
+      <Button fx:id="botaoFinalizar" focusTraversable="false" layoutX="17.0" layoutY="242.0" mnemonicParsing="false" onAction="#salvarTabelaEmPDF" prefHeight="51.0" prefWidth="286.0" stylesheets="@../../../bm.app.Styles/button.css" text="Editar" visible="false">
          <font>
             <Font name="Arial" size="16.0" />
          </font>
@@ -113,7 +111,7 @@
             <Font name="Arial Black" size="13.0" />
          </font>
       </TextField>
-      <Button fx:id="remover_botao" focusTraversable="false" layoutX="1.0" layoutY="131.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#botaoRemover" prefHeight="51.0" prefWidth="286.0" stylesheets="@../../../bm.app.Styles/button.css" text="Remover">
+      <Button fx:id="remover_botao" focusTraversable="false" layoutX="1.0" layoutY="120.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#botaoRemover" prefHeight="40.0" prefWidth="286.0" stylesheets="@../../../bm.app.Styles/button.css" text="Remover">
          <font>
             <Font name="Arial" size="16.0" />
          </font>
@@ -132,12 +130,12 @@
             <Font name="Arial" size="15.0" />
          </font>
       </TextArea>
-      <ImageView fx:id="add" fitHeight="44.0" fitWidth="40.0" layoutX="4.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="add" fitHeight="28.0" fitWidth="27.0" layoutX="9.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../neworder.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="delete" fitHeight="40.0" fitWidth="40.0" layoutX="4.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="delete" fitHeight="28.0" fitWidth="27.0" layoutX="9.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../delete.png" />
          </image>
@@ -205,12 +203,19 @@
          </font>
       </Label>
       <Separator layoutX="124.0" layoutY="311.0" prefHeight="4.0" prefWidth="165.0" />
-      <CheckBox layoutX="12.0" layoutY="225.0" mnemonicParsing="false" text="Pago" />
-      <Label layoutX="12.0" layoutY="190.0" prefHeight="20.0" prefWidth="135.0" text="DETALHES DO PEDIDO">
+      <CheckBox fx:id="cbPagoPedido" disable="true" layoutX="8.0" layoutY="235.0" mnemonicParsing="false" onAction="#alterarPago" text="Pedido pago" />
+      <Label layoutX="10.0" layoutY="167.0" prefHeight="20.0" prefWidth="165.0" text="DETALHES DO PEDIDO">
          <font>
             <Font name="Yu Gothic Medium" size="14.0" />
          </font>
       </Label>
-      <Separator layoutX="153.0" layoutY="200.0" prefHeight="4.0" prefWidth="135.0" />
+      <Separator layoutX="179.0" layoutY="176.0" prefHeight="4.0" prefWidth="109.0" />
+      <CheckBox fx:id="cbEntreguePedido" disable="true" layoutX="8.0" layoutY="265.0" mnemonicParsing="false" onAction="#alterarEntregue" text="Pedido entregue" />
+      <Label layoutX="10.0" layoutY="190.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="Código:" />
+      <Label fx:id="labelCodigoPedido" layoutX="10.0" layoutY="207.0" prefHeight="17.0" prefWidth="260.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="964-002/2024" visible="false" />
+      <Label layoutX="156.0" layoutY="228.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="Chave do Peso:" />
+      <Label fx:id="labelChavePesoPedido" layoutX="158.0" layoutY="247.0" prefHeight="17.0" prefWidth="79.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="8.50" visible="false" />
+      <Label layoutX="156.0" layoutY="273.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="Data/Hora:" />
+      <Label fx:id="labelDataHoraPedido" layoutX="154.0" layoutY="290.0" prefHeight="17.0" prefWidth="126.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="01/01/24, 18:30" visible="false" />
    </children>
 </AnchorPane>

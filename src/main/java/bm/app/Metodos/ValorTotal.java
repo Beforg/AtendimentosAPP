@@ -1,22 +1,23 @@
 package bm.app.Metodos;
 
-import bm.app.Model.Cliente;
-import bm.app.Model.ClienteTotal;
+import bm.app.Model.pedidos.PedidoTableView;
+import bm.app.Model.pedidos.PedidoTotalTableView;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import java.math.BigDecimal;
 
 public class ValorTotal {
-    public static void vincularSoma(TableView<Cliente> tabelaCliente, TableColumn<Cliente, BigDecimal> brlColumn, TableView<ClienteTotal> tabelaTotal, TableColumn<ClienteTotal, BigDecimal> valorTotalColumn) {
+    public static void vincularSoma(TableView<PedidoTableView> tabelaCliente, TableColumn<PedidoTableView, BigDecimal> brlColumn, TableView<PedidoTotalTableView> tabelaTotal, TableColumn<PedidoTotalTableView, BigDecimal> valorTotalColumn) {
 
         DoubleBinding somaBinding = Bindings.createDoubleBinding(() ->
                         tabelaCliente.getItems().stream()
-                                .map(Cliente::getBrl)
+                                .map(PedidoTableView::getBrl)
                                 .mapToDouble(BigDecimal::doubleValue)
                                 .sum(),
                 tabelaCliente.getItems());
@@ -25,16 +26,16 @@ public class ValorTotal {
             return Bindings.createObjectBinding(() -> valorTotal);
         });
 
-        tabelaCliente.getItems().addListener((ListChangeListener<Cliente>) change -> {
+        tabelaCliente.getItems().addListener((ListChangeListener<PedidoTableView>) change -> {
             tabelaTotal.refresh();
         });
     }
-    public static void vincularFalta(TableView<Cliente> tabelaAtendimento, TableView<ClienteTotal> tabelaTotal, TableColumn<ClienteTotal, BigDecimal> valorTotalColumn) {
+    public static void vincularFalta(TableView<PedidoTableView> tabelaAtendimento, TableView<PedidoTotalTableView> tabelaTotal, TableColumn<PedidoTotalTableView, BigDecimal> valorTotalColumn) {
 
         DoubleBinding somaBinding = Bindings.createDoubleBinding(() ->
                         tabelaAtendimento.getItems().stream()
                                 .filter(atendimento -> !atendimento.isPago())
-                                .map(Cliente::getBrl)
+                                .map(PedidoTableView::getBrl)
                                 .mapToDouble(BigDecimal::doubleValue)
                                 .sum(),
                 tabelaAtendimento.getItems());
@@ -44,38 +45,37 @@ public class ValorTotal {
             return Bindings.createObjectBinding(() -> valorTotal);
         });
 
-        tabelaAtendimento.getItems().addListener((ListChangeListener<Cliente>) change -> {
+        tabelaAtendimento.getItems().addListener((ListChangeListener<PedidoTableView>) change -> {
             tabelaTotal.refresh();
         });
     }
-    public static void vincularBrl(
-        TableView<Cliente> tabelaCliente,
-        TableColumn<Cliente, String> pagamentoColumn,
-        TableColumn<Cliente, Boolean> pagoColumn,
-        TableView<ClienteTotal> tabelaTotal,
-        TableColumn<ClienteTotal, BigDecimal> valorTotalColumn
+    public static void vincularDinheiro(
+        TableView<PedidoTableView> tabelaCliente,
+        TableView<PedidoTotalTableView> tabelaTotal,
+        TableColumn<PedidoTotalTableView, BigDecimal> valorTotalColumn,
+        String tipoPagamento
 ) {
-    ObservableList<Cliente> clientesRelevantes = FXCollections.observableArrayList();
+    ObservableList<PedidoTableView> pedidosList = FXCollections.observableArrayList();
 
-    tabelaCliente.getItems().addListener((ListChangeListener<Cliente>) change -> {
-        clientesRelevantes.clear();
-        for (Cliente cliente : tabelaCliente.getItems()) {
-            String pagamento = pagamentoColumn.getCellData(cliente);
-            Boolean pago = pagoColumn.getCellData(cliente);
+    tabelaCliente.getItems().addListener((ListChangeListener<PedidoTableView>) change -> {
+        pedidosList.clear();
+        for (PedidoTableView pedidoTableView : tabelaCliente.getItems()) {
+            String pagamento = pedidoTableView.getFormaPagamento();
+            Boolean pago = pedidoTableView.isPago();
 
-            if ("Reais".equals(pagamento) && pago != null && pago) {
-                clientesRelevantes.add(cliente);
+            if (tipoPagamento.equals(pagamento) && pago != null && pago) {
+                pedidosList.add(pedidoTableView);
             }
         }
     });
 
-    clientesRelevantes.addListener((ListChangeListener<Cliente>) change -> {
+    pedidosList.addListener((ListChangeListener<PedidoTableView>) change -> {
         DoubleBinding somaBinding = Bindings.createDoubleBinding(() ->
-                        clientesRelevantes.stream()
-                                .map(Cliente::getBrl)
+                        pedidosList.stream()
+                                .map(PedidoTableView::getBrl)
                                 .mapToDouble(BigDecimal::doubleValue)
                                 .sum(),
-                clientesRelevantes
+                pedidosList
 
         );
 
@@ -84,34 +84,35 @@ public class ValorTotal {
         tabelaTotal.refresh();
     });
 
-    tabelaCliente.getItems().addListener((ListChangeListener<Cliente>) change -> {
+    tabelaCliente.getItems().addListener((ListChangeListener<PedidoTableView>) change -> {
         tabelaTotal.refresh();
     });
 }
-    public static void vincularUyu(
-            TableView<Cliente> tabelaCliente,
-            TableColumn<Cliente, String> pagamentoColumn,
-            TableColumn<Cliente, Boolean> pagoColumn,
-            TableView<ClienteTotal> tabelaTotal,
-            TableColumn<ClienteTotal, BigDecimal> valorTotalColumn
-    ) {
-        ObservableList<Cliente> clientesRelevantes = FXCollections.observableArrayList();
 
-        tabelaCliente.getItems().addListener((ListChangeListener<Cliente>) change -> {
+    public static void vincularUyu(
+            TableView<PedidoTableView> tabelaCliente,
+            TableColumn<PedidoTableView, String> pagamentoColumn,
+            TableColumn<PedidoTableView, Boolean> pagoColumn,
+            TableView<PedidoTotalTableView> tabelaTotal,
+            TableColumn<PedidoTotalTableView, BigDecimal> valorTotalColumn
+    ) {
+        ObservableList<PedidoTableView> clientesRelevantes = FXCollections.observableArrayList();
+
+        tabelaCliente.getItems().addListener((ListChangeListener<PedidoTableView>) change -> {
             clientesRelevantes.clear();
-            for (Cliente cliente : tabelaCliente.getItems()) {
-                String pagamento = pagamentoColumn.getCellData(cliente);
-                Boolean pago = pagoColumn.getCellData(cliente);
+            for (PedidoTableView pedidoTableView : tabelaCliente.getItems()) {
+                String pagamento = pagamentoColumn.getCellData(pedidoTableView);
+                Boolean pago = pagoColumn.getCellData(pedidoTableView);
 
                 if ("Pesos".equals(pagamento) && pago != null && pago) {
-                    clientesRelevantes.add(cliente);
+                    clientesRelevantes.add(pedidoTableView);
                 }
             }
         });
-        clientesRelevantes.addListener((ListChangeListener<Cliente>) change -> {
+        clientesRelevantes.addListener((ListChangeListener<PedidoTableView>) change -> {
             DoubleBinding somaBinding = Bindings.createDoubleBinding(() ->
                             clientesRelevantes.stream()
-                                    .map(Cliente::getUyu)
+                                    .map(PedidoTableView::getUyu)
                                     .mapToDouble(BigDecimal::doubleValue)
                                     .sum(),
                     clientesRelevantes
@@ -122,35 +123,35 @@ public class ValorTotal {
             valorTotalColumn.setCellValueFactory(data -> Bindings.createObjectBinding(() -> valorTotal));
             tabelaTotal.refresh();
         });
-        tabelaCliente.getItems().addListener((ListChangeListener<Cliente>) change -> {
+        tabelaCliente.getItems().addListener((ListChangeListener<PedidoTableView>) change -> {
             tabelaTotal.refresh();
         });
     }
     public static void vincularPix(
-            TableView<Cliente> tabelaCliente,
-            TableColumn<Cliente, String> pagamentoColumn,
-            TableColumn<Cliente, Boolean> pagoColumn,
-            TableView<ClienteTotal> tabelaTotal,
-            TableColumn<ClienteTotal, BigDecimal> valorTotalColumn
+            TableView<PedidoTableView> tabelaCliente,
+            TableColumn<PedidoTableView, String> pagamentoColumn,
+            TableColumn<PedidoTableView, Boolean> pagoColumn,
+            TableView<PedidoTotalTableView> tabelaTotal,
+            TableColumn<PedidoTotalTableView, BigDecimal> valorTotalColumn
     ) {
-        ObservableList<Cliente> clientesRelevantes = FXCollections.observableArrayList();
+        ObservableList<PedidoTableView> clientesRelevantes = FXCollections.observableArrayList();
 
-        tabelaCliente.getItems().addListener((ListChangeListener<Cliente>) change -> {
+        tabelaCliente.getItems().addListener((ListChangeListener<PedidoTableView>) change -> {
             clientesRelevantes.clear();
-            for (Cliente cliente : tabelaCliente.getItems()) {
-                String pagamento = pagamentoColumn.getCellData(cliente);
-                Boolean pago = pagoColumn.getCellData(cliente);
+            for (PedidoTableView pedidoTableView : tabelaCliente.getItems()) {
+                String pagamento = pagamentoColumn.getCellData(pedidoTableView);
+                Boolean pago = pagoColumn.getCellData(pedidoTableView);
 
                 if ("PIX".equals(pagamento) && pago != null && pago) {
-                    clientesRelevantes.add(cliente);
+                    clientesRelevantes.add(pedidoTableView);
                 }
             }
         });
 
-        clientesRelevantes.addListener((ListChangeListener<Cliente>) change -> {
+        clientesRelevantes.addListener((ListChangeListener<PedidoTableView>) change -> {
             DoubleBinding somaBinding = Bindings.createDoubleBinding(() ->
                             clientesRelevantes.stream()
-                                    .map(Cliente::getBrl)
+                                    .map(PedidoTableView::getBrl)
                                     .mapToDouble(BigDecimal::doubleValue)
                                     .sum(),
                     clientesRelevantes
@@ -162,37 +163,37 @@ public class ValorTotal {
             tabelaTotal.refresh();
         });
 
-        tabelaCliente.getItems().addListener((ListChangeListener<Cliente>) change -> {
+        tabelaCliente.getItems().addListener((ListChangeListener<PedidoTableView>) change -> {
             tabelaTotal.refresh();
         });
     }
     public static void vincularCartao(
-            TableView<Cliente> tabelaCliente,
-            TableColumn<Cliente, String> pagamentoColumn,
-            TableColumn<Cliente, Boolean> pagoColumn,
-            TableView<ClienteTotal> tabelaTotal,
-            TableColumn<ClienteTotal, BigDecimal> valorTotalColumn
+            TableView<PedidoTableView> tabelaCliente,
+            TableColumn<PedidoTableView, String> pagamentoColumn,
+            TableColumn<PedidoTableView, Boolean> pagoColumn,
+            TableView<PedidoTotalTableView> tabelaTotal,
+            TableColumn<PedidoTotalTableView, BigDecimal> valorTotalColumn
     ) {
-        ObservableList<Cliente> clientesRelevantes = FXCollections.observableArrayList();
+        ObservableList<PedidoTableView> clientesRelevantes = FXCollections.observableArrayList();
 
-        tabelaCliente.getItems().addListener((ListChangeListener<Cliente>) change -> {
+        tabelaCliente.getItems().addListener((ListChangeListener<PedidoTableView>) change -> {
             clientesRelevantes.clear();
-            for (Cliente cliente : tabelaCliente.getItems()) {
-                String pagamento = pagamentoColumn.getCellData(cliente);
-                Boolean pago = pagoColumn.getCellData(cliente);
+            for (PedidoTableView pedidoTableView : tabelaCliente.getItems()) {
+                String pagamento = pagamentoColumn.getCellData(pedidoTableView);
+                Boolean pago = pagoColumn.getCellData(pedidoTableView);
 
                 if ("Cartão".equals(pagamento) && pago != null && pago) {
-                    clientesRelevantes.add(cliente);
+                    clientesRelevantes.add(pedidoTableView);
                 } else if ("Outro".equals(pagamento)  && pago != null && pago) {
-                    clientesRelevantes.add(cliente);
+                    clientesRelevantes.add(pedidoTableView);
                 }
             }
         });
 
-        clientesRelevantes.addListener((ListChangeListener<Cliente>) change -> {
+        clientesRelevantes.addListener((ListChangeListener<PedidoTableView>) change -> {
             DoubleBinding somaBinding = Bindings.createDoubleBinding(() ->
                             clientesRelevantes.stream()
-                                    .map(Cliente::getBrl)
+                                    .map(PedidoTableView::getBrl)
                                     .mapToDouble(BigDecimal::doubleValue)
                                     .sum(),
                     clientesRelevantes
@@ -204,7 +205,7 @@ public class ValorTotal {
             tabelaTotal.refresh();
         });
 
-        tabelaCliente.getItems().addListener((ListChangeListener<Cliente>) change -> {
+        tabelaCliente.getItems().addListener((ListChangeListener<PedidoTableView>) change -> {
             tabelaTotal.refresh();
         });
     }

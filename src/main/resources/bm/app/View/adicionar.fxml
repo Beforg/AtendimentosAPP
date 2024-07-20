@@ -19,25 +19,25 @@
             <Font name="Yu Gothic UI Semibold" size="21.0" />
          </font>
       </Label>
-      <Label layoutX="17.0" layoutY="216.0" prefHeight="16.0" prefWidth="78.0" styleClass="labelInfo" text="Pagamento:">
+      <Label layoutX="16.0" layoutY="180.0" prefHeight="16.0" prefWidth="78.0" styleClass="labelInfo" text="Pagamento">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="chave_peso" alignment="CENTER" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="141.0" layoutY="175.0" prefHeight="25.0" prefWidth="173.0" promptText="Valor" scaleShape="false">
+      <TextField fx:id="chave_peso" alignment="CENTER" cacheShape="false" centerShape="false" focusTraversable="false" layoutX="141.0" layoutY="211.0" prefHeight="25.0" prefWidth="173.0" promptText="Valor da chave" scaleShape="false">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font></TextField>
-      <Label layoutX="16.0" layoutY="180.0" prefHeight="17.0" prefWidth="113.0" styleClass="labelInfo" text="Chave do peso:">
+      <Label layoutX="18.0" layoutY="216.0" prefHeight="17.0" prefWidth="113.0" styleClass="labelInfo" text="Chave do peso">
          <font>
             <Font name="Arial" size="15.0" />
          </font></Label>
-      <Label layoutX="42.0" layoutY="70.0" styleClass="labelInfo" text="Nome do cliente:">
+      <Label layoutX="42.0" layoutY="70.0" styleClass="labelInfo" text="Nome do pedido">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="16.0" layoutY="145.0" styleClass="labelInfo" text="Valor do pedido:">
+      <Label layoutX="16.0" layoutY="145.0" styleClass="labelInfo" text="Valor do pedido">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -61,7 +61,7 @@
          </font>
       </CheckBox>
       <TextField fx:id="valorPedido" disable="true" layoutX="141.0" layoutY="140.0" prefHeight="25.0" prefWidth="173.0" promptText="Valor do pedido" />
-      <ChoiceBox fx:id="listaPagamento" layoutX="141.0" layoutY="211.0" prefHeight="25.0" prefWidth="173.0" />
+      <ChoiceBox fx:id="listaPagamento" disable="true" layoutX="141.0" layoutY="175.0" prefHeight="25.0" prefWidth="173.0" />
       <CheckBox fx:id="continuaAdd" layoutX="16.0" layoutY="258.0" mnemonicParsing="false" text="Continuar adicionando">
          <font>
             <Font name="Arial" size="15.0" />

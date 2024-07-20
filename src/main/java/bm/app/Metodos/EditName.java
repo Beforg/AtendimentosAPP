@@ -1,16 +1,16 @@
 package bm.app.Metodos;
 
-import bm.app.Model.Cliente;
+import bm.app.Model.pedidos.PedidoTableView;
 import javafx.scene.control.*;
 
 public class EditName {
-    public void editName(TableView<Cliente> tabelaCliente, TableColumn.CellEditEvent<Cliente, String> nomeClienteTroca) {
-        Cliente cliente = tabelaCliente.getSelectionModel().getSelectedItem();
-        String oldName = cliente.getNome();
+    public void editName(TableView<PedidoTableView> tabelaCliente, TableColumn.CellEditEvent<PedidoTableView, String> nomeClienteTroca) {
+        PedidoTableView pedidoTableView = tabelaCliente.getSelectionModel().getSelectedItem();
+        String oldName = pedidoTableView.getNome();
         System.out.println(oldName);
-        cliente.setNome(nomeClienteTroca.getNewValue());
-        if (cliente.getNome().equals("")) {
-            cliente.setNome(oldName);
+        pedidoTableView.setNome(nomeClienteTroca.getNewValue());
+        if (pedidoTableView.getNome().equals("")) {
+            pedidoTableView.setNome(oldName);
             tabelaCliente.refresh();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Atenção");

@@ -1,6 +1,6 @@
 package bm.app.Metodos;
 
-import bm.app.Model.Cliente;
+import bm.app.Model.pedidos.PedidoTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -11,16 +11,16 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class RemoverCliente {
-    public void removerCliente(ObservableList<Cliente> list){
-        ObservableList<Cliente> removeCliente = FXCollections.observableArrayList();
+    public void removerCliente(ObservableList<PedidoTableView> list){
+        ObservableList<PedidoTableView> removePedidoTableView = FXCollections.observableArrayList();
 
-        for (Cliente cliente : list){
-            if (cliente.getRemover().isSelected())
+        for (PedidoTableView pedidoTableView : list){
+            if (pedidoTableView.getRemover().isSelected())
             {
-                removeCliente.add(cliente);
+                removePedidoTableView.add(pedidoTableView);
             }
         }
-        if (removeCliente.isEmpty()) {
+        if (removePedidoTableView.isEmpty()) {
             Alert removerVazio = new Alert(Alert.AlertType.ERROR);
             removerVazio.setTitle("Erro");
             removerVazio.setHeaderText("Nenhum atendimento selecionado");
@@ -46,7 +46,7 @@ public class RemoverCliente {
                     });
 
             if (confirmaRemover.showAndWait().get() == ButtonType.OK) {
-                list.removeAll(removeCliente);
+                list.removeAll(removePedidoTableView);
 
             }
         }

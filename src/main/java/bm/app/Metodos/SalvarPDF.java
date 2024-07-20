@@ -1,7 +1,7 @@
 package bm.app.Metodos;
 
-import bm.app.Model.Cliente;
-import bm.app.Model.ClienteTotal;
+import bm.app.Model.pedidos.PedidoTableView;
+import bm.app.Model.pedidos.PedidoTotalTableView;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
@@ -20,31 +20,31 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SalvarPDF {
-    public void salvarPDF(TableView<ClienteTotal> tabelaTotal, ObservableList<Cliente> list, String horaAtual, TextField nomeFuncionario, TextField valorPeso, TextArea anotacoes, Button botaoFinalizar) {
-        TableColumn<ClienteTotal, Integer> colunaAtendimentos = (TableColumn<ClienteTotal, Integer>) tabelaTotal.getColumns().get(0);
+    public void salvarPDF(TableView<PedidoTotalTableView> tabelaTotal, ObservableList<PedidoTableView> list, String horaAtual, TextField nomeFuncionario, TextField valorPeso, TextArea anotacoes, Button botaoFinalizar) {
+        TableColumn<PedidoTotalTableView, Integer> colunaAtendimentos = (TableColumn<PedidoTotalTableView, Integer>) tabelaTotal.getColumns().get(0);
         String atendimentos = String.valueOf(colunaAtendimentos.getCellData(tabelaTotal.getItems().get(0)));
 
-        TableColumn<ClienteTotal, Integer> colunaPedidos = (TableColumn<ClienteTotal, Integer>) tabelaTotal.getColumns().get(1);
+        TableColumn<PedidoTotalTableView, Integer> colunaPedidos = (TableColumn<PedidoTotalTableView, Integer>) tabelaTotal.getColumns().get(1);
         String pedidos = String.valueOf(colunaPedidos.getCellData(tabelaTotal.getItems().get(0)));
 
-        TableColumn<ClienteTotal, BigDecimal> colunaVtotal = (TableColumn<ClienteTotal, BigDecimal>) tabelaTotal.getColumns().get(3);
+        TableColumn<PedidoTotalTableView, BigDecimal> colunaVtotal = (TableColumn<PedidoTotalTableView, BigDecimal>) tabelaTotal.getColumns().get(3);
         BigDecimal valorNumTot = colunaVtotal.getCellData(tabelaTotal.getItems().get(0));
         String valorTotal = String.format("%.2f", valorNumTot);
 
-        TableColumn<ClienteTotal, BigDecimal> colunaRecebidoBrl = (TableColumn<ClienteTotal, BigDecimal>) tabelaTotal.getColumns().get(4);
+        TableColumn<PedidoTotalTableView, BigDecimal> colunaRecebidoBrl = (TableColumn<PedidoTotalTableView, BigDecimal>) tabelaTotal.getColumns().get(4);
         BigDecimal valorBrlNum = colunaRecebidoBrl.getCellData(tabelaTotal.getItems().get(0));
         String valorBrl =  String.format("%.2f", valorBrlNum);
 
 
-        TableColumn<ClienteTotal, BigDecimal> colunaRecebidoPIX = (TableColumn<ClienteTotal, BigDecimal>) tabelaTotal.getColumns().get(5);
+        TableColumn<PedidoTotalTableView, BigDecimal> colunaRecebidoPIX = (TableColumn<PedidoTotalTableView, BigDecimal>) tabelaTotal.getColumns().get(5);
         BigDecimal valorPixNum = colunaRecebidoPIX.getCellData(tabelaTotal.getItems().get(0));
         String valorPix = String.format("%.2f", valorPixNum);
 
-        TableColumn<ClienteTotal, BigDecimal> colunaRecebidoUYU = (TableColumn<ClienteTotal, BigDecimal>) tabelaTotal.getColumns().get(7);
+        TableColumn<PedidoTotalTableView, BigDecimal> colunaRecebidoUYU = (TableColumn<PedidoTotalTableView, BigDecimal>) tabelaTotal.getColumns().get(7);
         BigDecimal valorUyuNum = colunaRecebidoUYU.getCellData(tabelaTotal.getItems().get(0));
         String valorUyu = String.format("%.2f", valorUyuNum);
 
-        TableColumn<ClienteTotal, BigDecimal> colunaRecebidoCartao = (TableColumn<ClienteTotal, BigDecimal>) tabelaTotal.getColumns().get(6);
+        TableColumn<PedidoTotalTableView, BigDecimal> colunaRecebidoCartao = (TableColumn<PedidoTotalTableView, BigDecimal>) tabelaTotal.getColumns().get(6);
         BigDecimal valorCartaoNum = colunaRecebidoCartao.getCellData(tabelaTotal.getItems().get(0));
         String valorCartao = String.format("%.2f", valorCartaoNum);
 
@@ -58,7 +58,7 @@ public class SalvarPDF {
 
             PDPage page = new PDPage();
 
-            for (Cliente cliente : list) {
+            for (PedidoTableView pedidoTableView : list) {
                 if (yPosition == 0) {
 
                     page = new PDPage(PDRectangle.A4);
@@ -94,19 +94,19 @@ public class SalvarPDF {
                     contentStream.beginText();
                     contentStream.setFont(PDType1Font.HELVETICA, 10);
                     contentStream.newLineAtOffset(margin, yPosition);
-                    contentStream.showText(cliente.getNome());
+                    contentStream.showText(pedidoTableView.getNome());
                     contentStream.newLineAtOffset(85, 0);;
-                    contentStream.showText("  " + cliente.getStatus().replace("Atendendo", "Não pediu"));
+                    contentStream.showText("  " + pedidoTableView.getStatus().replace("Atendendo", "Não pediu"));
                     contentStream.newLineAtOffset(90, 0);
-                    contentStream.showText(String.valueOf(cliente.getBrl()) + " R$");
+                    contentStream.showText(String.valueOf(pedidoTableView.getBrl()) + " R$");
                     contentStream.newLineAtOffset(85, 0);
-                    contentStream.showText(String.valueOf(cliente.getUyu()) + " $");
+                    contentStream.showText(String.valueOf(pedidoTableView.getUyu()) + " $");
                     contentStream.newLineAtOffset(85, 0);
-                    contentStream.showText(cliente.getFormaPagamento());
+                    contentStream.showText(pedidoTableView.getFormaPagamento());
                     contentStream.newLineAtOffset(85, 0);
-                    contentStream.showText(String.valueOf(cliente.getEntregue()).replace("true", "SIM").replace("false","NÃO"));
+                    //contentStream.showText(String.valueOf(pedidoTableView.getEntregue()).replace("true", "SIM").replace("false","NÃO"));
                     contentStream.newLineAtOffset(85, 0);
-                    contentStream.showText(String.valueOf(cliente.getPago()).replace("true", "SIM").replace("false","NÃO"));
+                   // contentStream.showText(String.valueOf(pedidoTableView.getPago()).replace("true", "SIM").replace("false","NÃO"));
 
                     contentStream.endText();
 
