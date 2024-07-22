@@ -1,8 +1,9 @@
 .list-view {
-    -fx-background-color: #ffffff;
+    -fx-background-color: transparent;
     -fx-text-fill: #000000;
     -fx-font-size: 14px;
     -fx-font-family: "Yu Gothic Light";
+    -fx-border-color: #c1bfbf;
 }
 .list-view:focused {
     -fx-focus-color: transparent;

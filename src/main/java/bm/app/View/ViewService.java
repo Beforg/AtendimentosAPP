@@ -11,10 +11,102 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ViewService {
-    public Stage ajudaView() throws IOException {
+    public static Stage funcionarioView() throws IOException {
+        Stage stageFuncionario = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(ViewService.class.getResource("funcionarios.fxml"));
+        Parent content = loader.load();
+        Scene funcionarioView = new Scene(content);
+        loader.getController();
+        stageFuncionario.setTitle("Funcionário");
+        stageFuncionario.setScene(funcionarioView);
+        //Image icon = new Image("funcionario.png");
+        //stageFuncionario.getIcons().add(icon);
+        stageFuncionario.setResizable(false);
+        stageFuncionario.show();
+        return stageFuncionario;
+    }
+    public static Stage clientesView() throws IOException {
+        Stage stageClientes = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(ViewService.class.getResource("clientes.fxml"));
+        Parent content = loader.load();
+        Scene clientesView = new Scene(content);
+        loader.getController();
+        stageClientes.setTitle("Clientes");
+        stageClientes.setScene(clientesView);
+        //Image icon = new Image("clientes.png");
+        //stageClientes.getIcons().add(icon);
+        stageClientes.setResizable(false);
+        stageClientes.show();
+
+        return stageClientes;
+    }
+    public static Stage administradorView() throws IOException {
+        Stage stageAdministrador = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(ViewService.class.getResource("adm.fxml"));
+        Parent content = loader.load();
+        Scene administradorView = new Scene(content);
+        loader.getController();
+        stageAdministrador.setTitle("Administrador");
+        stageAdministrador.setScene(administradorView);
+       // Image icon = new Image("administrador.png");
+       // stageAdministrador.getIcons().add(icon);
+        stageAdministrador.setResizable(false);
+        stageAdministrador.show();
+
+        return stageAdministrador;
+    }
+    public static Stage notasView() throws IOException {
+        Stage stageNotas = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(ViewService.class.getResource("notas.fxml"));
+        Parent content = loader.load();
+        Scene notasView = new Scene(content);
+        loader.getController();
+        stageNotas.setTitle("Notas");
+        stageNotas.setScene(notasView);
+        //Image icon = new Image("notas.png");
+       // stageNotas.getIcons().add(icon);
+        stageNotas.setResizable(false);
+
+        return stageNotas;
+    }
+    public static Stage telaView() throws IOException {
+        Stage stageTela = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(ViewService.class.getResource("tela.fxml"));
+        Parent content = loader.load();
+        Scene telaView = new Scene(content);
+        loader.getController();
+        stageTela.setTitle("Tela");
+        stageTela.setScene(telaView);
+       // Image icon = new Image("tela.png");
+       // stageTela.getIcons().add(icon);
+        stageTela.setResizable(false);
+        stageTela.show();
+        return stageTela;
+    }
+    public static Stage clienteCadastroView() throws IOException {
+        Stage stageClienteCadastro = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(ViewService.class.getResource("cadastro-cliente.fxml"));
+        Parent content = loader.load();
+        Scene clienteCadastroView = new Scene(content);
+        loader.getController();
+        stageClienteCadastro.setTitle("Cadastro de cliente");
+        stageClienteCadastro.setScene(clienteCadastroView);
+       // Image icon = new Image("cliente-cadastro.png");
+        //stageClienteCadastro.getIcons().add(icon);
+        stageClienteCadastro.setResizable(false);
+        stageClienteCadastro.show();
+        return stageClienteCadastro;
+    }
+    public static Stage ajudaView() throws IOException {
         Stage stageAjuda = new Stage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ajudaTela.fxml"));
+        loader.setLocation(ViewService.class.getResource("ajudaTela.fxml"));
         Parent content = loader.load();
         Scene ajudaView = new Scene(content);
         loader.getController();
@@ -26,10 +118,10 @@ public class ViewService {
 
         return stageAjuda;
     }
-    public Stage sobreView() throws IOException {
+    public static Stage sobreView() throws IOException {
         Stage stageSobre = new Stage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("sobre.fxml"));
+        loader.setLocation(ViewService.class.getResource("sobre.fxml"));
         Parent content = loader.load();
         Scene sobreView = new Scene(content);
         loader.getController();

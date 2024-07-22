@@ -1,5 +1,18 @@
 .text-area {
-    -fx-border-color: #000000; /* Cor da borda */
-    -fx-border-width: 1px; /* Largura da borda */
-    -fx-border-radius: 5px; /* Raio dos cantos da borda */
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 20, 0, 5.0, 5.0);
+}
+.text-area .content {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+.text-area:focused .content {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+.text-field {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 20, 0, 5.0, 5.0);
 }

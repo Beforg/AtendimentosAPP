@@ -1,6 +1,7 @@
 package bm.app.Utils;
 
-import bm.app.Metodos.ValorTotal;
+import bm.app.Infra.dao.PedidoDAO;
+import bm.app.Model.notas.Notas;
 import bm.app.Model.FormaPagamento;
 import bm.app.Model.pedidos.Pedido;
 import bm.app.Model.pedidos.PedidoTableView;
@@ -13,12 +14,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.util.converter.BigDecimalStringConverter;
 
 import java.math.BigDecimal;
+import java.net.URL;
 import java.util.Locale;
 
 public class AppUtils {
+
     public static void adicionaItensChoiceBox(ChoiceBox<String> choiceBoxFormaPagamento) {
        for (FormaPagamento formaPagamento : FormaPagamento.values()) {
            choiceBoxFormaPagamento.getItems().add(formaPagamento.getFormaPagamento());
@@ -54,7 +60,7 @@ public class AppUtils {
                                               TableColumn<PedidoTableView, String> entregador, TableColumn<PedidoTableView, String> statusCliente,
                                               TableColumn<PedidoTableView, BigDecimal> brl, TableColumn<PedidoTableView, BigDecimal> uyu,
                                               TableColumn<PedidoTableView, CheckBox> deleta, TableColumn<PedidoTableView, String> pagamento,
-                                              ObservableList<PedidoTableView> list) {
+                                              ObservableList<PedidoTableView> list, PedidoDAO pedidoDAO) {
         tabelaPedidos.setPlaceholder(new Label("Não há atendimentos registrados."));
         nomeCliente.setCellValueFactory(new PropertyValueFactory<PedidoTableView, String>("nome"));
         nomeCliente.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -67,11 +73,13 @@ public class AppUtils {
         statusCliente.setOnEditCommit(event -> {
             PedidoTableView pedidoTableView = event.getRowValue();
             pedidoTableView.setStatus(event.getNewValue());
-            System.out.println(pedidoTableView.getStatus());
+
+            Pedido pedido = new Pedido(pedidoTableView);
+            pedidoDAO.atualizarStatus(pedido);
         });
         brl.setCellValueFactory(new PropertyValueFactory<PedidoTableView, BigDecimal>("brl"));
         brl.setCellFactory(column -> {
-            MoneyTableCell brlCell = new MoneyTableCell(new Locale("pt", "BR"), "BRL");
+            FormataTabelaMonetaria brlCell = new FormataTabelaMonetaria(new Locale("pt", "BR"), "BRL");
             brlCell.setTabelaCliente(tabelaPedidos);
             return brlCell;
         });
@@ -80,7 +88,7 @@ public class AppUtils {
         uyu.setCellValueFactory(new PropertyValueFactory<PedidoTableView, BigDecimal>("uyu"));
         uyu.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         uyu.setCellFactory(column -> {
-            MoneyTableCell brlCell = new MoneyTableCell(new Locale("pt", "BR"), "BRL");
+            FormataTabelaMonetaria brlCell = new FormataTabelaMonetaria(new Locale("es", "UY"), "UYU");
             brlCell.setTabelaCliente(tabelaPedidos);
             return brlCell;
         });
@@ -120,29 +128,30 @@ public class AppUtils {
         entreguesTot.setCellValueFactory(new PropertyValueFactory<PedidoTotalTableView, Integer>("entregues"));
 
         valorTotal.setCellValueFactory(new PropertyValueFactory<PedidoTotalTableView, BigDecimal>("valorTotal"));
-        valorTotal.setCellFactory(column -> new MoneyTableCellTotal(new Locale("pt", "BR")));
+        valorTotal.setCellFactory(column -> new FormataTabelaMonetariaTotal(new Locale("pt", "BR")));
 
         brlRecebido.setCellValueFactory(new PropertyValueFactory<PedidoTotalTableView, BigDecimal>("valorBrl"));
-        brlRecebido.setCellFactory(column -> new MoneyTableCellTotal(new Locale("pt", "BR")));
+        brlRecebido.setCellFactory(column -> new FormataTabelaMonetariaTotal(new Locale("pt", "BR")));
 
         uyuRecebido.setCellValueFactory(new PropertyValueFactory<PedidoTotalTableView, BigDecimal>("valorUyu"));
-        uyuRecebido.setCellFactory(column -> new MoneyTableCellTotal(new Locale("es", "UY", "UYU")));
+        uyuRecebido.setCellFactory(column -> new FormataTabelaMonetariaTotal(new Locale("es", "UY", "UYU")));
 
         pixRecebido.setCellValueFactory(new PropertyValueFactory<PedidoTotalTableView, BigDecimal>("valorPix"));
-        pixRecebido.setCellFactory(column -> new MoneyTableCellTotal(new Locale("pt", "BR")));
+        pixRecebido.setCellFactory(column -> new FormataTabelaMonetariaTotal(new Locale("pt", "BR")));
 
         recebidoCartao.setCellValueFactory(new PropertyValueFactory<PedidoTotalTableView, BigDecimal>("valorPix"));
-        recebidoCartao.setCellFactory(column -> new MoneyTableCellTotal(new Locale("pt", "BR")));
+        recebidoCartao.setCellFactory(column -> new FormataTabelaMonetariaTotal(new Locale("pt", "BR")));
 
         valor_npg.setCellValueFactory(new PropertyValueFactory<PedidoTotalTableView, BigDecimal>("valorNaoRecebido"));
-        valor_npg.setCellFactory(column -> new MoneyTableCellTotal(new Locale("pt", "BR")));
+        valor_npg.setCellFactory(column -> new FormataTabelaMonetariaTotal(new Locale("pt", "BR")));
         ValorTotal.vincularSoma(tabelaPedidos, brl,tabelaTotal,valorTotal);
 
         tabelaPedidos.getItems().addListener((ListChangeListener<? super PedidoTableView>) c -> {
             int pedidosCount = 0;
             int entregasCount = 0;
             for (PedidoTableView pedidoTableView : tabelaPedidos.getItems()) {
-                if ("Pedido".equals(pedidoTableView.getStatus()) || "Entregue".equals(pedidoTableView.getStatus()) || "Não Pago".equals(pedidoTableView.getStatus()) || "Pago".equals(pedidoTableView.getStatus())) {
+                if ("Pedido".equals(pedidoTableView.getStatus()) || "Entregue".equals(pedidoTableView.getStatus())
+                        || "Não Pago".equals(pedidoTableView.getStatus()) || "Pago".equals(pedidoTableView.getStatus())) {
                     pedidosCount++;
                 }
 
@@ -186,5 +195,82 @@ public class AppUtils {
         PedidoTableView novoPedidoTableView = new PedidoTableView();
         list.add(novoPedidoTableView);
         list.remove(novoPedidoTableView);
+    }
+
+    public static PedidoTableView editarNome(TableView<PedidoTableView> tabelaCliente, TableColumn.CellEditEvent<PedidoTableView, String> nomeClienteTroca) {
+        PedidoTableView pedidoTableView = tabelaCliente.getSelectionModel().getSelectedItem();
+        String oldName = pedidoTableView.getNome();
+        pedidoTableView.setNome(nomeClienteTroca.getNewValue());
+        if (pedidoTableView.getNome().equals("")) {
+            pedidoTableView.setNome(oldName);
+            tabelaCliente.refresh();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Atenção");
+            alert.setHeaderText("Ocorreu um erro na aplicação");
+            alert.setContentText("Preencha o nome para continuar");
+            alert.getButtonTypes().stream()
+                    .filter(buttonType -> buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE)
+                    .findFirst()
+                    .ifPresent(buttonType -> {
+                        Button button = (Button) alert.getDialogPane().lookupButton(buttonType);
+                        button.setDefaultButton(false);
+
+                    });
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.setStyle("-fx-font-size: 14px; -fx-font-family: Arial, sans-serif;");
+            alert.showAndWait();
+        }
+        return pedidoTableView;
+    }
+    public static void hoverImagem(ImageView imageView, String path) {
+        URL url = AppUtils.class.getResource(path);
+        if (url != null) {
+            Image image = new Image(url.toExternalForm());
+            imageView.setImage(image);
+        } else {
+            System.err.println("URL Não encontrada: " + path);
+        }
+    }
+    public static void configuraLista(ListView<Notas> lista, ObservableList<Notas> notasList) {
+        lista.setPlaceholder(new Label("Nenhuma nota disponível"));
+        lista.setItems(notasList);
+        lista.setCellFactory(param -> new ListCell<Notas>() {
+            @Override
+            protected void updateItem(Notas item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    Label label = new Label("Título: " + item.getTitulo() + "\nDescrição: " + item.getDescricao() ); // Supondo que Notas tenha um método getNome()
+                    label.setWrapText(true); // Habilita a quebra de texto
+                    label.setMaxWidth(getListView().getWidth() - 20); // Define a largura máxima do label para quebrar o texto, ajuste conforme necessário
+                    setGraphic(label); // Define o label como o conteúdo gráfico da célula
+                }
+            }
+        });
+    }
+
+    public static void adicionarNotasView(Pane pane, ListView<Notas> lista, boolean p, boolean l, TextField titulo) {
+        pane.setVisible(p);
+        lista.setVisible(l);
+        titulo.requestFocus();
+    }
+    public static void limpaCamposNotas(TextField titulo, TextArea texto) {
+        titulo.clear();
+        texto.clear();
+    }
+
+    public static void editarNotasView(Pane paneAdicionarTarefas, ListView<Notas> listaDeNotas, TextField tfTituloNota,
+                                       TextArea anotacoes, Button btEditarNota) {
+        Notas nota = listaDeNotas.getSelectionModel().getSelectedItem();
+        if (nota == null) {
+            CaixaDeMensagem.mensagemErro("Erro", "Erro ao editar nota", "Selecione uma nota para editar");
+            return;
+        }
+        tfTituloNota.setText(nota.getTitulo());
+        anotacoes.setText(nota.getDescricao());
+        adicionarNotasView(paneAdicionarTarefas, listaDeNotas, true, false, tfTituloNota);
+        btEditarNota.setVisible(true);
     }
 }

@@ -19,11 +19,12 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="painelFundo" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1308.0" styleClass="anchor-pane" stylesheets="@../../../bm.app.Styles/app.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.AppController">
    <children>
-      <Button fx:id="add_botao" focusTraversable="false" layoutX="1.0" layoutY="78.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#adicionar" prefHeight="40.0" prefWidth="289.0" stylesheets="@../../../bm.app.Styles/button.css" text="Adicionar">
+      <Button fx:id="add_botao" focusTraversable="false" layoutX="1.0" layoutY="78.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#adicionar" prefHeight="40.0" prefWidth="289.0" styleClass="add_botao" stylesheets="@../../../bm.app.Styles/button.css" text="Adicionar">
          <font>
             <Font name="Arial" size="16.0" />
          </font>
@@ -34,8 +35,8 @@
             <items>
                   <Menu mnemonicParsing="false" text="Empregados">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Funcionários" />
-                      <MenuItem mnemonicParsing="false" text="Administrador" />
+                        <MenuItem mnemonicParsing="false" onAction="#funcionariosView" text="Funcionários" />
+                      <MenuItem mnemonicParsing="false" onAction="#admView" text="Administrador" />
                     </items>
                   </Menu>
                   <MenuItem mnemonicParsing="false" text="Chave do peso" />
@@ -48,17 +49,17 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Clientes">
               <items>
-                <MenuItem mnemonicParsing="false" text="Cadastrar" />
-                  <MenuItem mnemonicParsing="false" text="Gerenciamento" />
+                <MenuItem mnemonicParsing="false" onAction="#cadastrarClienteView" text="Cadastrar" />
+                  <MenuItem mnemonicParsing="false" onAction="#gerenciamentoClienteView" text="Gerenciamento" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Relatório">
               <items>
-                <MenuItem mnemonicParsing="false" text="Notas Pendentes" />
+                <MenuItem mnemonicParsing="false" onAction="#notasPendentesView" text="Notas Pendentes" />
                   <Menu mnemonicParsing="false" text="Relatório do Dia">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Fechar caixa" />
-                        <MenuItem mnemonicParsing="false" text="Pesquisar dia" />
+                      <MenuItem mnemonicParsing="false" onAction="#fecharCaixa" text="Fechar caixa" />
+                        <MenuItem mnemonicParsing="false" onAction="#buscarDiaView" text="Pesquisar dia" />
                     </items>
                   </Menu>
               </items>
@@ -95,7 +96,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="botaoFinalizar" focusTraversable="false" layoutX="17.0" layoutY="242.0" mnemonicParsing="false" onAction="#salvarTabelaEmPDF" prefHeight="51.0" prefWidth="286.0" stylesheets="@../../../bm.app.Styles/button.css" text="Editar" visible="false">
+      <Button fx:id="botaoFinalizar" focusTraversable="false" layoutX="17.0" layoutY="242.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="286.0" stylesheets="@../../../bm.app.Styles/button.css" text="Editar" visible="false">
          <font>
             <Font name="Arial" size="16.0" />
          </font>
@@ -111,7 +112,7 @@
             <Font name="Arial Black" size="13.0" />
          </font>
       </TextField>
-      <Button fx:id="remover_botao" focusTraversable="false" layoutX="1.0" layoutY="120.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#botaoRemover" prefHeight="40.0" prefWidth="286.0" stylesheets="@../../../bm.app.Styles/button.css" text="Remover">
+      <Button fx:id="remover_botao" focusTraversable="false" layoutX="1.0" layoutY="120.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#botaoRemover" prefHeight="40.0" prefWidth="286.0" styleClass="remover_botao" stylesheets="@../../../bm.app.Styles/button.css" text="Remover">
          <font>
             <Font name="Arial" size="16.0" />
          </font>
@@ -125,11 +126,6 @@
             <URL value="@../../../bm.app.Styles/funcionario.css" />
          </stylesheets>
       </TextField>
-      <TextArea fx:id="anotacoes" cacheShape="false" centerShape="false" layoutX="6.0" layoutY="348.0" pickOnBounds="false" prefHeight="335.0" prefWidth="260.0" scaleShape="false" stylesheets="@../../../bm.app.Styles/textArea.css" visible="false" wrapText="true">
-         <font>
-            <Font name="Arial" size="15.0" />
-         </font>
-      </TextArea>
       <ImageView fx:id="add" fitHeight="28.0" fitWidth="27.0" layoutX="9.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../neworder.png" />
@@ -176,18 +172,18 @@
             <Image url="@../../../notes.png" />
          </image>
       </ImageView>
-      <ListView layoutX="1.0" layoutY="367.0" prefHeight="350.0" prefWidth="286.0" stylesheets="@../../../bm.app.Styles/list.css" />
-      <ImageView fx:id="pdf11" fitHeight="28.0" fitWidth="27.0" layoutX="9.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
+      <ListView fx:id="listaDeNotas" layoutX="1.0" layoutY="367.0" prefHeight="360.0" prefWidth="289.0" stylesheets="@../../../bm.app.Styles/list.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" />
+      <ImageView fx:id="imvAdicionarNota" fitHeight="28.0" fitWidth="27.0" layoutX="9.0" layoutY="331.0" onMouseClicked="#adicionarNotaView" onMouseEntered="#hoverAdicionarNota" onMouseExited="#exitAdicionarNota" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../ui/add.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="pdf111" fitHeight="28.0" fitWidth="27.0" layoutX="43.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imvEditarNota" fitHeight="28.0" fitWidth="27.0" layoutX="43.0" layoutY="331.0" onMouseClicked="#editarNotaView" onMouseEntered="#hoverEditarNota" onMouseExited="#exitEditarNota" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../ui/edit.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="pdf1111" fitHeight="28.0" fitWidth="27.0" layoutX="75.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imvRemoverNota" fitHeight="28.0" fitWidth="27.0" layoutX="75.0" layoutY="331.0" onMouseClicked="#removerNota" onMouseEntered="#hoverRemoverNota" onMouseExited="#exitRemoverNota" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../delete.png" />
          </image>
@@ -202,7 +198,7 @@
             <Font name="Yu Gothic Medium" size="18.0" />
          </font>
       </Label>
-      <Separator layoutX="124.0" layoutY="311.0" prefHeight="4.0" prefWidth="165.0" />
+      <Separator accessibleHelp="asdas" accessibleText="asdasd" layoutX="124.0" layoutY="311.0" prefHeight="4.0" prefWidth="165.0" />
       <CheckBox fx:id="cbPagoPedido" disable="true" layoutX="8.0" layoutY="235.0" mnemonicParsing="false" onAction="#alterarPago" text="Pedido pago" />
       <Label layoutX="10.0" layoutY="167.0" prefHeight="20.0" prefWidth="165.0" text="DETALHES DO PEDIDO">
          <font>
@@ -217,5 +213,21 @@
       <Label fx:id="labelChavePesoPedido" layoutX="158.0" layoutY="247.0" prefHeight="17.0" prefWidth="79.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="8.50" visible="false" />
       <Label layoutX="156.0" layoutY="273.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="Data/Hora:" />
       <Label fx:id="labelDataHoraPedido" layoutX="154.0" layoutY="290.0" prefHeight="17.0" prefWidth="126.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="01/01/24, 18:30" visible="false" />
+      <Separator layoutX="-1.0" layoutY="359.0" prefHeight="4.0" prefWidth="289.0" />
+      <Pane fx:id="paneAdicionarTarefas" layoutX="2.0" layoutY="363.0" prefHeight="360.0" prefWidth="286.0" visible="false">
+         <children>
+            <TextArea fx:id="anotacoes" cacheShape="false" centerShape="false" layoutX="14.0" layoutY="95.0" pickOnBounds="false" prefHeight="213.0" prefWidth="244.0" scaleShape="false" stylesheets="@../../../bm.app.Styles/textArea.css" wrapText="true">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextArea>
+            <Label layoutX="14.0" layoutY="6.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="Título" />
+            <Label layoutX="14.0" layoutY="67.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="Descrição" />
+            <TextField fx:id="tfTituloNota" layoutX="14.0" layoutY="30.0" prefHeight="25.0" prefWidth="244.0" stylesheets="@../../../bm.app.Styles/textArea.css" />
+            <Button layoutX="179.0" layoutY="317.0" mnemonicParsing="false" onAction="#adicionarNota" prefHeight="25.0" prefWidth="79.0" styleClass="buttonTextArea" stylesheets="@../../../bm.app.Styles/button.css" text="Adicionar" />
+            <Button layoutX="83.0" layoutY="317.0" mnemonicParsing="false" onAction="#voltarAdicionarView" prefHeight="25.0" prefWidth="79.0" styleClass="buttonTextArea" stylesheets="@../../../bm.app.Styles/button.css" text="Voltar" />
+            <Button fx:id="btEditarNota" layoutX="179.0" layoutY="317.0" mnemonicParsing="false" onAction="#editarNotaExistente" prefHeight="25.0" prefWidth="79.0" styleClass="buttonTextArea" stylesheets="@../../../bm.app.Styles/button.css" text="Salvar" visible="false" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

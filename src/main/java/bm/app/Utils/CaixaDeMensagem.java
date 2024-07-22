@@ -10,24 +10,17 @@ public class CaixaDeMensagem {
 
     public static void mensagemErro(String titulo, String cabecalho, String conteudo) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(titulo);
-        alert.setHeaderText(cabecalho);
-        alert.setContentText(conteudo);
-        alert.getButtonTypes().stream()
-                .filter(buttonType -> buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE)
-                .findFirst()
-                .ifPresent(buttonType -> {
-                    Button button = (Button) alert.getDialogPane().lookupButton(buttonType);
-                    button.setDefaultButton(false);
-
-                });
-        DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.setStyle(style);
+        alert(titulo, cabecalho, conteudo, alert);
         alert.showAndWait();
     }
 
     public static boolean mensagemConfirmacao(String titulo, String cabecalho, String conteudo, Button cancelarBot) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert(titulo, cabecalho, conteudo, alert);
+        return alert.showAndWait().get() == ButtonType.OK;
+    }
+
+    private static void alert(String titulo, String cabecalho, String conteudo, Alert alert) {
         alert.setTitle(titulo);
         alert.setHeaderText(cabecalho);
         alert.setContentText(conteudo);
@@ -41,6 +34,5 @@ public class CaixaDeMensagem {
                 });
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.setStyle(style);
-        return alert.showAndWait().get() == ButtonType.OK;
     }
 }

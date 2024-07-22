@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -18,8 +19,9 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        stage.setTitle("Atendimentos");
-        Parent fxmlPrincipal = FXMLLoader.load(getClass().getResource("tela.fxml"));
+        stage.setTitle("Credenciamento");
+        stage.initStyle(StageStyle.UNDECORATED);
+        Parent fxmlPrincipal = FXMLLoader.load(getClass().getResource("login.fxml"));
         Scene principal = new Scene(fxmlPrincipal);
         stage.setResizable(false);
 

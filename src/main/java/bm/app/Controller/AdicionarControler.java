@@ -1,11 +1,14 @@
 package bm.app.Controller;
 
+import bm.app.Infra.dao.PedidoDAO;
 import bm.app.Model.FormaPagamento;
 import bm.app.Model.StatusPedido;
+import bm.app.Model.cliente.Cliente;
 import bm.app.Model.pedidos.Pedido;
 import bm.app.Model.pedidos.PedidoService;
 import bm.app.Utils.AppUtils;
 import bm.app.Utils.CaixaDeMensagem;
+import bm.app.Utils.Validacao;
 import bm.app.View.ViewService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,12 +33,14 @@ public class AdicionarControler implements Initializable {
     private ChoiceBox<String> listaPagamento;
     @FXML
     private TextField chave_peso;
+    @FXML
+    private ComboBox<Cliente> cbSelecionarCliente;
 
-
+    private final PedidoDAO pedidoDAO = new PedidoDAO();
     private final PedidoService pedidoService = new PedidoService();
     private StatusPedido statusPedido = StatusPedido.PENDENTE;
-
     public static String peso;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         AppUtils.adicionaItensChoiceBox(listaPagamento);
@@ -56,10 +61,15 @@ public class AdicionarControler implements Initializable {
         if (adicionaPedido.isSelected()) {
             statusPedido = StatusPedido.EM_ANDAMENTO;
         }
+
+        Cliente cliente = Validacao.verificaComboBoxAdicionarCliente(cbSelecionarCliente);
         Pedido pedido = pedidoService.criarPedido(adicionaNome.getText(),
-                new BigDecimal(valorPedido.getText().replace(",", ".")), FormaPagamento.valueOf(listaPagamento.getValue().toUpperCase().replace("Ã", "A")),
-                "", statusPedido, chave_peso.getText(), adicionaPedido.isSelected());
+                new BigDecimal(valorPedido.getText().replace(",", ".")),
+                FormaPagamento.valueOf(listaPagamento.getValue().toUpperCase().replace("Ã", "A")),
+                "", statusPedido, chave_peso.getText(), adicionaPedido.isSelected(), cliente);
         AppController.adicionarAtendimento(pedido);
+        pedidoDAO.criarPedido(pedido);
+
         if(!continuaAdd.isSelected()) {
             AppController.verificaJanela = false;
             Stage stage = (Stage) cancelarBot.getScene().getWindow();

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="389.0" prefWidth="402.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.View.CadastroCliente">
+<AnchorPane prefHeight="389.0" prefWidth="402.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.CadastroClienteController">
    <children>
       <Separator layoutY="72.0" prefHeight="0.0" prefWidth="402.0" />
       <Label layoutX="149.0" layoutY="35.0" text="Cadastro de Cliente" />

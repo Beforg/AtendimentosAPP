@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="164.0" prefWidth="315.0" styleClass="loginBackground" stylesheets="@../../../bm.app.Styles/app2.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.View.Login">
+<AnchorPane prefHeight="164.0" prefWidth="315.0" styleClass="loginBackground" stylesheets="@../../../bm.app.Styles/app2.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.LoginController">
    <children>
       <Label layoutX="29.0" layoutY="45.0" styleClass="labelInfo" text="Login" />
       <Label layoutX="27.0" layoutY="86.0" styleClass="labelInfo" text="Senha" />
@@ -22,9 +21,9 @@
             <Font size="9.0" />
          </font>
       </Label>
-      <TextField layoutX="76.0" layoutY="41.0" prefHeight="27.0" prefWidth="192.0" />
-      <PasswordField layoutX="77.0" layoutY="82.0" prefHeight="27.0" prefWidth="192.0" />
-      <Button layoutX="77.0" layoutY="123.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="88.0" styleClass="button2" text="Entrar" />
-      <Button layoutX="180.0" layoutY="123.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="88.0" styleClass="button2" text="Sair" />
+      <TextField fx:id="tfLogin" layoutX="76.0" layoutY="41.0" prefHeight="27.0" prefWidth="192.0" />
+      <PasswordField fx:id="pfSenha" layoutX="77.0" layoutY="82.0" prefHeight="27.0" prefWidth="192.0" />
+      <Button layoutX="77.0" layoutY="123.0" mnemonicParsing="false" onAction="#entrar" prefHeight="27.0" prefWidth="88.0" styleClass="button2" text="Entrar" />
+      <Button layoutX="180.0" layoutY="123.0" mnemonicParsing="false" onAction="#sair" prefHeight="27.0" prefWidth="88.0" styleClass="button2" text="Sair" />
    </children>
 </AnchorPane>

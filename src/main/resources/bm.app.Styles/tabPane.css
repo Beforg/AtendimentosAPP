@@ -1,0 +1,40 @@
+* {
+    -fx-primary-color: #ACE1AF;
+    -fx-secondary-color: #aff6b3;
+
+    -fx-focus-color: -fx-secondary-color;
+}
+
+.tab-header-area .tab-header-background {
+    -fx-background-color: -fx-primary-color;
+}
+.tab-pane .tab:selected {
+    -fx-background-color: -fx-secondary-color;
+    -fx-background-insets: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+}
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #000000;
+    -fx-font-family: "Yu Gothic UI";
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 0 0;
+}
+.tab-pane:top *.tab-header-area {
+    -fx-padding: 0 0 0 0;
+
+}
+.tab-pane {
+    -fx-background-color: transparent;
+    -fx-tab-min-width: 100px;
+    -fx-tab-min-height: 30px;
+    -fx-tab-max-height: 30px;
+}
+.tab-pane .tab {
+    -fx-background-color: transparent;
+}
+.tab-pane:focused .tab-header-area .headers-region .tab:selected .focus-indicator {
+    -fx-border-width: 0;
+    -fx-border-insets: 0 0 0 0;
+    -fx-border-radius: 0;
+}

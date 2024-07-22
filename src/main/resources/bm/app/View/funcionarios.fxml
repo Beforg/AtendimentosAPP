@@ -12,19 +12,18 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="382.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.View.Funcionarios">
+<AnchorPane prefHeight="400.0" prefWidth="414.0" stylesheets="@../../../bm.app.Styles/app2.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.FuncionariosController">
    <children>
-      <TabPane layoutY="-1.0" prefHeight="400.0" prefWidth="383.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane layoutY="-1.0" prefHeight="400.0" prefWidth="411.0" stylesheets="@../../../bm.app.Styles/tabPane.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab text="Funcionários cadastrados">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutY="55.0" prefHeight="356.0" prefWidth="382.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView layoutY="55.0" prefHeight="356.0" prefWidth="382.0" stylesheets="@../../../bm.app.Styles/tabela.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="ID" />
-                            <TableColumn prefWidth="306.0" text="NOME" />
+                            <TableColumn prefWidth="327.0" text="NOME" />
                           </columns>
                         </TableView>
                      </children>
@@ -35,18 +34,18 @@
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="26.0" layoutY="61.0" text="Nome" />
-                        <Label layoutX="28.0" layoutY="109.0" text="Usuário" />
-                        <Label layoutX="27.0" layoutY="156.0" text="Senha" />
-                        <Button layoutX="246.0" layoutY="195.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Cadastrar" />
-                        <TextField layoutX="87.0" layoutY="57.0" prefHeight="25.0" prefWidth="263.0" />
-                        <TextField layoutX="87.0" layoutY="105.0" prefHeight="25.0" prefWidth="263.0" />
-                        <PasswordField layoutX="87.0" layoutY="152.0" prefHeight="25.0" prefWidth="263.0" />
-                        <Separator layoutX="20.0" layoutY="37.0" prefHeight="1.0" prefWidth="346.0" />
-                        <Separator layoutX="18.0" layoutY="38.0" orientation="VERTICAL" prefHeight="207.0" prefWidth="6.0" />
-                        <Separator layoutX="364.0" layoutY="38.0" orientation="VERTICAL" prefHeight="207.0" prefWidth="6.0" />
-                        <Separator layoutX="20.0" layoutY="244.0" prefHeight="1.0" prefWidth="346.0" />
-                        <Label layoutX="20.0" layoutY="14.0" text="Cadastro de Funcionários" />
+                        <Label layoutX="39.0" layoutY="61.0" text="Nome" />
+                        <Label layoutX="41.0" layoutY="109.0" text="Usuário" />
+                        <Label layoutX="40.0" layoutY="156.0" text="Senha" />
+                        <Button layoutX="261.0" layoutY="207.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" styleClass="buttonTextArea" stylesheets="@../../../bm.app.Styles/button.css" text="Cadastrar" />
+                        <TextField layoutX="100.0" layoutY="57.0" prefHeight="25.0" prefWidth="263.0" />
+                        <TextField layoutX="100.0" layoutY="105.0" prefHeight="25.0" prefWidth="263.0" />
+                        <PasswordField layoutX="100.0" layoutY="152.0" prefHeight="25.0" prefWidth="263.0" />
+                        <Separator layoutX="33.0" layoutY="37.0" prefHeight="1.0" prefWidth="346.0" />
+                        <Separator layoutX="31.0" layoutY="38.0" orientation="VERTICAL" prefHeight="207.0" prefWidth="6.0" />
+                        <Separator layoutX="377.0" layoutY="38.0" orientation="VERTICAL" prefHeight="207.0" prefWidth="6.0" />
+                        <Separator layoutX="32.0" layoutY="244.0" prefHeight="4.0" prefWidth="348.0" />
+                        <Label layoutX="33.0" layoutY="14.0" text="Cadastro de Funcionários" />
                      </children>
                   </AnchorPane>
                </content>
@@ -55,11 +54,11 @@
                <content>
                   <AnchorPane prefHeight="371.0" prefWidth="380.0">
                      <children>
-                        <ListView layoutX="20.0" layoutY="127.0" prefHeight="266.0" prefWidth="382.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                        <Button layoutX="43.0" layoutY="20.0" mnemonicParsing="false" text="Editar Cadastro" />
-                        <Button layoutX="41.0" layoutY="65.0" mnemonicParsing="false" text="Excluir Cadastro" />
-                        <Label layoutX="191.0" layoutY="24.0" text="Nome:" />
-                        <Label layoutX="194.0" layoutY="69.0" text="Usuário:" />
+                        <ListView layoutX="20.0" layoutY="127.0" prefHeight="266.0" prefWidth="382.0" stylesheets="@../../../bm.app.Styles/list.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <Button layoutX="276.0" layoutY="67.0" mnemonicParsing="false" styleClass="buttonTextArea" stylesheets="@../../../bm.app.Styles/button.css" text="Editar Cadastro" />
+                        <Button layoutX="140.0" layoutY="67.0" mnemonicParsing="false" styleClass="buttonTextArea" stylesheets="@../../../bm.app.Styles/button.css" text="Excluir Cadastro" />
+                        <Label layoutX="14.0" layoutY="14.0" styleClass="labelInfo" text="Nome:" />
+                        <Label layoutX="14.0" layoutY="45.0" styleClass="labelInfo" text="Usuário:" />
                      </children>
                   </AnchorPane>
                </content>
