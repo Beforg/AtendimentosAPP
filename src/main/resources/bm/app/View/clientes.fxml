@@ -1,38 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="400.0" prefWidth="382.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.ClienteController">
    <children>
-      <TabPane layoutY="-1.0" prefHeight="400.0" prefWidth="383.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="tabPane" layoutY="-1.0" prefHeight="400.0" prefWidth="382.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab text="Clientes cadastrados">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutY="55.0" prefHeight="356.0" prefWidth="382.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="tabelaClientes" layoutY="55.0" prefHeight="242.0" prefWidth="382.0" AnchorPane.bottomAnchor="129.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="ID" />
-                            <TableColumn prefWidth="306.0" text="NOME" />
+                            <TableColumn fx:id="tcId" prefWidth="75.0" text="ID" />
+                            <TableColumn fx:id="tcNome" prefWidth="306.0" text="NOME" />
                           </columns>
                         </TableView>
+                        <Label layoutX="23.0" layoutY="246.0" text="Nome:" />
+                        <Label layoutX="23.0" layoutY="291.0" text="Endereço:" />
+                        <Label layoutX="23.0" layoutY="340.0" text="Telefone:" />
+                        <Button layoutX="311.0" layoutY="336.0" mnemonicParsing="false" onAction="#excluir" prefHeight="25.0" prefWidth="62.0" text="Excluir" />
+                        <Button layoutX="244.0" layoutY="336.0" mnemonicParsing="false" onAction="#editar" prefHeight="25.0" prefWidth="64.0" text="Editar" />
+                        <Label fx:id="labelEndereço" layoutX="23.0" layoutY="311.0" prefHeight="17.0" prefWidth="333.0" text="Label" />
+                        <Label fx:id="labelNome" layoutX="23.0" layoutY="268.0" prefHeight="17.0" prefWidth="333.0" text="Label" />
+                        <Label fx:id="labelTelefone" layoutX="77.0" layoutY="340.0" prefHeight="17.0" prefWidth="153.0" text="Label" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Gerenciamento">
+            <Tab text="Cadastrar Cliente">
                <content>
                   <AnchorPane prefHeight="371.0" prefWidth="380.0">
                      <children>
-                        <ListView layoutX="20.0" layoutY="127.0" prefHeight="319.0" prefWidth="382.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                        <Button layoutX="126.0" layoutY="14.0" mnemonicParsing="false" text="Editar Cadastro" />
-                        <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Excluir Cadastro" />
+                        <Label layoutX="20.0" layoutY="32.0" text="Nome*" />
+                        <Label layoutX="122.0" layoutY="221.0" text="Telefone*" />
+                        <Label layoutX="20.0" layoutY="96.0" text="Rua*" />
+                        <Label layoutX="23.0" layoutY="162.0" text="Bairro" />
+                        <Label layoutX="24.0" layoutY="221.0" text="Número" />
+                        <Label layoutX="191.0" layoutY="162.0" text="Complemento" />
+                        <TextField fx:id="tfComplemento" layoutX="191.0" layoutY="185.0" prefHeight="25.0" prefWidth="168.0" />
+                        <TextField fx:id="tfBairro" layoutX="24.0" layoutY="185.0" prefHeight="25.0" prefWidth="160.0" />
+                        <TextField fx:id="tfRua" layoutX="21.0" layoutY="126.0" prefHeight="25.0" prefWidth="337.0" />
+                        <TextField fx:id="tfNumero" layoutX="24.0" layoutY="246.0" prefHeight="25.0" prefWidth="89.0" />
+                        <TextField fx:id="tfTelefone" layoutX="122.0" layoutY="246.0" prefHeight="25.0" prefWidth="238.0" />
+                        <TextField fx:id="tfNome" layoutX="20.0" layoutY="59.0" prefHeight="25.0" prefWidth="337.0" />
+                        <Button layoutX="275.0" layoutY="283.0" mnemonicParsing="false" onAction="#cadastrar" prefHeight="25.0" prefWidth="88.0" text="Cadastrar " />
+                        <Separator layoutX="13.0" layoutY="22.0" prefHeight="2.0" prefWidth="357.0" />
+                        <Separator layoutX="368.0" layoutY="23.0" orientation="VERTICAL" prefHeight="301.0" prefWidth="5.0" />
+                        <Separator layoutX="12.0" layoutY="23.0" orientation="VERTICAL" prefHeight="301.0" prefWidth="5.0" />
+                        <Separator layoutX="13.0" layoutY="323.0" prefHeight="2.0" prefWidth="357.0" />
+                        <Label layoutX="14.0" layoutY="4.0" text="Cadastrar novo Cliente" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="teste" text="Editar Cliente">
+               <content>
+                  <AnchorPane prefHeight="371.0" prefWidth="380.0">
+                     <children>
+                        <Label layoutX="20.0" layoutY="32.0" text="Nome*" />
+                        <Label layoutX="122.0" layoutY="221.0" text="Telefone*" />
+                        <Label layoutX="20.0" layoutY="96.0" text="Rua*" />
+                        <Label layoutX="23.0" layoutY="162.0" text="Bairro" />
+                        <Label layoutX="24.0" layoutY="221.0" text="Número" />
+                        <Label layoutX="191.0" layoutY="162.0" text="Complemento" />
+                        <TextField fx:id="tfEditarComplemento" layoutX="191.0" layoutY="185.0" prefHeight="25.0" prefWidth="168.0" />
+                        <TextField fx:id="tfEditarBairro" layoutX="24.0" layoutY="185.0" prefHeight="25.0" prefWidth="160.0" />
+                        <TextField fx:id="tfEditarRua" layoutX="21.0" layoutY="126.0" prefHeight="25.0" prefWidth="337.0" />
+                        <TextField fx:id="tfEditarNumero" layoutX="24.0" layoutY="246.0" prefHeight="25.0" prefWidth="89.0" />
+                        <TextField fx:id="tfEditarTelefone" layoutX="122.0" layoutY="246.0" prefHeight="25.0" prefWidth="238.0" />
+                        <TextField fx:id="tfEditarNome" layoutX="20.0" layoutY="59.0" prefHeight="25.0" prefWidth="337.0" />
+                        <Button layoutX="275.0" layoutY="283.0" mnemonicParsing="false" onAction="#salvarEdicao" prefHeight="25.0" prefWidth="88.0" text="Salvar" />
+                        <Separator layoutX="13.0" layoutY="22.0" prefHeight="2.0" prefWidth="357.0" />
+                        <Separator layoutX="368.0" layoutY="23.0" orientation="VERTICAL" prefHeight="301.0" prefWidth="5.0" />
+                        <Separator layoutX="12.0" layoutY="23.0" orientation="VERTICAL" prefHeight="301.0" prefWidth="5.0" />
+                        <Separator layoutX="13.0" layoutY="323.0" prefHeight="2.0" prefWidth="357.0" />
+                        <Label layoutX="14.0" layoutY="4.0" text="Editar Cliente" />
                      </children>
                   </AnchorPane>
                </content>

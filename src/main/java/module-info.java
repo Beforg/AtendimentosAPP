@@ -21,5 +21,7 @@ module bm.app.demo {
     opens bm.app.Model.notas to javafx.fxml;
     exports bm.app.Utils;
     opens bm.app.Utils to javafx.fxml;
+    opens bm.app.Model.credenciamento to javafx.fxml, javafx.base;
+    exports bm.app.Model.credenciamento;
 
 }

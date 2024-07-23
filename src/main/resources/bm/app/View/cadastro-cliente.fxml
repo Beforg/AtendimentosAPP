@@ -3,26 +3,12 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-
 
 <AnchorPane prefHeight="389.0" prefWidth="402.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.CadastroClienteController">
    <children>
       <Separator layoutY="72.0" prefHeight="0.0" prefWidth="402.0" />
       <Label layoutX="149.0" layoutY="35.0" text="Cadastro de Cliente" />
-      <Label layoutX="18.0" layoutY="100.0" text="Nome*" />
-      <Label layoutX="205.0" layoutY="100.0" text="Telefone*" />
-      <Label layoutX="18.0" layoutY="159.0" text="Rua*" />
-      <Label layoutX="120.0" layoutY="218.0" text="Bairro" />
-      <Label layoutX="17.0" layoutY="218.0" text="Número" />
-      <Label layoutX="20.0" layoutY="281.0" text="Complemento" />
-      <TextField layoutX="19.0" layoutY="120.0" prefHeight="25.0" prefWidth="177.0" />
-      <TextField layoutX="205.0" layoutY="120.0" prefHeight="25.0" prefWidth="177.0" />
-      <TextField layoutX="19.0" layoutY="182.0" prefHeight="25.0" prefWidth="363.0" />
-      <TextField layoutX="23.0" layoutY="245.0" prefHeight="25.0" prefWidth="89.0" />
-      <TextField layoutX="120.0" layoutY="245.0" prefHeight="25.0" prefWidth="261.0" />
-      <TextField layoutX="22.0" layoutY="307.0" prefHeight="25.0" prefWidth="363.0" />
       <Button layoutX="277.0" layoutY="350.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Cadastrar" />
    </children>
 </AnchorPane>

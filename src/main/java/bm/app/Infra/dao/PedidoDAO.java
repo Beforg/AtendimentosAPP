@@ -47,7 +47,7 @@ public class PedidoDAO {
        }
     }
 
-    public ObservableList<PedidoTableView> carregarPedidoHoje(ObservableList<PedidoTableView> lista) {
+    public void carregarPedidoHoje(ObservableList<PedidoTableView> lista) {
         String sql = "SELECT * FROM pedidos WHERE data_pedido = CURRENT_DATE";
         Connection conn = connectionFactory.getConnection();
         try {
@@ -72,7 +72,6 @@ public class PedidoDAO {
 
             }
             conn.close();
-            return lista;
         } catch (SQLException e) {
             throw new RuntimeException("Erro na conexão com o banco de dados: " + e.getMessage());
         }

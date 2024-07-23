@@ -1,7 +1,8 @@
 package bm.app.Utils;
 
 import bm.app.Infra.dao.PedidoDAO;
-import bm.app.Model.credenciamento.Credenciamento;
+import bm.app.Model.credenciamento.AdminTableView;
+import bm.app.Model.credenciamento.FuncionariosTableView;
 import bm.app.Model.notas.Notas;
 import bm.app.Model.FormaPagamento;
 import bm.app.Model.pedidos.Pedido;
@@ -187,6 +188,18 @@ public class AppUtils {
 
         tabelaTotal.getItems().addAll(listPedidosTotal);
     }
+    public static void configuraTabelaFuncionarios(TableView<FuncionariosTableView> tabelaFuncionarios,
+                                                   TableColumn<FuncionariosTableView, String> tcId,
+                                                   TableColumn<FuncionariosTableView, String> tcNome) {
+        tcId.setCellValueFactory(new PropertyValueFactory<FuncionariosTableView, String>("id"));
+        tcNome.setCellValueFactory(new PropertyValueFactory<FuncionariosTableView, String>("nome"));
+    }
+    public static void configuraTabelaAdmin(TableView<AdminTableView> tabelaAdmin,
+                                           TableColumn<AdminTableView, String> tcId,
+                                           TableColumn<AdminTableView, String> tcNome) {
+        tcId.setCellValueFactory(new PropertyValueFactory<AdminTableView, String>("id"));
+        tcNome.setCellValueFactory(new PropertyValueFactory<AdminTableView, String>("nome"));
+    }
     public static void limpaCamposAdicionarPedido(TextField nome, TextField valor, ChoiceBox<String> formaPagamento, CheckBox pedido) {
         nome.clear();
         valor.clear();
@@ -287,24 +300,75 @@ public class AppUtils {
         adicionarNotasView(paneAdicionarTarefas, listaDeNotas, true, false, tfTituloNota);
         btEditarNota.setVisible(true);
     }
-    public static void mostrarEdicaoFuncionario(Label labelNome, Label labelUser, Button excluir, Button editar,
+    public static void mostrarEdicaoFuncionario(CheckBox cb, Label labelNome, Label labelUser, Button excluir, Button editar,
                                                 Button salvar, TextField nome, TextField user, TextField senha,
                                                 boolean label, boolean buttonFirst, boolean buttonSecond, boolean textFields,
-                                                Credenciamento credenciamento) {
+                                                FuncionariosTableView credenciamento, TableView<FuncionariosTableView> tabela) {
+        boolean val = Validacao.verificaFuncionarioSelecionado(tabela);
+        if (!val) {
+            CaixaDeMensagem.mensagemErro("Erro", "Funcionário não selecionado", "Selecione um funcionário para editar");
+            return;
+        }
+        validarSelecaoCredenciamento(cb, excluir, editar, salvar, nome, user, senha, buttonFirst, buttonSecond,
+                textFields, credenciamento != null, credenciamento.getNome(), credenciamento.getUsername());
 
-        labelNome.setVisible(label);
-        labelUser.setVisible(label);
+    }
+    public static void mostraEdicaoAdmin(CheckBox cb,Button excluir, Button editar,
+                                         Button salvar, TextField nome, TextField user, TextField senha,
+                                         boolean buttonFirst, boolean buttonSecond, boolean textFields,
+                                         AdminTableView credenciamento, TableView<AdminTableView> tabela) {
+        boolean val = Validacao.verificaAdminSelecionado(tabela);
+        if (!val) {
+            CaixaDeMensagem.mensagemErro("Erro", "Admin não selecionado", "Selecione um admin para editar");
+            return;
+        }
+        validarSelecaoCredenciamento(cb, excluir, editar, salvar, nome, user, senha, buttonFirst, buttonSecond,
+                textFields, credenciamento != null, credenciamento.getNome(), credenciamento.getUsername());
+
+    }
+
+    private static void validarSelecaoCredenciamento(CheckBox cb,
+                                                     Button excluir,
+                                                     Button editar,
+                                                     Button salvar,
+                                                     TextField nome,
+                                                     TextField user,
+                                                     TextField senha,
+                                                     boolean buttonFirst,
+                                                     boolean buttonSecond,
+                                                     boolean textFields,
+                                                     boolean b,
+                                                     String nome2,
+                                                     String username) {
         excluir.setVisible(buttonFirst);
         editar.setVisible(buttonFirst);
         salvar.setVisible(buttonSecond);
+        cb.setVisible(buttonSecond);
         nome.setVisible(textFields);
         user.setVisible(textFields);
         senha.setVisible(textFields);
-        if (credenciamento != null) {
-            nome.setText(credenciamento.getNome());
-            user.setText(credenciamento.getUsername());
+        if (b) {
+            nome.setText(nome2);
+            user.setText(username);
 
+        } else if (editar.isVisible()) {
+            nome.clear();
+            user.clear();
+            senha.clear();
         }
+    }
 
+    public static void limparCamposCadastroCredenciamento(PasswordField passwordField, TextField ... textFields) {
+        for (TextField textField : textFields) {
+            textField.clear();
+        }
+        passwordField.clear();
+    }
+    public static void disablePasswordField(CheckBox cbTrocaSenha, PasswordField pfNovaSenha) {
+        if (cbTrocaSenha.isSelected()) {
+            pfNovaSenha.setDisable(false);
+        } else {
+            pfNovaSenha.setDisable(true);
+        }
     }
 }

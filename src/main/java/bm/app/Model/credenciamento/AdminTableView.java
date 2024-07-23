@@ -7,18 +7,19 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class FuncionariosTableView {
+@AllArgsConstructor
+public class AdminTableView {
     private String id;
     private String nome;
     private String username;
     private String password;
 
-    public FuncionariosTableView(Credenciamento credenciamento) {
+    public AdminTableView(Credenciamento credenciamento) {
         this.id = String.valueOf(credenciamento.getId());
         this.nome = credenciamento.getNome();
         this.username = credenciamento.getUsername();
         this.password = credenciamento.getPassword();
     }
+
 }

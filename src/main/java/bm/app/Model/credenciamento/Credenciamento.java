@@ -25,5 +25,16 @@ public class Credenciamento {
         this.cargo = cargo;
     }
 
+    public Credenciamento(FuncionariosTableView funcionariosTableView) {
+        this.id = Integer.parseInt(funcionariosTableView.getId());
+        this.nome = funcionariosTableView.getNome();
+        this.username = funcionariosTableView.getUsername();
+    }
+
+    public Credenciamento(AdminTableView adminTableView) {
+        this.id = Integer.parseInt(adminTableView.getId());
+        this.nome = adminTableView.getNome();
+        this.username = adminTableView.getUsername();
+    }
 }
 

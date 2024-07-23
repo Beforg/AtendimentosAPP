@@ -1,6 +1,8 @@
 package bm.app.Utils;
 
 import bm.app.Model.cliente.Cliente;
+import bm.app.Model.credenciamento.AdminTableView;
+import bm.app.Model.credenciamento.FuncionariosTableView;
 import bm.app.Model.pedidos.Pedido;
 import javafx.scene.control.*;
 
@@ -22,5 +24,13 @@ public class Validacao {
             return null;
         }
         return comboBox.getSelectionModel().getSelectedItem();
+    }
+    public static boolean verificaFuncionarioSelecionado(TableView<FuncionariosTableView> tabela) {
+        FuncionariosTableView funcionariosTableView = tabela.getSelectionModel().getSelectedItem();
+        return funcionariosTableView != null;
+    }
+    public static boolean verificaAdminSelecionado(TableView<AdminTableView> tabela) {
+        AdminTableView admTableView = tabela.getSelectionModel().getSelectedItem();
+        return admTableView != null;
     }
 }
