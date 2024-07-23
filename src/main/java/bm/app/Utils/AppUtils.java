@@ -1,6 +1,7 @@
 package bm.app.Utils;
 
 import bm.app.Infra.dao.PedidoDAO;
+import bm.app.Model.credenciamento.Credenciamento;
 import bm.app.Model.notas.Notas;
 import bm.app.Model.FormaPagamento;
 import bm.app.Model.pedidos.Pedido;
@@ -67,6 +68,12 @@ public class AppUtils {
 
         entregador.setCellValueFactory(new PropertyValueFactory<PedidoTableView, String>("entregador"));
         entregador.setCellFactory(TextFieldTableCell.forTableColumn());
+        entregador.setOnEditCommit(event -> {
+            PedidoTableView pedidoTableView = event.getRowValue();
+            pedidoTableView.setEntregador(event.getNewValue());
+            Pedido pedidoDb = new Pedido(pedidoTableView);
+            pedidoDAO.atualizarEntregador(pedidoDb);
+        });
 
         statusCliente.setCellValueFactory(new PropertyValueFactory<PedidoTableView, String>("status"));
         statusCliente.setCellFactory(ChoiceBoxTableCell.forTableColumn("Atendendo", "Pedido", "Entregue", "Não pago", "Pago"));
@@ -94,7 +101,14 @@ public class AppUtils {
         });
         deleta.setCellValueFactory(new PropertyValueFactory<PedidoTableView, CheckBox>("remover"));
         pagamento.setCellValueFactory(new PropertyValueFactory<PedidoTableView, String>("formaPagamento"));
-        pagamento.setCellFactory(ChoiceBoxTableCell.forTableColumn("Dinheiro", "Cartão", "Pix"));
+        pagamento.setCellFactory(ChoiceBoxTableCell.forTableColumn("Reais", "Cartão", "Pix", "Boleto", "Cheque","Pesos"));
+        pagamento.setOnEditCommit(event -> {
+            PedidoTableView pedidoTableView = event.getRowValue();
+            pedidoTableView.setFormaPagamento(event.getNewValue());
+            Pedido pedido = new Pedido(pedidoTableView);
+            pedidoDAO.atualizarFormaPagamaneto(pedido);
+            atualizarTabelas(list);
+        });
         tabelaPedidos.setEditable(true);
         tabelaPedidos.setItems(list);
 
@@ -242,10 +256,10 @@ public class AppUtils {
                     setText(null);
                     setGraphic(null);
                 } else {
-                    Label label = new Label("Título: " + item.getTitulo() + "\nDescrição: " + item.getDescricao() ); // Supondo que Notas tenha um método getNome()
-                    label.setWrapText(true); // Habilita a quebra de texto
-                    label.setMaxWidth(getListView().getWidth() - 20); // Define a largura máxima do label para quebrar o texto, ajuste conforme necessário
-                    setGraphic(label); // Define o label como o conteúdo gráfico da célula
+                    Label label = new Label("Título: " + item.getTitulo() + "\nDescrição: " + item.getDescricao() );
+                    label.setWrapText(true);
+                    label.setMaxWidth(getListView().getWidth() - 20);
+                    setGraphic(label);
                 }
             }
         });
@@ -272,5 +286,25 @@ public class AppUtils {
         anotacoes.setText(nota.getDescricao());
         adicionarNotasView(paneAdicionarTarefas, listaDeNotas, true, false, tfTituloNota);
         btEditarNota.setVisible(true);
+    }
+    public static void mostrarEdicaoFuncionario(Label labelNome, Label labelUser, Button excluir, Button editar,
+                                                Button salvar, TextField nome, TextField user, TextField senha,
+                                                boolean label, boolean buttonFirst, boolean buttonSecond, boolean textFields,
+                                                Credenciamento credenciamento) {
+
+        labelNome.setVisible(label);
+        labelUser.setVisible(label);
+        excluir.setVisible(buttonFirst);
+        editar.setVisible(buttonFirst);
+        salvar.setVisible(buttonSecond);
+        nome.setVisible(textFields);
+        user.setVisible(textFields);
+        senha.setVisible(textFields);
+        if (credenciamento != null) {
+            nome.setText(credenciamento.getNome());
+            user.setText(credenciamento.getUsername());
+
+        }
+
     }
 }

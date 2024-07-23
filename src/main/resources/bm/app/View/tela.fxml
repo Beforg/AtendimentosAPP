@@ -68,7 +68,7 @@
       </MenuBar>
       <TableView fx:id="tabelaPedidos" cacheShape="false" centerShape="false" editable="true" fixedCellSize="0.0" focusTraversable="false" layoutX="289.0" layoutY="27.0" prefHeight="623.0" prefWidth="1018.0" scaleShape="false" stylesheets="@../../../bm.app.Styles/tabela.css" AnchorPane.rightAnchor="1.0">
         <columns>
-            <TableColumn fx:id="deleta" editable="false" prefWidth="33.0" resizable="false" text="X" />
+            <TableColumn fx:id="deleta" editable="false" prefWidth="33.0" resizable="false" sortable="false" text="X" />
           <TableColumn fx:id="nomeCliente" onEditCommit="#editarNome" prefWidth="233.0" resizable="false" text="Nome" />
           <TableColumn fx:id="statusCliente" prefWidth="147.0" resizable="false" text="Status" />
             <TableColumn fx:id="brl" prefWidth="124.0" resizable="false" text="Valor BRL" />
@@ -208,7 +208,7 @@
       <Separator layoutX="179.0" layoutY="176.0" prefHeight="4.0" prefWidth="109.0" />
       <CheckBox fx:id="cbEntreguePedido" disable="true" layoutX="8.0" layoutY="265.0" mnemonicParsing="false" onAction="#alterarEntregue" text="Pedido entregue" />
       <Label layoutX="10.0" layoutY="190.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="Código:" />
-      <Label fx:id="labelCodigoPedido" layoutX="10.0" layoutY="207.0" prefHeight="17.0" prefWidth="260.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="964-002/2024" visible="false" />
+      <Label fx:id="labelCodigoPedido" layoutX="10.0" layoutY="207.0" prefHeight="17.0" prefWidth="278.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="964-002/2024" visible="false" />
       <Label layoutX="156.0" layoutY="228.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="Chave do Peso:" />
       <Label fx:id="labelChavePesoPedido" layoutX="158.0" layoutY="247.0" prefHeight="17.0" prefWidth="79.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="8.50" visible="false" />
       <Label layoutX="156.0" layoutY="273.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="Data/Hora:" />

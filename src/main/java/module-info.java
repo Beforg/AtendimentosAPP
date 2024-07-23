@@ -4,6 +4,7 @@ module bm.app.demo {
     requires org.apache.pdfbox;
     requires java.sql;
     requires static lombok;
+    requires spring.security.crypto;
 
 
     exports bm.app.View;

@@ -119,27 +119,16 @@ public class PedidoDAO {
         }
     }
 
-        public void atualizarPago(Pedido pedido) {
-        String sql = "UPDATE pedidos SET pago = ? WHERE codigo = ?";
+
+    public void atualizarAndamento(Pedido pedido) {
+        String sql = "UPDATE pedidos SET entregue = ?, pago = ?, status = ?  WHERE codigo = ?";
         Connection conn = connectionFactory.getConnection();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setBoolean(1, pedido.verificaPago());
-            ps.setObject(2, pedido.getId());
-            ps.execute();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro na conexão com o banco de dados: " + e.getMessage());
-        }
-    }
-
-    public void atualizarEntregue(Pedido pedido) {
-        String sql = "UPDATE pedidos SET entregue = ? WHERE codigo = ?";
-        Connection conn = connectionFactory.getConnection();
-        try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setBoolean(1, pedido.verificaEntregue());
-            ps.setObject(2, pedido.getId());
+            ps.setObject(2, pedido.verificaEntregue());
+            ps.setString(3, pedido.getStatusPedido());
+            ps.setObject(4, pedido.getId());
             ps.execute();
             conn.close();
         } catch (SQLException e) {

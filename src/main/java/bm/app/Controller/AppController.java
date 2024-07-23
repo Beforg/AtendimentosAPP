@@ -1,5 +1,6 @@
 package bm.app.Controller;
 
+import bm.app.Infra.dao.NotasDAO;
 import bm.app.Infra.dao.PedidoDAO;
 import bm.app.Model.notas.NotasService;
 import bm.app.Utils.GerarRelatorio;
@@ -77,6 +78,7 @@ public class AppController implements Initializable {
     private ObservableList<Notas> listNotas = FXCollections.observableArrayList();
     public static Boolean verificaJanela = false;
     private final PedidoDAO pedidoDAO = new PedidoDAO();
+    private final NotasDAO notasDAO = new NotasDAO();
 
     IntegerProperty pedidosProperty = new SimpleIntegerProperty(0);
     IntegerProperty entreguesProperty = new SimpleIntegerProperty(0);
@@ -99,13 +101,11 @@ public class AppController implements Initializable {
         verificaJanela = false;
     }
     public void ajuda() throws IOException {
-        ViewService viewService = new ViewService();
-        Stage ajudaViewStage = viewService.ajudaView();
+        Stage ajudaViewStage = ViewService.ajudaView();
         ajudaViewStage.show();
     }
     public void sobre() throws IOException {
-        ViewService viewService = new ViewService();
-        Stage sobreViewStage = viewService.sobreView();
+        Stage sobreViewStage = ViewService.sobreView();
         sobreViewStage.show();
     }
     public void adicionar(ActionEvent e) throws IOException {
@@ -121,7 +121,7 @@ public class AppController implements Initializable {
         }
     }
     public void botaoRemover(ActionEvent event){
-        pedidoService.removerPedido(list);
+        pedidoService.removerPedido(list,pedidoDAO);
     }
     public void editarNome(TableColumn.CellEditEvent<PedidoTableView, String> nomeClienteTroca) {
         PedidoTableView ptv = AppUtils.editarNome(tabelaPedidos, nomeClienteTroca);
@@ -142,10 +142,10 @@ public class AppController implements Initializable {
 
     }
     public void alterarPago() {
-        pedidoService.atualizarPedido(cbPagoPedido, cbEntreguePedido, tabelaPedidos,list);
+        pedidoService.atualizarPedido(cbPagoPedido, cbEntreguePedido, tabelaPedidos,list,pedidoDAO);
     }
     public void alterarEntregue() {
-        pedidoService.atualizarPedido(cbPagoPedido, cbEntreguePedido, tabelaPedidos,list);
+        pedidoService.atualizarPedido(cbPagoPedido, cbEntreguePedido, tabelaPedidos,list,pedidoDAO);
     }
     public void registro_rb() {
 
@@ -200,7 +200,7 @@ public class AppController implements Initializable {
         AppUtils.adicionarNotasView(paneAdicionarTarefas, listaDeNotas,false,true, tfTituloNota);
     }
     public void adicionarNota() {
-       notasService.criarNota(tfTituloNota.getText(), anotacoes.getText(), listNotas);
+       notasService.criarNota(tfTituloNota.getText(), anotacoes.getText(), listNotas, notasDAO);
         voltarAdicionarView();
         AppUtils.limpaCamposNotas(tfTituloNota, anotacoes);
     }
@@ -208,20 +208,15 @@ public class AppController implements Initializable {
         AppUtils.editarNotasView(paneAdicionarTarefas, listaDeNotas, tfTituloNota, anotacoes,btEditarNota);
     }
     public void removerNota() {
-        notasService.removerNota(listaDeNotas, listNotas);
+        notasService.removerNota(listaDeNotas, listNotas, notasDAO);
     }
     public void editarNotaExistente() {
-        notasService.editarNota(listaDeNotas, tfTituloNota, anotacoes, paneAdicionarTarefas);
-    }
-    public void atualizaStatus() {
-        PedidoTableView pedidoTableView = tabelaPedidos.getSelectionModel().getSelectedItem();
-        Pedido pedido = new Pedido(pedidoTableView);
-        pedidoDAO.atualizarStatus(pedido);
-        System.out.println("asd");
+        notasService.editarNota(listaDeNotas, tfTituloNota, anotacoes, paneAdicionarTarefas, notasDAO);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        notasDAO.listarNotasHoje(listaDeNotas);
         pedidoDAO.carregarPedidoHoje(list);
         AppUtils.configuraLista(listaDeNotas, listNotas);
         AppUtils.configuraTabelaPedidos(tabelaPedidos, nomeCliente, entregador, statusCliente,

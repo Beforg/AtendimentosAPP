@@ -1,5 +1,6 @@
 package bm.app.Model.pedidos;
 
+import bm.app.Infra.dao.PedidoDAO;
 import bm.app.Model.FormaPagamento;
 import bm.app.Model.StatusPedido;
 import bm.app.Model.cliente.Cliente;
@@ -34,29 +35,33 @@ public class PedidoService {
         return null;
     }
 
-    public void atualizarPedido(CheckBox pago, CheckBox entregue, TableView<PedidoTableView> tabela, ObservableList<PedidoTableView> lista) {
+    public void atualizarPedido(CheckBox pago, CheckBox entregue, TableView<PedidoTableView> tabela, ObservableList<PedidoTableView> lista,
+                                PedidoDAO pedidoDAO) {
         PedidoTableView pedido = tabela.getSelectionModel().getSelectedItem();
         if (pago.isSelected() && entregue.isSelected()) {
-            pedido.setStatus(StatusPedido.ENTREGUE.getStatusPedido());
-            pedido.setPago(true);
-            pedido.setEntregue(true);
+            Pedido pedidoDb = settarPedido(pedido, StatusPedido.ENTREGUE, true, true);
+            pedidoDAO.atualizarAndamento(pedidoDb);
         } else if (pago.isSelected()) {
-            pedido.setStatus(StatusPedido.PAGO.getStatusPedido());
-            pedido.setPago(true);
-            pedido.setEntregue(false);
+            Pedido pedidoDb = settarPedido(pedido, StatusPedido.PAGO, true, false);
+            pedidoDAO.atualizarAndamento(pedidoDb);
         } else if (entregue.isSelected()) {
-            pedido.setStatus(StatusPedido.ENTREGUE.getStatusPedido());
-            pedido.setPago(false);
-            pedido.setEntregue(true);
+            Pedido pedidoDb = settarPedido(pedido, StatusPedido.ENTREGUE, false, true);
+            pedidoDAO.atualizarAndamento(pedidoDb);
         } else {
-            pedido.setStatus(StatusPedido.PENDENTE.getStatusPedido());
-            pedido.setPago(false);
-            pedido.setEntregue(false);
+            Pedido pedidoDb = settarPedido(pedido, StatusPedido.PENDENTE, false, false);
+            pedidoDAO.atualizarAndamento(pedidoDb);
         }
         tabela.refresh();
         AppUtils.atualizarTabelas(lista);
     }
-    public void removerPedido(ObservableList<PedidoTableView> list){
+
+    private Pedido settarPedido(PedidoTableView pedido, StatusPedido statusPedido, boolean pago, boolean entregue) {
+        pedido.setStatus(statusPedido.getStatusPedido());
+        pedido.setPago(pago);
+        pedido.setEntregue(entregue);
+        return new Pedido(pedido);
+    }
+    public void removerPedido(ObservableList<PedidoTableView> list, PedidoDAO pedidoDAO){
         ObservableList<PedidoTableView> removePedidoTableView = FXCollections.observableArrayList();
 
         for (PedidoTableView pedidoTableView : list){
@@ -91,6 +96,10 @@ public class PedidoService {
                     });
 
             if (confirmaRemover.showAndWait().get() == ButtonType.OK) {
+                for (PedidoTableView pedidoTableView : removePedidoTableView) {
+                    Pedido pedido = new Pedido(pedidoTableView);
+                    pedidoDAO.removerPedido(pedido);
+                }
                 list.removeAll(removePedidoTableView);
 
             }
