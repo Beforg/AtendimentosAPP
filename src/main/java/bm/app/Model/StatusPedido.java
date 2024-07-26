@@ -4,7 +4,8 @@ public enum StatusPedido {
     PENDENTE("Pendente"),
     EM_ANDAMENTO("Em andamento"),
     ENTREGUE("Entregue"),
-    PAGO("Pago");
+    PAGO("Pago"),
+    NAO_PAGO("Não pago");
 
     public final String statusPedido;
 

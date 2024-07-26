@@ -11,7 +11,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="382.0" stylesheets="@../../../bm.app.Styles/app2.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.AdminController">
+<AnchorPane prefHeight="400.0" prefWidth="382.0" stylesheets="@../../../bm.app.Styles/telas-menu.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.AdminController">
    <children>
       <TabPane layoutY="-1.0" prefHeight="400.0" prefWidth="383.0" stylesheets="@../../../bm.app.Styles/tabPane.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -19,13 +19,13 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tabelaAdm" layoutY="60.0" prefHeight="258.0" prefWidth="382.0" stylesheets="@../../../bm.app.Styles/tabela.css" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="tabelaAdm" layoutY="60.0" prefHeight="318.0" prefWidth="382.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="tcId" prefWidth="75.0" text="ID" />
-                            <TableColumn fx:id="tcNome" prefWidth="303.0" text="NOME" />
+                            <TableColumn fx:id="tcNome" prefWidth="304.0" text="NOME" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btExcluir" layoutX="302.0" layoutY="333.0" mnemonicParsing="false" onAction="#excluir" prefWidth="70.0" styleClass="button2" text="Excluir" />
+                        <Button fx:id="btExcluir" layoutX="302.0" layoutY="333.0" mnemonicParsing="false" onAction="#excluir" prefWidth="70.0" styleClass="remover_botao" text="Excluir" />
                      </children>
                   </AnchorPane>
             </content>
@@ -45,7 +45,8 @@
                         <Separator layoutX="18.0" layoutY="81.0" orientation="VERTICAL" prefHeight="207.0" prefWidth="6.0" />
                         <Separator layoutX="364.0" layoutY="81.0" orientation="VERTICAL" prefHeight="207.0" prefWidth="6.0" />
                         <Separator layoutX="20.0" layoutY="287.0" prefHeight="1.0" prefWidth="346.0" />
-                        <Label layoutX="20.0" layoutY="57.0" styleClass="labelInfo" text="Cadastro de Administrador" />
+                        <Label layoutX="20.0" layoutY="21.0" styleClass="labelInfo" text="Cadastro de Administrador" />
+                        <Separator layoutX="200.0" layoutY="30.0" prefHeight="3.0" prefWidth="182.0" />
                      </children>
                   </AnchorPane>
                </content>

@@ -1,5 +1,6 @@
 package bm.app.Controller;
 
+import bm.app.Infra.dao.ClienteDAO;
 import bm.app.Infra.dao.PedidoDAO;
 import bm.app.Model.FormaPagamento;
 import bm.app.Model.StatusPedido;
@@ -14,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -35,8 +37,13 @@ public class AdicionarControler implements Initializable {
     private TextField chave_peso;
     @FXML
     private ComboBox<Cliente> cbSelecionarCliente;
+    @FXML
+    private Label nomeAdd;
+    @FXML
+    private ImageView imgBusca;
 
     private final PedidoDAO pedidoDAO = new PedidoDAO();
+    private final ClienteDAO clienteDAO = new ClienteDAO();
     private final PedidoService pedidoService = new PedidoService();
     private StatusPedido statusPedido = StatusPedido.PENDENTE;
     public static String peso;
@@ -44,12 +51,13 @@ public class AdicionarControler implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         AppUtils.adicionaItensChoiceBox(listaPagamento);
+        clienteDAO.listarClientesComboBox(cbSelecionarCliente);
         chave_peso.setText(peso);
     }
 
 
     public void cancelar() throws IOException {
-        boolean verifica = CaixaDeMensagem.mensagemConfirmacao("Cancelar atendimento", "Tem certeza que deseja cancelar?", "", cancelarBot);
+        boolean verifica = CaixaDeMensagem.mensagemConfirmacao("Cancelar atendimento", "Tem certeza que deseja cancelar?", "", "aviso.png");
         if (verifica) {
             AppController.verificaJanela = false;
             Stage stage = (Stage) cancelarBot.getScene().getWindow();
@@ -57,16 +65,36 @@ public class AdicionarControler implements Initializable {
         }
 
     }
+    @FXML
+    void listarClientes(){
+        AppUtils.showInputsAdicionar(cbSelecionarCliente,adicionaNome,true);
+        adicionaNome.setText("");
+    }
+    @FXML
+    void hoverBusca() {
+        AppUtils.hoverImagem(imgBusca, "/ui/search-hv.png");
+    }
+    @FXML
+    void exitHoverBusca() {
+        AppUtils.hoverImagem(imgBusca, "/ui/search.png");
+    }
+
     public void adicionar() {
         if (adicionaPedido.isSelected()) {
-            statusPedido = StatusPedido.EM_ANDAMENTO;
+            statusPedido = StatusPedido.PENDENTE;
+        }
+        if (listaPagamento.getValue() == null) {
+            listaPagamento.setValue("Reais");
+        }
+        if(valorPedido.getText().isEmpty()) {
+            valorPedido.setText("0.00");
         }
 
         Cliente cliente = Validacao.verificaComboBoxAdicionarCliente(cbSelecionarCliente);
         Pedido pedido = pedidoService.criarPedido(adicionaNome.getText(),
                 new BigDecimal(valorPedido.getText().replace(",", ".")),
                 FormaPagamento.valueOf(listaPagamento.getValue().toUpperCase().replace("Ã", "A")),
-                "", statusPedido, chave_peso.getText(), adicionaPedido.isSelected(), cliente);
+                "", statusPedido, chave_peso.getText(), adicionaPedido.isSelected(), cliente, cbSelecionarCliente);
         AppController.adicionarAtendimento(pedido);
         pedidoDAO.criarPedido(pedido);
 
@@ -75,16 +103,12 @@ public class AdicionarControler implements Initializable {
             Stage stage = (Stage) cancelarBot.getScene().getWindow();
             stage.close();
         } else {
-            AppUtils.limpaCamposAdicionarPedido(adicionaNome, valorPedido, listaPagamento, adicionaPedido);
+            AppUtils.limpaCamposAdicionarPedido(adicionaNome, valorPedido, listaPagamento, adicionaPedido, nomeAdd, cbSelecionarCliente);
+            AppUtils.showInputsAdicionar(cbSelecionarCliente,adicionaNome,false);
         }
     }
 
     public void pedidoMarcado() {
         AppUtils.liberaCamposAdicionarPedido(adicionaPedido, valorPedido, listaPagamento);
     }
-    public void teste() {
-        System.out.println("Teste");
-    }
-
-
 }

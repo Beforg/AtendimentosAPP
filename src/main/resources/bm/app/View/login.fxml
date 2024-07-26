@@ -11,7 +11,7 @@
    <children>
       <Label layoutX="29.0" layoutY="45.0" styleClass="labelInfo" text="Login" />
       <Label layoutX="27.0" layoutY="86.0" styleClass="labelInfo" text="Senha" />
-      <Label layoutX="100.0" layoutY="11.0" text="AtendimentosAPP">
+      <Label layoutX="100.0" layoutY="11.0" text="AtendimentosAPP" textFill="WHITE">
          <font>
             <Font name="Yu Gothic UI Semibold" size="14.0" />
          </font>

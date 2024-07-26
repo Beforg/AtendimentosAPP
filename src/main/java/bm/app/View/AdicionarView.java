@@ -12,7 +12,7 @@ import java.io.IOException;
 
 
 public class AdicionarView {
-    public Stage telaAdicionar(boolean verificaJanela, TextField valorPeso) throws IOException {
+    public Stage telaAdicionar(boolean verificaJanela, Label valorPeso) throws IOException {
         Stage stageAdicionar = new Stage();
         if (!verificaJanela) {
             AdicionarControler.peso = valorPeso.getText();
@@ -23,7 +23,6 @@ public class AdicionarView {
             segundaTela.getController();
             stageAdicionar.setTitle("Adicionar pedido");
             stageAdicionar.setScene(tela2);
-            stageAdicionar.show();
             Image icon = new Image("adicionar-usuario.png");
             stageAdicionar.getIcons().add(icon);
             stageAdicionar.setResizable(false);

@@ -1,43 +1,43 @@
 .menu-bar {
-    -fx-background-color: #E0FBE2;
-    -fx-font-family: "Yu Gothic Light";
+    -fx-background-color: #424769;
+    -fx-font-family: "Yu Gothic UI";
     -fx-font-style: normal;
     -fx-font-weight: 400;
     -fx-font-size: 12px;
-    -fx-text-fill: #000000;
+    -fx-text-fill: #f1ebeb;
     -fx-border-width: 0.5px;
     -fx-border-color: #777777;
 
 }
 
 .label {
-    -fx-font-family: "Yu Gothic Light";
+    -fx-font-family: "Yu Gothic UI";
     -fx-font-weight: bold;
     -fx-font-size: 18px;
 }
 
 .menu-bar .menu-button:hover, .menu-bar .menu-button:focused, .menu-bar .menu-button:showing {
-    -fx-background: #ACE1AF;
-    -fx-background-radius: 10;
+    -fx-background: #444a49;
+    -fx-background-radius: 8;
     -fx-opacity: 0.5;
-    -fx-text-fill: #000000;
+    -fx-text-fill: #eae1e1;
 }
 
 .menu-bar .label {
     -fx-font-size: 14.0 pt;
-    -fx-font-family: "Yu Gothic Light";
-    -fx-text-fill: #000000;
+    -fx-font-family: "Yu Gothic UI";
+    -fx-text-fill: #f4f0f0;
     -fx-font-weight: bold;
 }
 
 .menu-item {
-    -fx-text-fill: #000000;
-    -fx-background: #ACE1AF;
+    -fx-text-fill: #f3ecec;
+    -fx-background: #424769;
     -fx-background-radius: 10;
 }
 
 .menu-item .label{
-    -fx-text-fill: #000000;
+    -fx-text-fill: #ffffff;
 }
 .menu-item .label:hover{
 
@@ -45,10 +45,10 @@
 }
 
 .context-menu {
-    -fx-background-color: #ACE1AF;
+    -fx-background-color: #424769;
     -fx-background-radius: 10;
-    -fx-opacity: 0.8;
+    -fx-opacity: 0.9;
     -fx-border-radius: 10;
-    -fx-border-color: #E0FBE2;
+    -fx-border-color: #d3dcd4;
     -fx-text-fill: black;
 }

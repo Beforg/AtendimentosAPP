@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class GerarRelatorio {
-    public void salvarPDF(TableView<PedidoTotalTableView> tabelaTotal, ObservableList<PedidoTableView> list, String horaAtual, TextField nomeFuncionario, TextField valorPeso, TextArea anotacoes, Button botaoFinalizar) {
+    public void salvarPDF(TableView<PedidoTotalTableView> tabelaTotal, ObservableList<PedidoTableView> list, String horaAtual, Label nomeFuncionario, Label valorPeso, TextArea anotacoes, Button botaoFinalizar) {
         TableColumn<PedidoTotalTableView, Integer> colunaAtendimentos = (TableColumn<PedidoTotalTableView, Integer>) tabelaTotal.getColumns().get(0);
         String atendimentos = String.valueOf(colunaAtendimentos.getCellData(tabelaTotal.getItems().get(0)));
 
@@ -104,9 +104,9 @@ public class GerarRelatorio {
                     contentStream.newLineAtOffset(85, 0);
                     contentStream.showText(pedidoTableView.getFormaPagamento());
                     contentStream.newLineAtOffset(85, 0);
-                    //contentStream.showText(String.valueOf(pedidoTableView.getEntregue()).replace("true", "SIM").replace("false","NÃO"));
+                    contentStream.showText(String.valueOf(pedidoTableView.isEntregue()).replace("true", "SIM").replace("false","NÃO"));
                     contentStream.newLineAtOffset(85, 0);
-                   // contentStream.showText(String.valueOf(pedidoTableView.getPago()).replace("true", "SIM").replace("false","NÃO"));
+                    contentStream.showText(String.valueOf(pedidoTableView.isPago()).replace("true", "SIM").replace("false","NÃO"));
 
                     contentStream.endText();
 
@@ -148,12 +148,12 @@ public class GerarRelatorio {
                         contentStream2.newLineAtOffset(85, 0);
                         contentStream2.showText("PIX Recebido");
                         contentStream2.newLineAtOffset(85, 0);
-                        contentStream2.showText("Cartão");
+                        contentStream2.showText("Outros");
 
                         contentStream2.setFont(PDType1Font.HELVETICA, 10);
                         contentStream2.newLineAtOffset(-510, -20);
                         contentStream2.showText(atendimentos + " atendimentos");
-                        contentStream2.newLineAtOffset(85, 0);;
+                        contentStream2.newLineAtOffset(85, 0);
                         contentStream2.showText(pedidos + " pedido(s)");
                         contentStream2.newLineAtOffset(85, 0);
                         contentStream2.showText(valorTotal + " R$");
@@ -299,13 +299,11 @@ public class GerarRelatorio {
                     e.printStackTrace();
                 }
             } else {
-                System.out.println("Cancelado pelo usuário");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ;
     }
     }
 

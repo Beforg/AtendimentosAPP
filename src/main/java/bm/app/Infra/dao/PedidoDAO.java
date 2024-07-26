@@ -6,10 +6,11 @@ import bm.app.Model.pedidos.PedidoTableView;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class PedidoDAO {
-    ConnectionFactory connectionFactory;
+    private final ConnectionFactory connectionFactory;
 
     public PedidoDAO() {
         this.connectionFactory = new ConnectionFactory();
@@ -47,11 +48,13 @@ public class PedidoDAO {
        }
     }
 
-    public void carregarPedidoHoje(ObservableList<PedidoTableView> lista) {
-        String sql = "SELECT * FROM pedidos WHERE data_pedido = CURRENT_DATE";
+
+    public void carregarPedido(ObservableList<PedidoTableView> lista, LocalDate data) {
+        String sql = "SELECT * FROM pedidos WHERE data_pedido = ?";
         Connection conn = connectionFactory.getConnection();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setDate(1, Date.valueOf(data));
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 Pedido pedido = new Pedido();
@@ -124,8 +127,8 @@ public class PedidoDAO {
         Connection conn = connectionFactory.getConnection();
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setBoolean(1, pedido.verificaPago());
-            ps.setObject(2, pedido.verificaEntregue());
+            ps.setBoolean(1, pedido.verificaEntregue());
+            ps.setObject(2, pedido.verificaPago());
             ps.setString(3, pedido.getStatusPedido());
             ps.setObject(4, pedido.getId());
             ps.execute();

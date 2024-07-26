@@ -1,17 +1,21 @@
 package bm.app.Controller;
 
+import bm.app.Infra.configuration.ConfigUtil;
+import bm.app.Infra.dao.NotasClienteDAO;
 import bm.app.Infra.dao.NotasDAO;
 import bm.app.Infra.dao.PedidoDAO;
-import bm.app.Model.notas.NotasService;
+import bm.app.Model.anotacoes.NotasService;
+import bm.app.Model.credenciamento.Credenciamento;
+import bm.app.Model.notas.NotasClienteService;
 import bm.app.Utils.GerarRelatorio;
-import bm.app.Model.notas.Notas;
-import bm.app.Utils.ValorTotal;
+import bm.app.Model.anotacoes.Notas;
 import bm.app.Model.pedidos.Pedido;
 import bm.app.Model.pedidos.PedidoService;
 import bm.app.Model.pedidos.PedidoTableView;
 import bm.app.Model.pedidos.PedidoTotalTableView;
 import bm.app.Utils.AppUtils;
 import bm.app.Utils.CaixaDeMensagem;
+import bm.app.Utils.Validacao;
 import bm.app.View.AdicionarView;
 import bm.app.View.ViewService;
 import javafx.beans.property.IntegerProperty;
@@ -22,19 +26,29 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
+import java.util.List;
 
 public class AppController implements Initializable {
     @FXML
-    private  Button botaoFinalizar,btEditarNota;
+    private  Button botaoFinalizar,btEditarNota, add_botao;
     @FXML
     public TableView<PedidoTableView> tabelaPedidos;
     @FXML
@@ -52,7 +66,7 @@ public class AppController implements Initializable {
     @FXML
     private TableColumn<PedidoTotalTableView, BigDecimal> uyuRecebido,recebidoCartao,valorTotal,pixRecebido;
     @FXML
-    public TextField valorPeso,nomeFuncionario,tfTituloNota;
+    public TextField nomeFuncionario,tfTituloNota;
     @FXML
     private TableColumn<PedidoTableView, CheckBox> deleta;
     @FXML
@@ -62,7 +76,10 @@ public class AppController implements Initializable {
     @FXML
     private ObservableList<PedidoTotalTableView> listPedidosTotal = FXCollections.observableArrayList();
     @FXML
-    private Label labelCodigoPedido, labelChavePesoPedido, labelDataHoraPedido;
+    private Label labelCodigoPedido, labelChavePesoPedido, labelDataHoraPedido,valorPeso,labelNomeConta;
+    @FXML
+    private DatePicker datePicker;
+
     @FXML
     private CheckBox cbPagoPedido, cbEntreguePedido;
     @FXML
@@ -71,6 +88,8 @@ public class AppController implements Initializable {
     private ListView<Notas> listaDeNotas;
     @FXML
     private Pane paneAdicionarTarefas;
+    @FXML
+    private MenuItem menuAdministrador;
 
     private final PedidoService pedidoService = new PedidoService();
     private final NotasService notasService = new NotasService();
@@ -79,6 +98,9 @@ public class AppController implements Initializable {
     public static Boolean verificaJanela = false;
     private final PedidoDAO pedidoDAO = new PedidoDAO();
     private final NotasDAO notasDAO = new NotasDAO();
+    private final NotasClienteService notasClienteService = new NotasClienteService();
+    private final NotasClienteDAO notasClienteDAO = new NotasClienteDAO();
+    public static Credenciamento credenciamento;
 
     IntegerProperty pedidosProperty = new SimpleIntegerProperty(0);
     IntegerProperty entreguesProperty = new SimpleIntegerProperty(0);
@@ -100,6 +122,8 @@ public class AppController implements Initializable {
         list.add(novoPedidoTableView);
         verificaJanela = false;
     }
+
+
     public void ajuda() throws IOException {
         Stage ajudaViewStage = ViewService.ajudaView();
         ajudaViewStage.show();
@@ -108,17 +132,19 @@ public class AppController implements Initializable {
         Stage sobreViewStage = ViewService.sobreView();
         sobreViewStage.show();
     }
-    public void adicionar(ActionEvent e) throws IOException {
-        AdicionarView adicionarView = new AdicionarView();
-        Stage adicionar = adicionarView.telaAdicionar(verificaJanela,valorPeso);
-        if (!verificaJanela) {
-            adicionar.setOnCloseRequest(event -> {
-                verificaJanela =  false;
-            });
-            verificaJanela = true;
-        } else {
-            CaixaDeMensagem.mensagemErro("Erro", "Já existe uma operação em aberto", "Por favor, finalize a operação atual antes de continuar");
-        }
+    public void adicionar() throws IOException {
+        Stage stage = ViewService.telaAdicionar(verificaJanela,valorPeso);
+        stage.showAndWait();
+//        AdicionarView adicionarView = new AdicionarView();
+//        Stage adicionar = adicionarView.telaAdicionar(verificaJanela,valorPeso);
+//        if (!verificaJanela) {
+//            adicionar.setOnCloseRequest(event -> {
+//                verificaJanela =  false;
+//            });
+//            verificaJanela = true;
+//        } else {
+//            CaixaDeMensagem.mensagemErro("Erro", "Já existe uma operação em aberto", "Por favor, finalize a operação atual antes de continuar");
+//        }
     }
     public void botaoRemover(ActionEvent event){
         pedidoService.removerPedido(list,pedidoDAO);
@@ -138,20 +164,11 @@ public class AppController implements Initializable {
             tabelaPedidos.refresh();
         }
     }
-    public void carregar_imagem(){
-
-    }
     public void alterarPago() {
-        pedidoService.atualizarPedido(cbPagoPedido, cbEntreguePedido, tabelaPedidos,list,pedidoDAO);
+        pedidoService.atualizarPedido(cbPagoPedido,cbEntreguePedido , tabelaPedidos,list,pedidoDAO);
     }
     public void alterarEntregue() {
-        pedidoService.atualizarPedido(cbPagoPedido, cbEntreguePedido, tabelaPedidos,list,pedidoDAO);
-    }
-    public void registro_rb() {
-
-    }
-    public void promo_rb() {
-
+        pedidoService.atualizarPedido(cbPagoPedido,cbEntreguePedido , tabelaPedidos,list,pedidoDAO);
     }
     public void funcionariosView() throws IOException {
         ViewService.funcionarioView();
@@ -162,17 +179,16 @@ public class AppController implements Initializable {
     public void cadastrarClienteView() throws IOException {
         ViewService.clientesView();
     }
-    public void gerenciamentoClienteView() throws IOException {
-        ViewService.clienteCadastroView();
-    }
     public void notasPendentesView() throws IOException {
-        ViewService.notasView();
+        Stage stage = ViewService.notasPendentesView();
+        stage.showAndWait();
     }
     public void fecharCaixa() {
         GerarRelatorio gerarRelatorio = new GerarRelatorio();
-        gerarRelatorio.salvarPDF(tabelaTotal, list, horaAtual,nomeFuncionario, valorPeso, anotacoes, botaoFinalizar);
-    }
-    public void buscarDiaView() {
+        gerarRelatorio.salvarPDF(tabelaTotal, list, horaAtual,labelNomeConta, valorPeso, anotacoes, botaoFinalizar);
+        List<Pedido> list = notasClienteDAO.carregaPedidosDoDia();
+        System.out.println(list);
+        notasClienteService.registrarNotasCliente(list, notasClienteDAO);
 
     }
     public void hoverAdicionarNota() {
@@ -195,6 +211,7 @@ public class AppController implements Initializable {
     }
     public void adicionarNotaView() {
         AppUtils.adicionarNotasView(paneAdicionarTarefas, listaDeNotas,true,false, tfTituloNota);
+        btEditarNota.setVisible(false);
     }
     public void voltarAdicionarView() {
         AppUtils.adicionarNotasView(paneAdicionarTarefas, listaDeNotas,false,true, tfTituloNota);
@@ -213,11 +230,71 @@ public class AppController implements Initializable {
     public void editarNotaExistente() {
         notasService.editarNota(listaDeNotas, tfTituloNota, anotacoes, paneAdicionarTarefas, notasDAO);
     }
+    private void carregarChavePeso() {
+        valorPeso.setText(ConfigUtil.getProperty("chavePeso"));
+    }
+
+    @FXML
+    void carregaPedidosPorData(ActionEvent event) {
+        if(Validacao.validaData(datePicker.getValue(),add_botao)) {
+            list.clear();
+            pedidoDAO.carregarPedido(list, datePicker.getValue());
+            listNotas.clear();
+            notasDAO.listarNotasDia(listaDeNotas, datePicker.getValue());
+        } else {
+            CaixaDeMensagem.mensagemErro("Erro", "Data inválida", "Por favor, selecione uma data válida","botao-x.png");
+        }
+    }
+
+    @FXML
+    void chavePesoView() throws IOException {
+        Stage stage = ViewService.chavePesoView();
+        stage.showAndWait();
+        carregarChavePeso();
+    }
+
+    @FXML
+    void consultarPedido() throws IOException {
+        Stage stage = ViewService.buscarPedido();
+        stage.showAndWait();
+    }
+
+    @FXML
+    void getCodigo() {
+        AppUtils.codigoToClipboard(labelCodigoPedido);
+    }
+
+    @FXML
+    void trocarUser() throws IOException {
+        Stage stage = (Stage) nomeFuncionario.getScene().getWindow();
+        stage.close();
+        Stage stage1 = ViewService.loginView();
+        stage1.show();
+    }
+    @FXML
+    void codigoPedidoHover() {
+        labelCodigoPedido.setStyle("-fx-background-color: #f2f2f2; -fx-border-color: #f2f2f2; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-text-fill: black");
+    }
+    @FXML
+    void codigoPedidoHoverOff() {
+        labelCodigoPedido.setStyle("-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: white");
+    }
+    @FXML
+    void addPedidoEnter(KeyEvent event) throws IOException {
+        if (event.getCode() == KeyCode.ENTER) {
+           adicionar();
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ConfigUtil.permissoesApp(credenciamento,menuAdministrador);
+        datePicker.setValue(LocalDate.now());
+        labelNomeConta.setText(credenciamento.getNome());
+        AppUtils.atualizarTabelas(list);
+        carregarChavePeso();
         notasDAO.listarNotasHoje(listaDeNotas);
-        pedidoDAO.carregarPedidoHoje(list);
+        pedidoDAO.carregarPedido(list, LocalDate.now());
         AppUtils.configuraLista(listaDeNotas, listNotas);
         AppUtils.configuraTabelaPedidos(tabelaPedidos, nomeCliente, entregador, statusCliente,
                 brl, uyu, deleta, pagamento, list,pedidoDAO);
@@ -249,11 +326,12 @@ public class AppController implements Initializable {
                 valorCartao,
                 brl);
 
-        ValorTotal.vincularDinheiro(tabelaPedidos, tabelaTotal, brlRecebido, "Reais");
-        ValorTotal.vincularDinheiro(tabelaPedidos, tabelaTotal, uyuRecebido, "Pesos");
-        ValorTotal.vincularDinheiro(tabelaPedidos, tabelaTotal, recebidoCartao, "Cartão");
-        ValorTotal.vincularDinheiro(tabelaPedidos, tabelaTotal, pixRecebido, "Pix");
-        ValorTotal.vincularFalta(tabelaPedidos, tabelaTotal, valor_npg);
+        AppUtils.vincularDinheiro(tabelaPedidos, tabelaTotal, brlRecebido, "Reais",false);
+        AppUtils.vincularDinheiro(tabelaPedidos, tabelaTotal, uyuRecebido, "Pesos",true);
+        AppUtils.vincularDinheiro(tabelaPedidos, tabelaTotal, recebidoCartao, "Cartão",false);
+        AppUtils.vincularCartao(tabelaPedidos, tabelaTotal, recebidoCartao,false);
+        AppUtils.vincularDinheiro(tabelaPedidos, tabelaTotal, pixRecebido, "Pix",false);
+        AppUtils.vincularFalta(tabelaPedidos, tabelaTotal, valor_npg);
 
 
     }

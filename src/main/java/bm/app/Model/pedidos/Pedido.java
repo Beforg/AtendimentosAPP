@@ -50,6 +50,7 @@ public class Pedido {
         this.valor = pedidoTableView.getBrl();
         this.formaPagamento = pedidoTableView.getFormaPagamento();
         this.dataPedido = pedidoTableView.getDataPedido();
+        this.horaPedido = pedidoTableView.getHoraPedido();
         this.entregador = pedidoTableView.getEntregador();
         this.statusPedido = pedidoTableView.getStatus();
         this.pago = pedidoTableView.isPago();

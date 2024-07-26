@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="842.0" stylesheets="@../../../bm.app.Styles/telas-menu.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.NotasController">
+   <children>
+      <TableView fx:id="tabelaNotas" prefHeight="400.0" prefWidth="873.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columns>
+          <TableColumn fx:id="tcData" prefWidth="98.0" text="Data" />
+          <TableColumn fx:id="tcCliente" prefWidth="231.0" text="Cliente" />
+            <TableColumn fx:id="tcValor" prefWidth="107.0" text="Valor" />
+            <TableColumn fx:id="tcPeso" prefWidth="101.0" text="Chave do Peso" />
+            <TableColumn fx:id="tcPedido" prefWidth="303.0" text="Código Pedido (Clique para copiar)" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

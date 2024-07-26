@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="389.0" prefWidth="402.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.CadastroClienteController">
+<AnchorPane prefHeight="371.0" prefWidth="674.0" stylesheets="@../../../bm.app.Styles/telas-menu.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.CadastroClienteController">
    <children>
-      <Separator layoutY="72.0" prefHeight="0.0" prefWidth="402.0" />
-      <Label layoutX="149.0" layoutY="35.0" text="Cadastro de Cliente" />
-      <Button layoutX="277.0" layoutY="350.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Cadastrar" />
+      <Button layoutX="403.0" layoutY="255.0" mnemonicParsing="false" onAction="#selecionaCliente" prefHeight="25.0" prefWidth="104.0" styleClass="button2" text="Selecionar" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="11.0" />
+      <TableView fx:id="tableClientes" layoutX="31.0" layoutY="21.0" prefHeight="247.0" prefWidth="518.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columns>
+          <TableColumn fx:id="tcNome" prefWidth="229.0" text="Nome" />
+          <TableColumn fx:id="tcEndereco" prefWidth="268.0" text="Endereço" />
+            <TableColumn fx:id="tcTelefone" prefWidth="173.0" text="Telefone" />
+        </columns>
+      </TableView>
+      <Button layoutX="434.0" layoutY="255.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="25.0" prefWidth="104.0" styleClass="button2" text="Cancelar" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="122.0" />
    </children>
 </AnchorPane>

@@ -1,6 +1,6 @@
 * {
-    -fx-primary-color: #ACE1AF;
-    -fx-secondary-color: #aff6b3;
+    -fx-primary-color: #a1a1a1;
+    -fx-secondary-color: #e4e4e4;
 
     -fx-focus-color: -fx-secondary-color;
 }
@@ -32,6 +32,9 @@
 }
 .tab-pane .tab {
     -fx-background-color: transparent;
+}
+.tab-pane .tab:hover {
+    -fx-background-color: #dddddd;
 }
 .tab-pane:focused .tab-header-area .headers-region .tab:selected .focus-indicator {
     -fx-border-width: 0;

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="129.0" prefWidth="412.0" stylesheets="@../../../bm.app.Styles/telas-menu.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.BuscarController">
+   <children>
+      <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="413.0" stylesheets="@../../../bm.app.Styles/tabPane.css" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="buscarPedidoTab" text="Buscar Pedido">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="14.0" styleClass="labelInfo" text="Insira o Código do Pedido:" />
+                        <Separator layoutX="186.0" layoutY="19.0" prefHeight="11.0" prefWidth="228.0" />
+                        <TextField fx:id="tfCodigo" alignment="CENTER" layoutX="14.0" layoutY="59.0" prefHeight="27.0" prefWidth="386.0" promptText="Insira o Código" />
+                        <Button layoutX="259.0" layoutY="130.0" mnemonicParsing="false" onAction="#buscarPedido" prefHeight="25.0" prefWidth="62.0" styleClass="button2" text="Buscar" />
+                        <Button layoutX="332.0" layoutY="130.0" mnemonicParsing="false" onAction="#cancelarBusca" styleClass="button2" text="Cancelar" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="resultadoPedidoTab" text="Pedido de ">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="9.0" styleClass="labelInfo" text="Cliente:" />
+                        <Label layoutX="15.0" layoutY="50.0" styleClass="labelInfo" text="Data:" />
+                        <Label layoutX="13.0" layoutY="92.0" styleClass="labelInfo" text="Valor:" />
+                        <Label layoutX="14.0" layoutY="133.0" styleClass="labelInfo" text="Chave Peso:" />
+                        <CheckBox fx:id="cbPago" layoutX="265.0" layoutY="17.0" mnemonicParsing="false" onAction="#alteraPago" text="Marcar pago" />
+                        <CheckBox fx:id="cbEntregue" layoutX="265.0" layoutY="49.0" mnemonicParsing="false" onAction="#alteraEntregue" text="Marcar entregue" />
+                        <Label fx:id="labelNomeCliente" layoutX="105.0" layoutY="9.0" prefHeight="17.0" prefWidth="151.0" styleClass="labelInfo" text="nome" />
+                        <Label fx:id="labelData" layoutX="105.0" layoutY="50.0" prefHeight="17.0" prefWidth="150.0" styleClass="labelInfo" text="nome" />
+                        <Label fx:id="labelValor" layoutX="105.0" layoutY="92.0" prefHeight="17.0" prefWidth="156.0" styleClass="labelInfo" text="nome" />
+                        <Label fx:id="labelChave" layoutX="105.0" layoutY="133.0" prefHeight="17.0" prefWidth="154.0" styleClass="labelInfo" text="nome" />
+                        <Button layoutX="346.0" layoutY="128.0" mnemonicParsing="false" onAction="#voltar" styleClass="button2" text="Voltar" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

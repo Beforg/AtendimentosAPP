@@ -1,4 +1,4 @@
-package bm.app.Model.notas;
+package bm.app.Model.anotacoes;
 
 import bm.app.Infra.dao.NotasDAO;
 import bm.app.Utils.AppUtils;
@@ -20,7 +20,7 @@ public class NotasService {
     }
     public void removerNota(ListView<Notas> list, ObservableList<Notas> notasList, NotasDAO notasDAO) {
         if (list.getSelectionModel().isEmpty()) {
-            CaixaDeMensagem.mensagemErro("Erro","Erro ao remover nota","Selecione uma nota para remover");
+            CaixaDeMensagem.mensagemErro("Erro","Erro ao remover nota","Selecione uma nota para remover","botao-x.png");
             return;
         }
         Notas nota = list.getSelectionModel().getSelectedItem();

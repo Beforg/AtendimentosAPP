@@ -1,5 +1,8 @@
 package bm.app.Controller;
 
+import bm.app.Infra.dao.CredenciamentoDAO;
+import bm.app.Model.credenciamento.Credenciamento;
+import bm.app.Utils.CaixaDeMensagem;
 import bm.app.View.ViewService;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -14,13 +17,13 @@ public class LoginController {
     @FXML
     private TextField tfLogin;
 
+    private final CredenciamentoDAO credenciamentoDAO = new CredenciamentoDAO();
+
     public void entrar() throws IOException {
-        if (tfLogin.getText().equals("admin") && pfSenha.getText().equals("admin")) {
-            System.out.println("Login efetuado com sucesso!");
+        if (credenciamentoDAO.verificaLogin(pfSenha.getText(),tfLogin.getText())) {
+            AppController.credenciamento = credenciamentoDAO.carregarCredenciamento(tfLogin.getText());
             ViewService.telaView();
             sair();
-        } else {
-            System.out.println("Login ou senha inválidos!");
         }
     }
 

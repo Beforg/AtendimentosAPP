@@ -1,0 +1,215 @@
+.text-field {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 5, 0.1, 0.0, 0.0);
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
+    -fx-font-family: "Yu Gothic Light";
+}
+
+.loginBackground {
+    -fx-background-color: #c1c6b5;
+}
+
+.choice-box {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 5, 0.1, 0.0, 0.0);
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
+    -fx-font-family: "Yu Gothic Light";
+}
+
+.button {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 5, 0.1, 0.0, 0.0);
+    -fx-background-color: #a3a3a3;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+    -fx-color: #fff;
+    -fx-cursor: pointer;
+    -fx-font-size: 18px;
+    -fx-font-weight: 400;
+    -fx-text-align: center;
+}
+
+.button2 {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 5, 0.1, 0.0, 0.0);
+    -fx-background-color:#ffffff;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+    -fx-color: #fff;
+    -fx-cursor: pointer;
+    -fx-font-size: 13px;
+    -fx-font-weight: 400;
+    -fx-text-align: center;
+}
+.button:hover {
+    -fx-background-color: #efefef;
+}
+
+.labelInfo {
+    -fx-font-family: "Yu Gothic Medium";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.check-box {
+    -fx-font-family: "Yu Gothic Medium";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.check-box .box {
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 5, 0.1, 0.0, 0.0);
+}
+
+.combo-box {
+    -fx-font-family: "Yu Gothic Light";
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 5, 0.1, 0.0, 0.0);
+    -fx-font-size: 14px;
+    -fx-text-fill: #000000;
+}
+
+.tooltip {
+    -fx-font-size: 14px;
+    -fx-font-family: "Yu Gothic UI Semibold";
+    -fx-background-color: #333333;
+    -fx-text-fill: white;
+    -fx-padding: 10px;
+}
+
+.tooltip .content {
+    -fx-background-color: #ffebd5;
+}
+
+.tooltip .arrow {
+    -fx-background-color: #333333;
+}
+
+.table-view .column-header-background .table-column {
+    -fx-background-color: #d3dad5;
+    -fx-text-fill: #BFF6C3;
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: #c8c4c4;
+    -fx-alignment: CENTER;
+    -fx-font-family: "Yu Gothic Medium";
+}
+
+.table-view .column-header-background .table-column:focused {
+    -fx-background-color: #none;
+
+}
+.table-view .table-row-cell:filled:selected {
+    -fx-background-color: #4b545a;
+}
+.table-view .column-header-background {
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: #ffffff;
+}
+
+.table-row-cell:selected {
+    -fx-selection-bar: transparent;
+    -fx-selection-bar-non-focused: transparent;
+
+}
+.table-row-cell:odd {
+    -fx-background-color: #F5F5F5;
+
+}
+
+.table-row-cell:even {
+    -fx-background-color: #FFFAFA;
+
+}
+
+.table-row-cell {
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: #bdbdbd;
+
+}
+.table-cell {
+    -fx-font-family: "Yu Gothic Medium";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+.custom-choice-box-cell .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
+
+}
+
+.table-view:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.remover_botao {
+    -fx-background-color: #e37474;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+    -fx-color: #fff;
+    -fx-cursor: pointer;
+    -fx-font-size: 13px;
+    -fx-font-weight: 400;
+    -fx-text-align: center;
+}
+
+.remover_botao:hover {
+    -fx-background-color: #cd8585;
+}
+.add_botao {
+    -fx-background-color: #ACE1AF;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+    -fx-font-family: "Yu Gothic Medium";
+    -fx-color: #fff;
+    -fx-cursor: pointer;
+    -fx-font-size: 18px;
+    -fx-font-weight: 400;
+    -fx-text-align: center;
+}
+
+.add_botao:hover {
+    -fx-background-color: #aff6b3;
+}
+.botaoFinalizar {
+    -fx-background-color: #ACE1AF;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+    -fx-color: #fff;
+    -fx-cursor: pointer;
+    -fx-font-family: "Yu Gothic Medium";
+    -fx-font-size: 18px;
+    -fx-font-weight: 400;
+    -fx-text-align: center;
+}
+
+.botaoFinalizar:hover {
+    -fx-background-color: #B0EBB4;
+}
+
+.buttonTextArea {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 20, 0, 4.0, 4.0);
+    -fx-font-family: "Yu Gothic Medium";
+    -fx-color: #fff;
+    -fx-cursor: pointer;
+    -fx-font-size: 14px;
+    -fx-font-weight: 400;
+    -fx-text-align: center;
+}
+
+.buttonTextArea:hover {
+    -fx-background-color: #f1f1f1;
+}

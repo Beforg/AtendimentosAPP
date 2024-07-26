@@ -22,4 +22,17 @@ public class Cliente {
     public String toString() {
         return nome;
     }
+
+    public Cliente (String nome, String telefone, String endereco) {
+        this.nome = nome;
+        this.telefone = telefone;
+        this.endereco = endereco;
+    }
+
+    public Cliente (ClientesTableView clientesTableView) {
+        this.id = Integer.parseInt(clientesTableView.getId());
+        this.nome = clientesTableView.getNome();
+        this.telefone = clientesTableView.getTelefone();
+        this.endereco = clientesTableView.getEndereco();
+    }
 }

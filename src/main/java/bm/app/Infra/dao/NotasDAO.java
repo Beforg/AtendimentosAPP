@@ -1,7 +1,7 @@
 package bm.app.Infra.dao;
 
 import bm.app.Infra.connection.ConnectionFactory;
-import bm.app.Model.notas.Notas;
+import bm.app.Model.anotacoes.Notas;
 import javafx.application.Platform;
 import javafx.scene.control.ListView;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NotasDAO {
-    ConnectionFactory connectionFactory;
+    private final ConnectionFactory connectionFactory;
 
     public NotasDAO() {
         this.connectionFactory = new ConnectionFactory();

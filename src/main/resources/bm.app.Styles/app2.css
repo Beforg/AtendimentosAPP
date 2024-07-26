@@ -7,7 +7,7 @@
 }
 
 .loginBackground {
-    -fx-background-color: #c1c6b5;
+    -fx-background-color: #2D3250;
 }
 
 .choice-box {
@@ -51,11 +51,11 @@
     -fx-font-family: "Yu Gothic Medium";
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-text-fill: #000000;
+    -fx-text-fill: #f8f2f2;
 }
 
 .check-box {
-    -fx-font-family: "Yu Gothic Medium";
+    -fx-font-family: "Yu Gothic UI";
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-text-fill: #000000;

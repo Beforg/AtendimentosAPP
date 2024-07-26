@@ -1,6 +1,7 @@
 package bm.app.Utils;
 
 import bm.app.Infra.dao.PedidoDAO;
+import bm.app.Model.notas.NotasClienteTableView;
 import bm.app.Model.pedidos.Pedido;
 import bm.app.Model.pedidos.PedidoTableView;
 import javafx.scene.control.TableCell;
@@ -18,6 +19,8 @@ public class FormataTabelaMonetaria extends TableCell<PedidoTableView, BigDecima
     private final NumberFormat currencyFormat;
     @Setter
     private TableView<PedidoTableView> tabelaCliente;
+    @Setter
+    private TableView<NotasClienteTableView> tabelaNotas;
     @Setter
     private PedidoDAO pedidoDAO = new PedidoDAO();
 
@@ -47,9 +50,16 @@ public class FormataTabelaMonetaria extends TableCell<PedidoTableView, BigDecima
 
         if (empty || item == null) {
             setText(null);
+            setGraphic(null);
         } else {
-            String formattedPrice = currencyFormat.format(item);
-            setText(formattedPrice);
+            if (isEditing()) {
+                textField.setText(item.toString());
+                setGraphic(textField);
+                setText(null);
+            } else {
+                setText(currencyFormat.format(item));
+                setGraphic(null);
+            }
         }
     }
 
@@ -57,22 +67,22 @@ public class FormataTabelaMonetaria extends TableCell<PedidoTableView, BigDecima
     public void startEdit() {
         super.startEdit();
         if (isEmpty()) return;
+        textField.setText(getItem().toString());
         setGraphic(textField);
         String style = "-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-font-size: 14px; " +
                 "-fx-font-family: 'Yu Gothic Medium'; -fx-border-color: #000000; -fx-border-width: 0.3px; " +
                 "-fx-border-radius: 8px; -fx-padding: 2.5px; -fx-pref-width: 120px";
         textField.setStyle(style);
-        textField.setText(getItem().toString());
+        setText(null);
         textField.selectAll();
         textField.requestFocus();
-
     }
 
     @Override
     public void cancelEdit() {
         super.cancelEdit();
-        updateItem(getItem(), isEmpty());
-
+        setText(currencyFormat.format(getItem()));
+        setGraphic(null);
     }
 
     @Override
@@ -90,6 +100,8 @@ public class FormataTabelaMonetaria extends TableCell<PedidoTableView, BigDecima
             pedidoDAO.atualizarValorPedido(pedido);
             getTableView().refresh();
             AppUtils.atualizarTabelas(tabelaCliente.getItems());
+            setText(currencyFormat.format(newValue));
+            setGraphic(null);
         }
     }
 

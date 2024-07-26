@@ -36,16 +36,22 @@ public class AdminController implements Initializable {
     void cadastrar(ActionEvent event) {
         adminService.cadastrarAdmin(tfNomeCriar.getText(),tfUUsuarioCriar.getText(),pfSenhaCriar.getText(),credenciamentoDAO);
         AppUtils.limparCamposCadastroCredenciamento(pfSenhaCriar,tfNomeCriar,tfUUsuarioCriar);
+        atualizarTabela();
     }
 
     @FXML
     void excluir(ActionEvent event) {
         adminService.excluirAdmin(tabelaAdm,tabelaAdm.getSelectionModel().getSelectedItem(),credenciamentoDAO);
+        atualizarTabela();
+    }
+
+    private void atualizarTabela() {
+        adminService.listarAdminsTabela(tabelaAdm,credenciamentoDAO,list);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         AppUtils.configuraTabelaAdmin(tabelaAdm,tcId,tcNome);
-        adminService.listarAdminsTabela(tabelaAdm,credenciamentoDAO,list);
+        atualizarTabela();
     }
 }

@@ -1,15 +1,21 @@
 package bm.app.Utils;
 
 import bm.app.Infra.dao.PedidoDAO;
+import bm.app.Model.cliente.Cliente;
+import bm.app.Model.cliente.ClientesTableView;
 import bm.app.Model.credenciamento.AdminTableView;
 import bm.app.Model.credenciamento.FuncionariosTableView;
-import bm.app.Model.notas.Notas;
+import bm.app.Model.anotacoes.Notas;
 import bm.app.Model.FormaPagamento;
+import bm.app.Model.notas.NotasClienteTableView;
 import bm.app.Model.pedidos.Pedido;
 import bm.app.Model.pedidos.PedidoTableView;
 import bm.app.Model.pedidos.PedidoTotalTableView;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.IntegerProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
@@ -18,11 +24,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.Pane;
 import javafx.util.converter.BigDecimalStringConverter;
 
+
 import java.math.BigDecimal;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class AppUtils {
@@ -38,8 +50,13 @@ public class AppUtils {
        tabelaPedidos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
            if (newValue != null) {
                Pedido pedido = new Pedido(newValue);
+               LocalDate date = pedido.getDataPedido();
+               System.out.println(pedido.getHoraPedido()+"  "+pedido.getDataPedido());
+               DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+               String df = date.format(dateFormatter);
+
                 codigo.setText(pedido.getId().toString());
-                dataHora.setText(pedido.getDataPedido().toString());
+                dataHora.setText(df+", "+pedido.getHoraPedido());
                 chavePeso.setText(pedido.getChavePeso());
                 pago.setSelected(pedido.verificaPago());
                 entregue.setSelected(pedido.verificaEntregue());
@@ -84,6 +101,7 @@ public class AppUtils {
 
             Pedido pedido = new Pedido(pedidoTableView);
             pedidoDAO.atualizarStatus(pedido);
+            atualizarTabelas(list);
         });
         brl.setCellValueFactory(new PropertyValueFactory<PedidoTableView, BigDecimal>("brl"));
         brl.setCellFactory(column -> {
@@ -159,14 +177,14 @@ public class AppUtils {
 
         valor_npg.setCellValueFactory(new PropertyValueFactory<PedidoTotalTableView, BigDecimal>("valorNaoRecebido"));
         valor_npg.setCellFactory(column -> new FormataTabelaMonetariaTotal(new Locale("pt", "BR")));
-        ValorTotal.vincularSoma(tabelaPedidos, brl,tabelaTotal,valorTotal);
+        AppUtils.vincularSoma(tabelaPedidos, brl,tabelaTotal,valorTotal);
 
         tabelaPedidos.getItems().addListener((ListChangeListener<? super PedidoTableView>) c -> {
             int pedidosCount = 0;
             int entregasCount = 0;
             for (PedidoTableView pedidoTableView : tabelaPedidos.getItems()) {
                 if ("Pedido".equals(pedidoTableView.getStatus()) || "Entregue".equals(pedidoTableView.getStatus())
-                        || "Não Pago".equals(pedidoTableView.getStatus()) || "Pago".equals(pedidoTableView.getStatus())) {
+                        || "Não pago".equals(pedidoTableView.getStatus()) || "Pago".equals(pedidoTableView.getStatus())) {
                     pedidosCount++;
                 }
 
@@ -188,11 +206,59 @@ public class AppUtils {
 
         tabelaTotal.getItems().addAll(listPedidosTotal);
     }
-    public static void configuraTabelaFuncionarios(TableView<FuncionariosTableView> tabelaFuncionarios,
-                                                   TableColumn<FuncionariosTableView, String> tcId,
+    public static void configuraTabelaNotasPendentes(TableColumn<NotasClienteTableView, String> nomeCliente,
+                                                    TableColumn<NotasClienteTableView, String> dataPedido,
+                                                    TableColumn<NotasClienteTableView, String> valorPedido,
+                                                    TableColumn<NotasClienteTableView, String> chavePeso,
+                                                    TableColumn<NotasClienteTableView, String> tcIdPedido,
+                                                    TableView<NotasClienteTableView> tabelaNotas,
+                                                    ObservableList<NotasClienteTableView> listNotas) {
+        nomeCliente.setCellValueFactory(new PropertyValueFactory<NotasClienteTableView, String>("nomeCliente"));
+        dataPedido.setCellValueFactory(new PropertyValueFactory<NotasClienteTableView, String>("data"));
+        valorPedido.setCellValueFactory(new PropertyValueFactory<NotasClienteTableView, String>("valorPedido"));
+        chavePeso.setCellValueFactory(new PropertyValueFactory<NotasClienteTableView, String>("chavePeso"));
+        tcIdPedido.setCellValueFactory(new PropertyValueFactory<NotasClienteTableView, String>("idPedido"));
+        tcIdPedido.setCellFactory(tc -> {
+            TableCell<NotasClienteTableView, String> cellNotas = new TableCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                        setGraphic(null);
+                    } else {
+                        setText(getItem());
+                        setOnMouseClicked(event -> {
+                            NotasClienteTableView notasClienteTableView = getTableView().getItems().get(getIndex());
+                            Clipboard clipboard = Clipboard.getSystemClipboard();
+                            ClipboardContent content = new ClipboardContent();
+                            content.putString(notasClienteTableView.getIdPedido());
+                            clipboard.setContent(content);
+                        });
+                    }
+                }
+            };
+            return cellNotas;
+        });
+        tabelaNotas.setItems(listNotas);
+    }
+    public static void configuraTabelaFuncionarios(TableColumn<FuncionariosTableView, String> tcId,
                                                    TableColumn<FuncionariosTableView, String> tcNome) {
         tcId.setCellValueFactory(new PropertyValueFactory<FuncionariosTableView, String>("id"));
         tcNome.setCellValueFactory(new PropertyValueFactory<FuncionariosTableView, String>("nome"));
+    }
+    public static void configuraTabelaClientes(TableColumn<ClientesTableView, String> tcId,
+                                               TableColumn<ClientesTableView, String> tcNome,
+                                               TableColumn<ClientesTableView, String> tcTelefone,
+                                               TableColumn<ClientesTableView, String> tcEndereco,
+                                               String type) {
+        tcId.setCellValueFactory(new PropertyValueFactory<ClientesTableView, String>("id"));
+        tcNome.setCellValueFactory(new PropertyValueFactory<ClientesTableView, String>("nome"));
+        if (type.equals("Max")) {
+            tcTelefone.setCellValueFactory(new PropertyValueFactory<ClientesTableView, String>("telefone"));
+            tcEndereco.setCellValueFactory(new PropertyValueFactory<ClientesTableView, String>("endereco"));
+        }
+
     }
     public static void configuraTabelaAdmin(TableView<AdminTableView> tabelaAdmin,
                                            TableColumn<AdminTableView, String> tcId,
@@ -200,11 +266,24 @@ public class AppUtils {
         tcId.setCellValueFactory(new PropertyValueFactory<AdminTableView, String>("id"));
         tcNome.setCellValueFactory(new PropertyValueFactory<AdminTableView, String>("nome"));
     }
-    public static void limpaCamposAdicionarPedido(TextField nome, TextField valor, ChoiceBox<String> formaPagamento, CheckBox pedido) {
+    public static void limpaCamposAdicionarPedido(TextField nome, TextField valor, ChoiceBox<String> formaPagamento, CheckBox pedido,
+                                                  Label nomeAdd,
+                                                  ComboBox<Cliente> comboBox) {
+        if (comboBox.getValue() == null) {
+            nomeAdd.setText("Atendimento de " + nome.getText() + " adicionado!");
+            nomeAdd.setVisible(true);
+        } else {
+            nomeAdd.setText("Atendimento de " + comboBox.getValue().getNome() + " adicionado!");
+            nomeAdd.setVisible(true);
+            comboBox.setValue(null);
+        }
+        valor.setDisable(true);
+        formaPagamento.setDisable(true);
         nome.clear();
         valor.clear();
         formaPagamento.setValue(null);
         pedido.setSelected(false);
+
     }
 
     public static void liberaCamposAdicionarPedido(CheckBox adicionaPedido, TextField valorPedido, ChoiceBox<String> listaPagamento) {
@@ -269,7 +348,17 @@ public class AppUtils {
                     setText(null);
                     setGraphic(null);
                 } else {
+                    Tooltip tooltip;
+                    if (item.getDataEdicao() == null) {
+                        tooltip = new Tooltip("Criado: "+ item.getDataCriacao());
+                    } else {
+                        tooltip = new Tooltip("Criado: "+ item.getDataCriacao()+"\nEditado: " + item.getDataEdicao());
+                    }
+
+
                     Label label = new Label("Título: " + item.getTitulo() + "\nDescrição: " + item.getDescricao() );
+                    label.setStyle("-fx-font-size: 14px; -fx-font-family: 'Yu Gothic UI'; -fx-text-fill: white;");
+                    label.setTooltip(tooltip);
                     label.setWrapText(true);
                     label.setMaxWidth(getListView().getWidth() - 20);
                     setGraphic(label);
@@ -292,70 +381,13 @@ public class AppUtils {
                                        TextArea anotacoes, Button btEditarNota) {
         Notas nota = listaDeNotas.getSelectionModel().getSelectedItem();
         if (nota == null) {
-            CaixaDeMensagem.mensagemErro("Erro", "Erro ao editar nota", "Selecione uma nota para editar");
+            CaixaDeMensagem.mensagemErro("Erro", "Erro ao editar nota", "Selecione uma nota para editar","botao-x.png");
             return;
         }
         tfTituloNota.setText(nota.getTitulo());
         anotacoes.setText(nota.getDescricao());
         adicionarNotasView(paneAdicionarTarefas, listaDeNotas, true, false, tfTituloNota);
         btEditarNota.setVisible(true);
-    }
-    public static void mostrarEdicaoFuncionario(CheckBox cb, Label labelNome, Label labelUser, Button excluir, Button editar,
-                                                Button salvar, TextField nome, TextField user, TextField senha,
-                                                boolean label, boolean buttonFirst, boolean buttonSecond, boolean textFields,
-                                                FuncionariosTableView credenciamento, TableView<FuncionariosTableView> tabela) {
-        boolean val = Validacao.verificaFuncionarioSelecionado(tabela);
-        if (!val) {
-            CaixaDeMensagem.mensagemErro("Erro", "Funcionário não selecionado", "Selecione um funcionário para editar");
-            return;
-        }
-        validarSelecaoCredenciamento(cb, excluir, editar, salvar, nome, user, senha, buttonFirst, buttonSecond,
-                textFields, credenciamento != null, credenciamento.getNome(), credenciamento.getUsername());
-
-    }
-    public static void mostraEdicaoAdmin(CheckBox cb,Button excluir, Button editar,
-                                         Button salvar, TextField nome, TextField user, TextField senha,
-                                         boolean buttonFirst, boolean buttonSecond, boolean textFields,
-                                         AdminTableView credenciamento, TableView<AdminTableView> tabela) {
-        boolean val = Validacao.verificaAdminSelecionado(tabela);
-        if (!val) {
-            CaixaDeMensagem.mensagemErro("Erro", "Admin não selecionado", "Selecione um admin para editar");
-            return;
-        }
-        validarSelecaoCredenciamento(cb, excluir, editar, salvar, nome, user, senha, buttonFirst, buttonSecond,
-                textFields, credenciamento != null, credenciamento.getNome(), credenciamento.getUsername());
-
-    }
-
-    private static void validarSelecaoCredenciamento(CheckBox cb,
-                                                     Button excluir,
-                                                     Button editar,
-                                                     Button salvar,
-                                                     TextField nome,
-                                                     TextField user,
-                                                     TextField senha,
-                                                     boolean buttonFirst,
-                                                     boolean buttonSecond,
-                                                     boolean textFields,
-                                                     boolean b,
-                                                     String nome2,
-                                                     String username) {
-        excluir.setVisible(buttonFirst);
-        editar.setVisible(buttonFirst);
-        salvar.setVisible(buttonSecond);
-        cb.setVisible(buttonSecond);
-        nome.setVisible(textFields);
-        user.setVisible(textFields);
-        senha.setVisible(textFields);
-        if (b) {
-            nome.setText(nome2);
-            user.setText(username);
-
-        } else if (editar.isVisible()) {
-            nome.clear();
-            user.clear();
-            senha.clear();
-        }
     }
 
     public static void limparCamposCadastroCredenciamento(PasswordField passwordField, TextField ... textFields) {
@@ -364,11 +396,249 @@ public class AppUtils {
         }
         passwordField.clear();
     }
-    public static void disablePasswordField(CheckBox cbTrocaSenha, PasswordField pfNovaSenha) {
-        if (cbTrocaSenha.isSelected()) {
-            pfNovaSenha.setDisable(false);
+    public static void vincularSoma(TableView<PedidoTableView> tabelaCliente,
+                                    TableColumn<PedidoTableView, BigDecimal> brlColumn,
+                                    TableView<PedidoTotalTableView> tabelaTotal,
+                                    TableColumn<PedidoTotalTableView, BigDecimal> valorTotalColumn) {
+
+        DoubleBinding somaBinding = Bindings.createDoubleBinding(() ->
+                        tabelaCliente.getItems().stream()
+                                .map(PedidoTableView::getBrl)
+                                .mapToDouble(BigDecimal::doubleValue)
+                                .sum(),
+                tabelaCliente.getItems());
+        valorTotalColumn.setCellValueFactory(data -> {
+            BigDecimal valorTotal = BigDecimal.valueOf(somaBinding.get());
+            return Bindings.createObjectBinding(() -> valorTotal);
+        });
+
+        tabelaCliente.getItems().addListener((ListChangeListener<PedidoTableView>) change -> {
+            tabelaTotal.refresh();
+        });
+    }
+    public static void vincularFalta(TableView<PedidoTableView> tabelaAtendimento,
+                                     TableView<PedidoTotalTableView> tabelaTotal,
+                                     TableColumn<PedidoTotalTableView,
+                                             BigDecimal> valorTotalColumn) {
+
+        DoubleBinding somaBinding = Bindings.createDoubleBinding(() ->
+                        tabelaAtendimento.getItems().stream()
+                                .filter(atendimento -> !atendimento.isPago())
+                                .map(PedidoTableView::getBrl)
+                                .mapToDouble(BigDecimal::doubleValue)
+                                .sum(),
+                tabelaAtendimento.getItems());
+
+        valorTotalColumn.setCellValueFactory(data -> {
+            BigDecimal valorTotal = BigDecimal.valueOf(somaBinding.get());
+            return Bindings.createObjectBinding(() -> valorTotal);
+        });
+
+        tabelaAtendimento.getItems().addListener((ListChangeListener<PedidoTableView>) change -> {
+            tabelaTotal.refresh();
+        });
+    }
+    public static void vincularDinheiro(
+            TableView<PedidoTableView> tabelaCliente,
+            TableView<PedidoTotalTableView> tabelaTotal,
+            TableColumn<PedidoTotalTableView, BigDecimal> valorTotalColumn,
+            String tipoPagamento,
+            boolean peso
+    ) {
+        ObservableList<PedidoTableView> pedidosList = FXCollections.observableArrayList();
+
+        tabelaCliente.getItems().addListener((ListChangeListener<PedidoTableView>) change -> {
+            pedidosList.clear();
+            for (PedidoTableView pedidoTableView : tabelaCliente.getItems()) {
+                String pagamento = pedidoTableView.getFormaPagamento();
+                Boolean pago = pedidoTableView.isPago();
+
+                if (tipoPagamento.equals(pagamento) && pago != null && pago) {
+                    pedidosList.add(pedidoTableView);
+                }
+            }
+        });
+
+        pedidosList.addListener((ListChangeListener<PedidoTableView>) change -> {
+            if (peso) {
+                DoubleBinding somaBinding = Bindings.createDoubleBinding(() ->
+                                pedidosList.stream()
+                                        .map(PedidoTableView::getUyu)
+                                        .mapToDouble(BigDecimal::doubleValue)
+                                        .sum(),
+                        pedidosList
+
+                );
+
+                BigDecimal valorTotal = BigDecimal.valueOf(somaBinding.get());
+                valorTotalColumn.setCellValueFactory(data -> Bindings.createObjectBinding(() -> valorTotal));
+                tabelaTotal.refresh();
+
+            } else {
+                DoubleBinding somaBinding = Bindings.createDoubleBinding(() ->
+                                pedidosList.stream()
+                                        .map(PedidoTableView::getBrl)
+                                        .mapToDouble(BigDecimal::doubleValue)
+                                        .sum(),
+                        pedidosList
+
+                );
+
+                BigDecimal valorTotal = BigDecimal.valueOf(somaBinding.get());
+                valorTotalColumn.setCellValueFactory(data -> Bindings.createObjectBinding(() -> valorTotal));
+                tabelaTotal.refresh();
+            }
+        });
+
+        tabelaCliente.getItems().addListener((ListChangeListener<PedidoTableView>) change -> {
+            tabelaTotal.refresh();
+        });
+    }
+    public static void vincularCartao(
+            TableView<PedidoTableView> tabelaCliente,
+            TableView<PedidoTotalTableView> tabelaTotal,
+            TableColumn<PedidoTotalTableView, BigDecimal> valorTotalColumn,
+            boolean peso
+    ) {
+        ObservableList<PedidoTableView> pedidosList = FXCollections.observableArrayList();
+
+        tabelaCliente.getItems().addListener((ListChangeListener<PedidoTableView>) change -> {
+            pedidosList.clear();
+            for (PedidoTableView pedidoTableView : tabelaCliente.getItems()) {
+                String pagamento = pedidoTableView.getFormaPagamento();
+                Boolean pago = pedidoTableView.isPago();
+
+                if ("Cartão".equals(pagamento)  && pago != null && pago) {
+                    pedidosList.add(pedidoTableView);
+                } else if ("Boleto".equals(pagamento) && pago != null && pago) {
+                    pedidosList.add(pedidoTableView);
+                } else if ("Cheque".equals(pagamento) && pago != null && pago) {
+                    pedidosList.add(pedidoTableView);
+                }
+            }
+        });
+
+        pedidosList.addListener((ListChangeListener<PedidoTableView>) change -> {
+            if (peso) {
+                DoubleBinding somaBinding = Bindings.createDoubleBinding(() ->
+                                pedidosList.stream()
+                                        .map(PedidoTableView::getUyu)
+                                        .mapToDouble(BigDecimal::doubleValue)
+                                        .sum(),
+                        pedidosList
+
+                );
+
+                BigDecimal valorTotal = BigDecimal.valueOf(somaBinding.get());
+                valorTotalColumn.setCellValueFactory(data -> Bindings.createObjectBinding(() -> valorTotal));
+                tabelaTotal.refresh();
+
+            } else {
+                DoubleBinding somaBinding = Bindings.createDoubleBinding(() ->
+                                pedidosList.stream()
+                                        .map(PedidoTableView::getBrl)
+                                        .mapToDouble(BigDecimal::doubleValue)
+                                        .sum(),
+                        pedidosList
+
+                );
+
+                BigDecimal valorTotal = BigDecimal.valueOf(somaBinding.get());
+                valorTotalColumn.setCellValueFactory(data -> Bindings.createObjectBinding(() -> valorTotal));
+                tabelaTotal.refresh();
+            }
+        });
+
+        tabelaCliente.getItems().addListener((ListChangeListener<PedidoTableView>) change -> {
+            tabelaTotal.refresh();
+        });
+    }
+
+    public static void abrirEdicaoCliente(TableView<ClientesTableView> tabelaClientes, TabPane tabPane, Tab tab,
+                                          String type, ClientesTableView cliente, TextField tfRua,
+                                          TextField tfNumero, TextField tfBairro, TextField tfComplemento,
+                                          TextField tfNome, TextField tfTelefone) {
+        boolean val = Validacao.verificaClienteSelecionado(tabelaClientes);
+        if (!val) {
+            CaixaDeMensagem.mensagemErro("Erro", "Cliente não selecionado", "Selecione um cliente para editar","botao-x.png");
+            return;
+        }
+        if (type.equals("Fechar")) {
+            tabPane.getTabs().remove(tab);
+        } else if (type.equals("Editar")) {
+            tabPane.getTabs().add(tab);
+            tabPane.getSelectionModel().select(tab);
+            tfNome.setText(cliente.getNome());
+            tfRua.setText(cliente.getEndereco());
+            tfTelefone.setText(cliente.getTelefone());
+        }
+    }
+
+    public static String enderecoBuilder(String rua, String numero, String bairro, String complemento) {
+        return rua + "/" + "Num." + numero + "/" + bairro + "/" + "Comp.:" + complemento + "/";
+    }
+
+    public static void ocultaTabs(TabPane tabPane, Tab tab) {
+        tabPane.getTabs().remove(tab);
+    }
+
+    public static void listenerTabelaClientes(TableView<ClientesTableView> tabela,Label nome, Label labelEndereco, Label labelTelefone) {
+        tabela.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                labelEndereco.setText(newValue.getEndereco().replace("/", " | "));
+                labelTelefone.setText(newValue.getTelefone());
+                nome.setText(newValue.getNome());
+            } else {
+                labelEndereco.setText("");
+                labelTelefone.setText("");
+                nome.setText("");
+            }
+        });
+    }
+    public static void showInputsAdicionar(ComboBox<Cliente> cb, TextField tf, boolean vi) {
+        if (cb.isVisible()) {
+            cb.setVisible(false);
+            tf.setVisible(true);
         } else {
-            pfNovaSenha.setDisable(true);
+            cb.setVisible(true);
+            tf.setVisible(false);
+        }
+    }
+    public static void tabResultadoBuscaPedido(TabPane tabPane, Tab tab,Tab tabBusca, Pedido pedido, String type) {
+        if (type.equals("Abrir")) {
+            tabPane.getTabs().add(tab);
+            tab.setText("Pedido: " + pedido.getNome() + " - " + pedido.getDataPedido());
+            tabPane.getSelectionModel().select(tab);
+        } else if (type.equals("Fechar")) {
+            tabPane.getTabs().remove(tab);
+            tabPane.getSelectionModel().select(tabBusca);
+        }
+    }
+    public static void codigoToClipboard(Label labelCodigoPedido) {
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(labelCodigoPedido.getText());
+        clipboard.setContent(content);
+
+        Tooltip tooltip = new Tooltip("Código copiado para a área de transferência!");
+        tooltip.setAutoHide(true);
+        tooltip.show(labelCodigoPedido.getScene().getWindow(),
+                labelCodigoPedido.localToScreen(labelCodigoPedido.getBoundsInLocal()).getMinX(),
+                labelCodigoPedido.localToScreen(labelCodigoPedido.getBoundsInLocal()).getMinY() - tooltip.getHeight() - 5);
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        Platform.runLater(() -> tooltip.hide());
+                    }
+                },
+                2000
+        );
+    }
+
+    public static void limpaCamposCadastrarCliente(TextField ... textFields) {
+        for (TextField textField : textFields) {
+            textField.clear();
         }
     }
 }

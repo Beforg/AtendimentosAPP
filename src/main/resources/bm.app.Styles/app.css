@@ -4,6 +4,37 @@
 }
 
 .anchor-pane {
-    -fx-background-color: #E0FBE2;
+    -fx-background-color: #2D3250;
     -fx-font-family: -fx-fonte-principal;
+}
+
+.check-box .box {
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 5, 0.1, 0.0, 0.0);
+
+    -fx-font-family: "Yu Gothic Light";
+}
+
+.check-box {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 5, 0.1, 0.0, 0.0);
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-font-size: 14px;
+    -fx-font-family: "Yu Gothic Light";
+}
+
+.check-box:selected {
+    -fx-background-color: #59735a;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 5, 0.1, 0.0, 0.0);
+    -fx-font-family: "Yu Gothic Light";
+    -fx-font-size: 14px;
+    -fx-text-fill: #000000;
+}
+
+.combo-box {
+    -fx-font-family: "Yu Gothic Light";
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 5, 0.1, 0.0, 0.0);
+    -fx-font-size: 14px;
+    -fx-text-fill: #000000;
 }

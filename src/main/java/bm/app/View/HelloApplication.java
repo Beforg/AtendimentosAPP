@@ -26,52 +26,7 @@ public class HelloApplication extends Application {
         stage.setResizable(false);
 
 
-        principal.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
-                    if (!AppController.verificaJanela) {
-                        FXMLLoader segundaTela = new FXMLLoader(getClass().getResource("adicionar.fxml"));
-                        Scene tela2 = null;
-                        try {
-                            tela2 = new Scene(segundaTela.load());
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        Stage stageAdicionar = new Stage();
-                        segundaTela.getController();
-                        stageAdicionar.setTitle("Adicionar pedido");
-                        stageAdicionar.setScene(tela2);
-                        stageAdicionar.show();
-                        stageAdicionar.setResizable(false);
-                        Image icon = new Image("adicionar-usuario.png");
-                        stageAdicionar.getIcons().add(icon);
-                        stageAdicionar.setOnCloseRequest(eventJanela -> {
-                            event.consume();
-                            logout(stageAdicionar);
-                            AppController.verificaJanela = false;
-                        });
-                        AppController.verificaJanela = true;
-                    } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Atenção");
-                        alert.setHeaderText("Ocorreu um erro na aplicação");
-                        alert.setContentText("Já existe uma operação em aberto");
-                        alert.getButtonTypes().stream()
-                                .filter(buttonType -> buttonType.getButtonData() == ButtonBar.ButtonData.OK_DONE)
-                                .findFirst()
-                                .ifPresent(buttonType -> {
-                                    Button button = (Button) alert.getDialogPane().lookupButton(buttonType);
-                                    button.setDefaultButton(false);
 
-                                });
-                        DialogPane dialogPane = alert.getDialogPane();
-                        dialogPane.setStyle("-fx-font-size: 14px; -fx-font-family: Arial, sans-serif;");
-                        alert.showAndWait();
-                    }
-                }
-            }
-        });
         stage.setScene(principal);
         stage.show();
         Image icon = new Image("fone-de-ouvido.png");

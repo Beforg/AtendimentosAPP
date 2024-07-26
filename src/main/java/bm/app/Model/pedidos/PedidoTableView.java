@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Getter
@@ -19,6 +20,7 @@ public class PedidoTableView {
     private final ObjectProperty<BigDecimal> uyu = new SimpleObjectProperty<>();
     private UUID id;
     private LocalDate dataPedido;
+    private LocalTime horaPedido;
     private final StringProperty formaPagamento = new SimpleStringProperty();
     private boolean pago;
     private boolean entregue;
@@ -39,6 +41,7 @@ public class PedidoTableView {
         this.pago = pedido.verificaPago();
         this.entregue = pedido.verificaEntregue();
         this.chavePeso = pedido.getChavePeso();
+        this.horaPedido = pedido.getHoraPedido();
     }
     public PedidoTableView() {
 

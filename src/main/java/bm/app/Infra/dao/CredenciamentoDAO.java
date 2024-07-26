@@ -16,7 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CredenciamentoDAO {
-    ConnectionFactory connectionFactory;
+    private ConnectionFactory connectionFactory;
 
     public CredenciamentoDAO() {
         this.connectionFactory = new ConnectionFactory();
@@ -47,12 +47,12 @@ public class CredenciamentoDAO {
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                String senhaCriptografada = rs.getString("password");
+                String senhaCriptografada = rs.getString("senha");
                 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
                 conn.close();
                 return encoder.matches(senha, senhaCriptografada);
             } else {
-                CaixaDeMensagem.mensagemErro("Erro", "Usuário não encontrado", "Usuário não encontrado no banco de dados");
+                CaixaDeMensagem.mensagemErro("Erro", "Usuário não encontrado", "Usuário não encontrado no banco de dados","botao-x.png");
                 conn.close();
                 return false;
             }
@@ -80,12 +80,7 @@ public class CredenciamentoDAO {
             ps.setString(1, String.valueOf(Cargo.FUNCIONARIO));
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Credenciamento credenciamento = new Credenciamento();
-                credenciamento.setId(rs.getInt("id"));
-                credenciamento.setNome(rs.getString("nome"));
-                credenciamento.setUsername(rs.getString("usuario"));
-                credenciamento.setPassword(rs.getString("senha"));
-                credenciamento.setCargo(Cargo.valueOf(rs.getString("tipo")));
+                Credenciamento credenciamento = criaCredenciamento(rs);
                 FuncionariosTableView funcionariosTableView = new FuncionariosTableView(credenciamento);
 
                 list.add(funcionariosTableView);
@@ -104,18 +99,61 @@ public class CredenciamentoDAO {
             ps.setString(1, String.valueOf(Cargo.ADMINISTRADOR));
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Credenciamento credenciamento = new Credenciamento();
-                credenciamento.setId(rs.getInt("id"));
-                credenciamento.setNome(rs.getString("nome"));
-                credenciamento.setUsername(rs.getString("usuario"));
-                credenciamento.setPassword(rs.getString("senha"));
-                credenciamento.setCargo(Cargo.valueOf(rs.getString("tipo")));
+                Credenciamento credenciamento = criaCredenciamento(rs);
                 AdminTableView adminTableView = new AdminTableView(credenciamento);
 
                 list.add(adminTableView);
 
             }
             conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro na conexão com o banco de dados: " + e.getMessage());
+        }
+    }
+    public Credenciamento carregarCredenciamento(String username) {
+        String sql = "SELECT * FROM contas WHERE usuario = ?";
+        Connection conn = connectionFactory.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Credenciamento credenciamento = criaCredenciamento(rs);
+                conn.close();
+                return credenciamento;
+            } else {
+                conn.close();
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro na conexão com o banco de dados: " + e.getMessage());
+        }
+    }
+
+    private Credenciamento criaCredenciamento(ResultSet rs) throws SQLException {
+        Credenciamento credenciamento = new Credenciamento();
+        credenciamento.setId(rs.getInt("id"));
+        credenciamento.setNome(rs.getString("nome"));
+        credenciamento.setUsername(rs.getString("usuario"));
+        credenciamento.setPassword(rs.getString("senha"));
+        credenciamento.setCargo(Cargo.valueOf(rs.getString("tipo")));
+        return credenciamento;
+    }
+
+    public boolean verificaUsernameExistente(Credenciamento credenciamento) {
+        String sql = "SELECT * FROM contas WHERE usuario = ?";
+        Connection conn = connectionFactory.getConnection();
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, credenciamento.getUsername());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                conn.close();
+                return true;
+            } else {
+                conn.close();
+                return false;
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Erro na conexão com o banco de dados: " + e.getMessage());
         }

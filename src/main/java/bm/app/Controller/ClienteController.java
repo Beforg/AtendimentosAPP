@@ -1,5 +1,9 @@
 package bm.app.Controller;
 
+import bm.app.Infra.dao.ClienteDAO;
+import bm.app.Model.cliente.ClienteService;
+import bm.app.Model.cliente.ClientesTableView;
+import bm.app.Utils.AppUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,86 +14,74 @@ import java.util.ResourceBundle;
 
 public class ClienteController implements Initializable {
     @FXML
-    private Label labelEndereço;
+    private Label labelTelefone,labelNome, labelEndereco;
 
     @FXML
-    private Label labelNome;
-
-    @FXML
-    private Label labelTelefone;
-
-    @FXML
-    private TableView<?> tabelaClientes;
+    private TableView<ClientesTableView> tabelaClientes;
     @FXML
     private TabPane tabPane;
 
     @FXML
-    private TableColumn<?, ?> tcId;
+    private TableColumn<ClientesTableView, String> tcId,tcNome,tcEndereco,tcTelefone;
+    @FXML
+    private Tab tabEditarCliente,clienteCadastradosTab;
 
     @FXML
-    private TableColumn<?, ?> tcNome;
+    private TextField tfBairro,tfComplemento,tfEditarBairro,tfEditarComplemento,tfEditarNome,tfEditarNumero,
+            tfEditarRua,tfEditarTelefone,tfNome,tfNumero,tfRua,tfTelefone;
 
-    @FXML
-    private Tab teste;
+    private final ClienteService clienteService = new ClienteService();
+    private final ClienteDAO clienteDAO = new ClienteDAO();
 
-    @FXML
-    private TextField tfBairro;
-
-    @FXML
-    private TextField tfComplemento;
-
-    @FXML
-    private TextField tfEditarBairro;
-
-    @FXML
-    private TextField tfEditarComplemento;
-
-    @FXML
-    private TextField tfEditarNome;
-
-    @FXML
-    private TextField tfEditarNumero;
-
-    @FXML
-    private TextField tfEditarRua;
-
-    @FXML
-    private TextField tfEditarTelefone;
-
-    @FXML
-    private TextField tfNome;
-
-    @FXML
-    private TextField tfNumero;
-
-    @FXML
-    private TextField tfRua;
-
-    @FXML
-    private TextField tfTelefone;
 
     @FXML
     void cadastrar(ActionEvent event) {
-
+        clienteService.cadastrarCliente(tfNome.getText(),tfRua.getText(),tfNumero.getText(),tfBairro.getText()
+                ,tfComplemento.getText(),tfTelefone.getText(),clienteDAO);
+        atualizarTabela();
+        tabPane.getSelectionModel().select(clienteCadastradosTab);
+        AppUtils.limpaCamposCadastrarCliente(tfNome,tfRua,tfNumero,tfBairro,tfComplemento,tfTelefone);
     }
 
     @FXML
     void editar(ActionEvent event) {
-
+        AppUtils.abrirEdicaoCliente(
+                tabelaClientes
+                ,tabPane
+                ,tabEditarCliente,"Editar"
+                ,tabelaClientes.getSelectionModel().getSelectedItem(),
+                tfEditarRua,tfEditarNumero,tfEditarBairro,tfEditarComplemento,tfEditarNome,tfEditarTelefone);
     }
 
     @FXML
     void excluir(ActionEvent event) {
-
+        clienteService.removerCliente(clienteDAO, tabelaClientes.getSelectionModel().getSelectedItem(), tabelaClientes);
+        atualizarTabela();
     }
 
     @FXML
     void salvarEdicao(ActionEvent event) {
+        AppUtils.abrirEdicaoCliente(
+                tabelaClientes
+                ,tabPane
+                ,tabEditarCliente,"Fechar"
+                ,tabelaClientes.getSelectionModel().getSelectedItem(),
+                tfEditarRua,tfEditarNumero,tfEditarBairro,tfEditarComplemento,tfEditarNome,tfTelefone);
+        clienteService.editarCliente(clienteDAO, tabelaClientes.getSelectionModel().getSelectedItem(),
+                tabelaClientes,tfEditarNome,tfEditarRua,tfEditarNumero,tfEditarComplemento,tfEditarBairro,tfEditarTelefone);
+        atualizarTabela();
+        tabPane.getSelectionModel().select(clienteCadastradosTab);
+    }
 
+    private void atualizarTabela() {
+        clienteService.listarClientes(clienteDAO, tabelaClientes.getItems(), tabelaClientes);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tabPane.getTabs().remove(teste);
+        clienteService.listarClientes(clienteDAO, tabelaClientes.getItems(), tabelaClientes);
+        AppUtils.ocultaTabs(tabPane,tabEditarCliente);
+        AppUtils.configuraTabelaClientes(tcId,tcNome,tcEndereco,tcTelefone,"Min");
+        AppUtils.listenerTabelaClientes(tabelaClientes,labelNome,labelEndereco,labelTelefone);
     }
 }

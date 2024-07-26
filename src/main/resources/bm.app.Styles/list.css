@@ -1,6 +1,6 @@
 .list-view {
     -fx-background-color: transparent;
-    -fx-text-fill: #000000;
+    -fx-text-fill: #f4f0f0;
     -fx-font-size: 14px;
     -fx-font-family: "Yu Gothic Light";
     -fx-border-color: #c1bfbf;
@@ -8,4 +8,36 @@
 .list-view:focused {
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
+}
+.list-view .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-font-family: "Yu Gothic UI";
+    -fx-border-color: #c1bfbf;
+}
+.list-view .list-cell:hover {
+    -fx-background-color: #c5c3c3;
+}
+.list-view .list-cell:selected {
+    -fx-background-color: #acaaaa;
+
+}
+.list-view .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.list-view .scroll-bar .thumb {
+    -fx-background-color: #c1bfbf;
+    -fx-background-insets: 0;
+    -fx-background-radius: 5px;
+}
+
+.list-view .scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+.list-view .scroll-bar .increment-button,
+.list-view .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
 }

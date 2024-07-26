@@ -11,7 +11,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="382.0" stylesheets="@../../../bm.app.Styles/app2.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.FuncionariosController">
+<AnchorPane prefHeight="400.0" prefWidth="382.0" stylesheets="@../../../bm.app.Styles/telas-menu.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.FuncionariosController">
    <children>
       <TabPane layoutY="-1.0" prefHeight="400.0" prefWidth="411.0" stylesheets="@../../../bm.app.Styles/tabPane.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -19,33 +19,34 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tabelaFuncionarios" layoutY="114.0" prefHeight="258.0" prefWidth="382.0" stylesheets="@../../../bm.app.Styles/tabela.css" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="tabelaFuncionarios" layoutY="114.0" prefHeight="316.0" prefWidth="382.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="tcId" editable="false" prefWidth="75.0" text="ID" />
                             <TableColumn fx:id="tcNome" prefWidth="304.0" sortable="false" text="NOME" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btExcluir" layoutX="306.0" layoutY="327.0" mnemonicParsing="false" onAction="#excluirCadastro" styleClass="buttonTextArea" stylesheets="@../../../bm.app.Styles/button.css" text="Excluir" />
+                        <Button fx:id="btExcluir" layoutX="313.0" layoutY="327.0" mnemonicParsing="false" onAction="#excluirCadastro" styleClass="remover_botao" text="Excluir" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Cadastrar">
+          <Tab fx:id="tabFuncionario" text="Cadastrar">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="39.0" layoutY="101.0" styleClass="labelInfo" text="Nome" />
-                        <Label layoutX="41.0" layoutY="149.0" styleClass="labelInfo" text="Usuário" />
-                        <Label layoutX="40.0" layoutY="196.0" styleClass="labelInfo" text="Senha" />
-                        <Button layoutX="261.0" layoutY="247.0" mnemonicParsing="false" onAction="#cadastrar" prefHeight="25.0" prefWidth="104.0" styleClass="buttonTextArea" stylesheets="@../../../bm.app.Styles/button.css" text="Cadastrar" />
-                        <TextField fx:id="tfNome" layoutX="100.0" layoutY="97.0" prefHeight="25.0" prefWidth="263.0" />
-                        <TextField fx:id="tfUser" layoutX="100.0" layoutY="145.0" prefHeight="25.0" prefWidth="263.0" />
-                        <PasswordField fx:id="tfSenha" layoutX="100.0" layoutY="192.0" prefHeight="25.0" prefWidth="263.0" />
-                        <Separator layoutX="33.0" layoutY="77.0" prefHeight="1.0" prefWidth="346.0" />
-                        <Separator layoutX="31.0" layoutY="78.0" orientation="VERTICAL" prefHeight="207.0" prefWidth="6.0" />
-                        <Separator layoutX="377.0" layoutY="78.0" orientation="VERTICAL" prefHeight="207.0" prefWidth="6.0" />
-                        <Separator layoutX="32.0" layoutY="284.0" prefHeight="4.0" prefWidth="348.0" />
-                        <Label layoutX="33.0" layoutY="54.0" styleClass="labelInfo" text="Cadastro de Funcionários" />
+                        <Label layoutX="24.0" layoutY="101.0" styleClass="labelInfo" text="Nome" />
+                        <Label layoutX="26.0" layoutY="149.0" styleClass="labelInfo" text="Usuário" />
+                        <Label layoutX="25.0" layoutY="196.0" styleClass="labelInfo" text="Senha" />
+                        <Button layoutX="246.0" layoutY="247.0" mnemonicParsing="false" onAction="#cadastrar" prefHeight="25.0" prefWidth="104.0" styleClass="buttonTextArea" stylesheets="@../../../bm.app.Styles/button.css" text="Cadastrar" />
+                        <TextField fx:id="tfNome" layoutX="85.0" layoutY="97.0" prefHeight="25.0" prefWidth="263.0" />
+                        <TextField fx:id="tfUser" layoutX="85.0" layoutY="145.0" prefHeight="25.0" prefWidth="263.0" />
+                        <PasswordField fx:id="tfSenha" layoutX="85.0" layoutY="192.0" prefHeight="25.0" prefWidth="263.0" />
+                        <Separator layoutX="18.0" layoutY="77.0" prefHeight="1.0" prefWidth="346.0" />
+                        <Separator layoutX="16.0" layoutY="78.0" orientation="VERTICAL" prefHeight="207.0" prefWidth="6.0" />
+                        <Separator layoutX="362.0" layoutY="78.0" orientation="VERTICAL" prefHeight="207.0" prefWidth="6.0" />
+                        <Separator layoutX="17.0" layoutY="284.0" prefHeight="4.0" prefWidth="348.0" />
+                        <Label layoutX="17.0" layoutY="20.0" styleClass="labelInfo" text="Cadastro de Funcionários" />
+                        <Separator layoutX="191.0" layoutY="29.0" prefHeight="2.0" prefWidth="196.0" />
                      </children>
                   </AnchorPane>
                </content>
