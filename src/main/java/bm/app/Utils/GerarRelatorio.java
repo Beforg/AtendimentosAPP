@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class GerarRelatorio {
+    @SuppressWarnings("unchecked")
     public void salvarPDF(TableView<PedidoTotalTableView> tabelaTotal, ObservableList<PedidoTableView> list, String horaAtual, Label nomeFuncionario, Label valorPeso, TextArea anotacoes, Button botaoFinalizar) {
         TableColumn<PedidoTotalTableView, Integer> colunaAtendimentos = (TableColumn<PedidoTotalTableView, Integer>) tabelaTotal.getColumns().get(0);
         String atendimentos = String.valueOf(colunaAtendimentos.getCellData(tabelaTotal.getItems().get(0)));

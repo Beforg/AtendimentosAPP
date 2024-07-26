@@ -8,6 +8,7 @@ module bm.app.demo {
     requires java.prefs;
     requires java.datatransfer;
     requires java.desktop;
+    requires org.postgresql.jdbc;
 
 
     exports bm.app.View;
