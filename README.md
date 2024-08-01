@@ -50,7 +50,7 @@ Ao salvar ele irá gerar o login: **adm** e senha: **admin** para acessar o sist
  git clone https://github.com/Beforg/AtendimentosAPP.git
 ```
 
-## Aplicativo
+## Instruções do Aplicativo
 
 ### Tela de Login
 
@@ -58,7 +58,9 @@ Após a configuração de conexão com o banco de dados será gerado o acesso:
 - login: **adm**
 - senha: **admin**
 **É preciso adicionar valor a chave do peso antes de adicionar os atendimentos, através da aba Sistema.**
-![](https://github.com/Beforg/assets/blob/main/atendapp3.0/login.png) 
+  
+![](https://github.com/Beforg/assets/blob/main/atendapp3.0/login.png)
+
 A aplicação apresenta duas tabelas, uma para todos os atendimentos adicionados e outra para calcular os valores totais. Tudo é salvo no banco de dados.
 
 ![](https://github.com/Beforg/assets/blob/main/atendapp3.0/tabelas.png) 
@@ -99,6 +101,8 @@ Ao acionar o botão **FINALIZAR**, é aberto uma janela para salvar o arquivo ge
 ![](https://github.com/Beforg/assets/blob/main/atendapp3.0/pendentes.png) `versão 3.0`
 
 ![](https://github.com/Beforg/assets/blob/main/imagem_2023-10-12_182938450.png) `versão 2.0`
+
+A quitação de notas pendentes é feita através da busca do código da nota no menu **Relatório**.
 
 Após salvar o documento PDF, esse é o resultado final:
 
