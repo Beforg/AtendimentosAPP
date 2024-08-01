@@ -1,5 +1,11 @@
 # Aplicação de Atendimentos
+![](https://img.shields.io/badge/javafx-%23FF0000.svg?style=for-the-badge&logo=javafx&logoColor=white) ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) 
+
+[![Generic badge](https://img.shields.io/badge/Versão-3.0.0-<COLOR>.svg)](https://shields.io/)
+
 Projeto em Java com banco de dados PostgreSQL.
+
+
 | :placard: Vitrine.Dev |  @Beforg   |
 | -------------  | --- |
 | :sparkles: Nome        | **Atendimentos APP**
@@ -100,3 +106,6 @@ Após salvar o documento PDF, esse é o resultado final:
 
 É apresentado a tabela de todos atendimentos com a tabela total, sendo reposicionado o status de ATENDENDO por NÃO PEDIU, o PDF vai adicionando mais páginas quando necessário.
 
+## Licensa
+
+[![PyPI license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://github.com/Beforg/AtendimentosAPP/blob/master/LICENSE)
