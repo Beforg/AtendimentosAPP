@@ -1,5 +1,6 @@
 package bm.app.Utils;
 
+import bm.app.Infra.configuration.ConfigUtil;
 import bm.app.Infra.dao.PedidoDAO;
 import bm.app.Model.cliente.Cliente;
 import bm.app.Model.cliente.ClientesTableView;
@@ -639,6 +640,19 @@ public class AppUtils {
     public static void limpaCamposCadastrarCliente(TextField ... textFields) {
         for (TextField textField : textFields) {
             textField.clear();
+        }
+    }
+    public static void trocaTelaLogin(Pane paneInicio, Pane paneBanco, boolean i, boolean b, TextField url, TextField user, PasswordField senha) {
+        paneInicio.setVisible(i);
+        paneBanco.setVisible(b);
+        if (b) {
+            url.setText(ConfigUtil.getProperty("urlBanco"));
+            user.setText(ConfigUtil.getProperty("user"));
+            senha.setText(ConfigUtil.getProperty("senha"));
+        } else {
+            url.clear();
+            user.clear();
+            senha.clear();
         }
     }
 }

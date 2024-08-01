@@ -63,4 +63,12 @@ public class Validacao {
             return false;
         }
     }
+
+    public static boolean validarBancoDeDados(TextField tfUrlBanco, TextField tfUser, PasswordField pfSenhaBanco) {
+        if (tfUrlBanco.getText().isEmpty() || tfUser.getText().isEmpty() || pfSenhaBanco.getText().isEmpty()) {
+            CaixaDeMensagem.mensagemErro("Erro", "Campos obrigatórios não preenchidos", "Por favor, preencha todos os campos obrigatórios.","botao-x.png");
+            return false;
+        }
+        return true;
+    }
 }

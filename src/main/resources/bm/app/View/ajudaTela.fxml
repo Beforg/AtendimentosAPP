@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="510.0" prefWidth="436.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="510.0" prefWidth="436.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="19.0" layoutY="107.0">
          <font>
@@ -43,7 +43,7 @@
          </font>
       </Label>
       <Separator layoutY="67.0" prefHeight="16.0" prefWidth="436.0" />
-      <Label alignment="TOP_LEFT" layoutX="139.0" layoutY="30.0" prefHeight="37.0" prefWidth="159.0" text="Ajuda &lt;?&gt;" wrapText="true">
+      <Label alignment="TOP_LEFT" layoutX="19.0" layoutY="21.0" prefHeight="37.0" prefWidth="159.0" text="Ajuda" wrapText="true">
          <font>
             <Font name="Arial Bold" size="32.0" />
          </font>

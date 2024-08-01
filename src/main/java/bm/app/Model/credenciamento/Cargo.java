@@ -2,7 +2,8 @@ package bm.app.Model.credenciamento;
 
 public enum Cargo {
     ADMINISTRADOR("Administrador"),
-    FUNCIONARIO("Funcionário");
+    FUNCIONARIO("Funcionário"),
+    MASTER("Master");
 
     private String descricao;
 

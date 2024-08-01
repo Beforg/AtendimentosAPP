@@ -1,9 +1,10 @@
 Manifest-Version: 1.0
 Main-Class: bm.app.View.App
-Class-Path: javafx-controls-20.0.2-win.jar javafx-fxml-20.0.2.jar javafx
- -base-20.0.2-win.jar pdfbox-2.0.29.jar javafx-base-20.0.2.jar postgresq
- l-42.7.2.jar javafx-graphics-20.0.2.jar javafx-controls-20.0.2.jar java
- fx-graphics-20.0.2-win.jar spring-security-crypto-5.4.2.jar javafx-fxml
- -20.0.2-win.jar commons-logging-1.2.jar checker-qual-3.42.0.jar flyway-
- core-8.5.0.jar fontbox-2.0.29.jar
+Class-Path: lib/javafx-base-20.0.2.jar lib/javafx-base-20.0.2-win.jar li
+ b/checker-qual-3.42.0.jar lib/pdfbox-2.0.29.jar lib/postgresql-42.7.2.j
+ ar lib/javafx-fxml-20.0.2.jar lib/javafx-controls-20.0.2-win.jar lib/fo
+ ntbox-2.0.29.jar lib/javafx-controls-20.0.2.jar lib/commons-logging-1.2
+ .jar lib/spring-security-crypto-5.4.2.jar lib/javafx-fxml-20.0.2-win.ja
+ r lib/flyway-core-8.5.0.jar lib/javafx-graphics-20.0.2-win.jar lib/java
+ fx-graphics-20.0.2.jar
 

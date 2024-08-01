@@ -1,5 +1,6 @@
 package bm.app.Controller;
 
+import bm.app.Infra.configuration.ConfigUtil;
 import bm.app.Infra.dao.CredenciamentoDAO;
 import bm.app.Model.credenciamento.AdminService;
 import bm.app.Model.credenciamento.AdminTableView;
@@ -27,6 +28,10 @@ public class AdminController implements Initializable {
 
     @FXML
     private TextField tfUUsuarioCriar,tfNomeCriar;
+    @FXML
+    private Tab tabCadastro;
+    @FXML
+    private Button btExcluir;
 
     private final CredenciamentoDAO credenciamentoDAO = new CredenciamentoDAO();
     private final AdminService adminService = new AdminService();
@@ -52,6 +57,7 @@ public class AdminController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         AppUtils.configuraTabelaAdmin(tabelaAdm,tcId,tcNome);
+        ConfigUtil.permissoesCadastros(AppController.credenciamento,tabCadastro, btExcluir);
         atualizarTabela();
     }
 }

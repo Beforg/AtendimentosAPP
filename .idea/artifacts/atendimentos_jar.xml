@@ -1,25 +1,26 @@
 <component name="ArtifactManager">
-  <artifact name="demo:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/demo_jar</output-path>
+  <artifact name="atendimentos:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/atendimentos_jar</output-path>
     <root id="root">
-      <element id="archive" name="demo.jar">
+      <element id="directory" name="lib">
+        <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
+        <element id="library" level="project" name="Maven: org.apache.pdfbox:fontbox:2.0.29" />
+        <element id="library" level="project" name="Maven: org.apache.pdfbox:pdfbox:2.0.29" />
+        <element id="library" level="project" name="Maven: org.checkerframework:checker-qual:3.42.0" />
+        <element id="library" level="project" name="Maven: org.flywaydb:flyway-core:8.5.0" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-base:20.0.2" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:20.0.2" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-base:win:20.0.2" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:win:20.0.2" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:20.0.2" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:win:20.0.2" />
+        <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:win:20.0.2" />
+        <element id="library" level="project" name="Maven: org.postgresql:postgresql:42.7.2" />
+        <element id="library" level="project" name="Maven: org.springframework.security:spring-security-crypto:5.4.2" />
+      </element>
+      <element id="archive" name="atendimentos.jar">
         <element id="module-output" name="demo" />
       </element>
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:win:20.0.2" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:20.0.2" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:win:20.0.2" />
-      <element id="library" level="project" name="Maven: org.apache.pdfbox:pdfbox:2.0.29" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:20.0.2" />
-      <element id="library" level="project" name="Maven: org.postgresql:postgresql:42.7.2" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:20.0.2" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:20.0.2" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:win:20.0.2" />
-      <element id="library" level="project" name="Maven: org.springframework.security:spring-security-crypto:5.4.2" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:win:20.0.2" />
-      <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
-      <element id="library" level="project" name="Maven: org.checkerframework:checker-qual:3.42.0" />
-      <element id="library" level="project" name="Maven: org.flywaydb:flyway-core:8.5.0" />
-      <element id="library" level="project" name="Maven: org.apache.pdfbox:fontbox:2.0.29" />
       <element id="file-copy" path="$PROJECT_DIR$/../Documents/code/Material/Extensões/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/bin/api-ms-win-core-console-l1-1-0.dll" />
       <element id="file-copy" path="$PROJECT_DIR$/../Documents/code/Material/Extensões/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/bin/api-ms-win-core-console-l1-2-0.dll" />
       <element id="file-copy" path="$PROJECT_DIR$/../Documents/code/Material/Extensões/openjfx-20.0.2_windows-x64_bin-sdk/javafx-sdk-20.0.2/bin/api-ms-win-core-datetime-l1-1-0.dll" />

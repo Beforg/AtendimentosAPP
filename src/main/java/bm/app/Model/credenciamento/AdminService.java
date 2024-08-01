@@ -19,7 +19,7 @@ public class AdminService {
             return;
         }
         credenciamentoDAO.criar(credenciamento);
-        CaixaDeMensagem.mensagemInformacao("Sucesso", "Funcionário cadastrado", "Administrador cadastrado com sucesso.","done.png");
+        CaixaDeMensagem.mensagemInformacao("Sucesso", "Administrador cadastrado", "Administrador cadastrado com sucesso.","done.png");
     }
     public void excluirAdmin(TableView<AdminTableView> tab, AdminTableView adminTableView, CredenciamentoDAO credenciamentoDAO) {
         boolean val = Validacao.verificaAdminSelecionado(tab);

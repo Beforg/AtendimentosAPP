@@ -4,12 +4,13 @@ import bm.app.Model.credenciamento.Credenciamento;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 
 public class ConfigUtil {
+
     private static final Preferences prefs = Preferences.userRoot().node(ConfigUtil.class.getName());
 
     public static String getProperty(String key) {
@@ -25,11 +26,22 @@ public class ConfigUtil {
             menuAdministrador.setDisable(true);
         }
     }
-    public static void permissoesTelaFuncionario(Credenciamento credenciamento, Tab tab, Button button) {
+    public static void permissoesCadastros(Credenciamento credenciamento, Tab tab, Button button) {
         String tipoCredenciamento = credenciamento.getCargo().toString();
-        if (tipoCredenciamento.equals("FUNCIONARIO")) {
+        if (tipoCredenciamento.equals("FUNCIONARIO") || tipoCredenciamento.equals("ADMINISTRADOR")) {
             tab.setDisable(true);
             button.setDisable(true);
         }
+    }
+    public static boolean primeiroLogin() {
+        String pl = prefs.get("primeiroLogin", "");
+        if (pl.isEmpty()) {
+            prefs.put("primeiroLogin", "true");
+        } else return !pl.equals("false");
+        return true;
+    }
+
+    public static void recarregarPropiedades() throws BackingStoreException {
+        prefs.sync();
     }
 }

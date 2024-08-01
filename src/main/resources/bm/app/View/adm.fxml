@@ -30,7 +30,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Cadastrar administrador">
+          <Tab fx:id="tabCadastro" text="Cadastrar administrador">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>

@@ -5,25 +5,40 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="164.0" prefWidth="315.0" styleClass="loginBackground" stylesheets="@../../../bm.app.Styles/app2.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.LoginController">
+<AnchorPane prefHeight="186.0" prefWidth="315.0" styleClass="loginBackground" stylesheets="@../../../bm.app.Styles/app2.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bm.app.Controller.LoginController">
    <children>
-      <Label layoutX="29.0" layoutY="45.0" styleClass="labelInfo" text="Login" />
-      <Label layoutX="27.0" layoutY="86.0" styleClass="labelInfo" text="Senha" />
       <Label layoutX="100.0" layoutY="11.0" text="AtendimentosAPP" textFill="WHITE">
          <font>
             <Font name="Yu Gothic UI Semibold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="286.0" layoutY="145.0" text="v3.0.1">
-         <font>
-            <Font size="9.0" />
-         </font>
-      </Label>
-      <TextField fx:id="tfLogin" layoutX="76.0" layoutY="41.0" prefHeight="27.0" prefWidth="192.0" />
-      <PasswordField fx:id="pfSenha" layoutX="77.0" layoutY="82.0" prefHeight="27.0" prefWidth="192.0" />
-      <Button layoutX="77.0" layoutY="123.0" mnemonicParsing="false" onAction="#entrar" prefHeight="27.0" prefWidth="88.0" styleClass="button2" text="Entrar" />
-      <Button layoutX="180.0" layoutY="123.0" mnemonicParsing="false" onAction="#sair" prefHeight="27.0" prefWidth="88.0" styleClass="button2" text="Sair" />
+      <Pane fx:id="paneBanco" prefHeight="162.0" prefWidth="318.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TextField fx:id="tfUrlBanco" alignment="CENTER" layoutX="8.0" layoutY="67.0" prefHeight="27.0" prefWidth="302.0" promptText="URL do Banco" />
+            <Label fx:id="labelConfig" alignment="CENTER" layoutX="9.0" layoutY="39.0" prefHeight="17.0" prefWidth="302.0" styleClass="labelInfo" text="Configurações do Banco de Dados" />
+            <Button fx:id="btConfiguracoes" layoutX="111.0" layoutY="152.0" mnemonicParsing="false" onAction="#salvarUrl" prefHeight="27.0" prefWidth="95.0" styleClass="button2" text="Salvar" />
+            <TextField fx:id="tfUser" alignment="CENTER" layoutX="8.0" layoutY="101.0" prefHeight="27.0" prefWidth="153.0" promptText="Usuário" />
+            <PasswordField fx:id="pfSenhaBanco" alignment="CENTER" layoutX="169.0" layoutY="102.0" prefHeight="27.0" prefWidth="141.0" promptText="Senha" />
+         </children>
+      </Pane>
+      <Pane fx:id="paneInicio" layoutX="9.0" layoutY="-14.0" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="17.0" layoutY="50.0" styleClass="labelInfo" text="Login" />
+            <Label layoutX="15.0" layoutY="85.0" styleClass="labelInfo" text="Senha" />
+            <Label layoutX="281.0" layoutY="166.0" text="v3.0.0" textFill="WHITE">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfLogin" layoutX="70.0" layoutY="45.0" prefHeight="27.0" prefWidth="218.0" />
+            <PasswordField fx:id="pfSenha" layoutX="70.0" layoutY="80.0" prefHeight="27.0" prefWidth="218.0" />
+            <Button layoutX="70.0" layoutY="121.0" mnemonicParsing="false" onAction="#entrar" prefHeight="27.0" prefWidth="106.0" styleClass="button2" text="Entrar" />
+            <Button layoutX="182.0" layoutY="121.0" mnemonicParsing="false" onAction="#sair" prefHeight="27.0" prefWidth="106.0" styleClass="button2" text="Sair" />
+            <Label layoutX="112.0" layoutY="158.0" onMouseClicked="#trocarTela" styleClass="labelInfo2" text="Configurar Dados" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

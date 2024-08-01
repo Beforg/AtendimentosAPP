@@ -37,7 +37,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#trocarUser" text="Trocar usuário" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#sobre" text="Sobre" />
-                  <MenuItem mnemonicParsing="false" onAction="#ajuda" text="Ajuda" />
+                  <MenuItem mnemonicParsing="false" onAction="#ajuda" text="Ajuda" visible="false" />
                   <MenuItem mnemonicParsing="false" text="Sair" />
             </items>
           </Menu>
@@ -185,7 +185,7 @@
       <Label fx:id="labelChavePesoPedido" alignment="CENTER" layoutX="145.0" layoutY="250.0" prefHeight="17.0" prefWidth="126.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="8.50" visible="false" />
       <Label layoutX="38.0" layoutY="282.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="Data/Hora:" />
       <Label fx:id="labelDataHoraPedido" layoutX="145.0" layoutY="281.0" prefHeight="17.0" prefWidth="126.0" styleClass="labelInfo" stylesheets="@../../../bm.app.Styles/app2.css" text="01/01/24, 18:30" visible="false" />
-      <Pane fx:id="paneAdicionarTarefas" layoutX="2.0" layoutY="363.0" prefHeight="360.0" prefWidth="286.0" visible="false">
+      <Pane fx:id="paneAdicionarTarefas" layoutX="2.0" layoutY="442.0" prefHeight="360.0" prefWidth="286.0" visible="false">
          <children>
             <TextArea fx:id="anotacoes" cacheShape="false" centerShape="false" layoutX="14.0" layoutY="95.0" pickOnBounds="false" prefHeight="213.0" prefWidth="244.0" scaleShape="false" stylesheets="@../../../bm.app.Styles/textArea.css" wrapText="true">
                <font>

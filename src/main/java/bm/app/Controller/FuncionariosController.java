@@ -56,7 +56,7 @@ public class FuncionariosController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         credenciamento = AppController.credenciamento;
-        ConfigUtil.permissoesTelaFuncionario(credenciamento,tabFuncionario,btExcluir);
+        ConfigUtil.permissoesCadastros(credenciamento,tabFuncionario,btExcluir);
         AppUtils.configuraTabelaFuncionarios(tcId,tcNome);
         atualizarTabela();
     }

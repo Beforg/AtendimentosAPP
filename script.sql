@@ -26,6 +26,19 @@ create table if not exists contas
     usuario varchar(100) not null
     );
 
+create table if not exists notas_pendentes
+(
+    id            serial
+    primary key,
+    data          date             not null,
+    valor         numeric          not null,
+    chave_peso    double precision not null,
+    cliente_id    integer          not null
+    references clientes,
+    codigo_pedido uuid
+    references pedidos
+);
+
 create table if not exists pedidos
 (
     codigo          uuid             not null
@@ -43,16 +56,3 @@ create table if not exists pedidos
     data_pedido     date,
     hora_pedido     time
     );
-
-create table if not exists notas_pendentes
-(
-    id            serial
-    primary key,
-    data          date             not null,
-    valor         numeric          not null,
-    chave_peso    double precision not null,
-    cliente_id    integer          not null
-    references clientes,
-    codigo_pedido uuid
-    references pedidos
-);

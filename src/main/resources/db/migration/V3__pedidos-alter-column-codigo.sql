@@ -1,1 +1,0 @@
-ALTER TABLE pedidos ALTER COLUMN codigo TYPE UUID USING (codigo::text::uuid);

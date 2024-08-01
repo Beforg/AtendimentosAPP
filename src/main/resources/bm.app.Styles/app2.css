@@ -54,6 +54,18 @@
     -fx-text-fill: #f8f2f2;
 }
 
+.labelInfo2 {
+    -fx-font-family: "Yu Gothic Medium";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+
+}
+.labelInfo2:hover {
+    -fx-background-color: #84b0b5;
+    -fx-background-radius: 5px;
+}
+
 .check-box {
     -fx-font-family: "Yu Gothic UI";
     -fx-font-size: 14px;
