@@ -42,6 +42,8 @@ Caminho do banco de dados: <br>
 ```bash
   postgresql://<host>:<porta>/<database>  
 ```
+Arquivo de script.sql para gerar as tabelas do banco de dados está no repositório. <br>
+
 Ao salvar ele irá gerar o login: **adm** e senha: **admin** para acessar o sistema.
 
 ### Clonando o repositório
