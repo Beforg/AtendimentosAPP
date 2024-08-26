@@ -112,6 +112,6 @@ Após salvar o documento PDF, esse é o resultado final:
 
 É apresentado a tabela de todos atendimentos com a tabela total, sendo reposicionado o status de ATENDENDO por NÃO PEDIU, o PDF vai adicionando mais páginas quando necessário.
 
-## Licensa
+## License
 
 [![PyPI license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://github.com/Beforg/AtendimentosAPP/blob/master/LICENSE)
